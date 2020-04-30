@@ -30,17 +30,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4933d474-12fb-43a8-9a92-2d2ba8c5b85b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/string_matching/include/consts.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/include/GeneticStringMatcher.h" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/include/GeneticStringMatcher.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/string_matching/src/GeneticStringMatcher.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/GeneticStringMatcher.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +91,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1588229808858</updated>
-      <workItem from="1588229812848" duration="7417000" />
+      <workItem from="1588229812848" duration="7598000" />
     </task>
     <servers />
   </component>
@@ -133,22 +122,22 @@
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
     <state x="-1180" y="276" key="FileChooserDialogImpl/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230121825" />
-    <state width="1250" height="397" key="GridCell.Tab.0.bottom" timestamp="1588237089447">
+    <state width="1247" height="585" key="GridCell.Tab.0.bottom" timestamp="1588237322624">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="1250" height="397" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237089447" />
-    <state width="1250" height="397" key="GridCell.Tab.0.center" timestamp="1588237089447">
+    <state width="1247" height="585" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237322624" />
+    <state width="1247" height="585" key="GridCell.Tab.0.center" timestamp="1588237322624">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="1250" height="397" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237089447" />
-    <state width="1250" height="397" key="GridCell.Tab.0.left" timestamp="1588237089447">
+    <state width="1247" height="585" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237322624" />
+    <state width="1247" height="585" key="GridCell.Tab.0.left" timestamp="1588237322623">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="1250" height="397" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237089447" />
-    <state width="1250" height="397" key="GridCell.Tab.0.right" timestamp="1588237089447">
+    <state width="1247" height="585" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237322623" />
+    <state width="1247" height="585" key="GridCell.Tab.0.right" timestamp="1588237322624">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="1250" height="397" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237089447" />
+    <state width="1247" height="585" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588237322624" />
     <state width="938" height="348" key="GridCell.Tab.1.bottom" timestamp="1588237088936">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>

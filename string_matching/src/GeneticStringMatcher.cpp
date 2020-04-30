@@ -8,9 +8,8 @@
 #include "../include/consts.h"
 
 GeneticStringMatcher::GeneticStringMatcher(const std::string& heuristicType)
-//: heuristicType(heuristicType)
 {
-    // not initializing via MIL because we have to preform basic input valudation
+    // not initializing via MIL because we have to preform basic input validation
     if (heuristicType != bullAndCow && heuristicType != defaultHeuristic){
         std::cout << "You have inserted unsupported heuristic type, I decide you want to use default ;)" << std::endl;
         this->heuristicType = defaultHeuristic;
