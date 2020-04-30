@@ -9,17 +9,11 @@
 #include <algorithm>
 #include "GeneticAlgorithmStruct.h"
 
-#define GA_POPSIZE		2048		// ga population size
-#define GA_MAXITER		16384		// maximum iterations
-#define GA_ELITRATE		0.10f		// elitism rate
-#define GA_MUTATIONRATE	0.25f		// mutation rate
-#define GA_MUTATION		RAND_MAX * GA_MUTATIONRATE
-#define GA_TARGET		std::string("barakg")
 
 
 class GeneticStringMatcher {
 public:
-    GeneticStringMatcher() = default;
+    GeneticStringMatcher(const std::string& heuristicType);
     void init_population(std::vector<GeneticAlgorithmStruct>& population, std::vector<GeneticAlgorithmStruct>& buffer);
     void calc_fitness(std::vector<GeneticAlgorithmStruct>& population);
 
@@ -31,6 +25,9 @@ public:
     void swap(std::vector<GeneticAlgorithmStruct>*& population, std::vector<GeneticAlgorithmStruct>*& buffer);
     double calculateFitnessAvg(std::vector<GeneticAlgorithmStruct>& gav);
     double calculateStandardDeviation(std::vector<GeneticAlgorithmStruct>& gav, double averagedFitnessValue);
+
+private:
+    std::string heuristicType;
 };
 
 #endif //AILABGENETICALGORITHM_GENETICSTRINGMATCHER_H

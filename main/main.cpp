@@ -6,14 +6,19 @@
 #include <time.h>
 #include "../string_matching/include/GeneticStringMatcher.h"
 #include "chrono"
+#include "../string_matching/include/consts.h"
+
+using namespace std;
 
 int main(){
-    GeneticStringMatcher matcher;
-    std::cout << "Hello world!" << std::endl;
-    srand(unsigned(time(NULL)));
+    vector<GeneticAlgorithmStruct> pop_alpha, pop_beta;
+    vector<GeneticAlgorithmStruct>* population, *buffer;
+    string heuristicType;
 
-    std::vector<GeneticAlgorithmStruct> pop_alpha, pop_beta;
-    std::vector<GeneticAlgorithmStruct>* population, *buffer;
+    cout << "Choose heuristic method: " << defaultHeuristic << " / " << bullAndCow << endl;
+    getline(cin, heuristicType);
+
+    GeneticStringMatcher matcher{heuristicType};
 
     matcher.init_population(pop_alpha, pop_beta);
     population = &pop_alpha;

@@ -4,11 +4,13 @@
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../main/main.cpp
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../string_matching/include/GeneticAlgorithmStruct.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../string_matching/include/GeneticStringMatcher.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../string_matching/include/consts.h
 
 CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj: ../string_matching/include/GeneticAlgorithmStruct.h
 CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj: ../string_matching/src/GeneticAlgorithmStruct.cpp
 
 CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj: ../string_matching/include/GeneticAlgorithmStruct.h
 CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj: ../string_matching/include/GeneticStringMatcher.h
+CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj: ../string_matching/include/consts.h
 CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj: ../string_matching/src/GeneticStringMatcher.cpp
 

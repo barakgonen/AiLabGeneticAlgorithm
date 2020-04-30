@@ -5,6 +5,18 @@
 #include <iostream>
 #include <cmath>
 #include "../include/GeneticStringMatcher.h"
+#include "../include/consts.h"
+
+GeneticStringMatcher::GeneticStringMatcher(const std::string& heuristicType)
+//: heuristicType(heuristicType)
+{
+    // not initializing via MIL because we have to preform basic input valudation
+    if (heuristicType != bullAndCow && heuristicType != defaultHeuristic){
+        std::cout << "You have inserted unsupported heuristic type, I decide you want to use default ;)" << std::endl;
+        this->heuristicType = defaultHeuristic;
+    } else
+        this->heuristicType = heuristicType;
+}
 
 void GeneticStringMatcher::init_population(std::vector<GeneticAlgorithmStruct>& population,
                                                     std::vector<GeneticAlgorithmStruct>& buffer)
@@ -29,13 +41,35 @@ void GeneticStringMatcher::calc_fitness(std::vector<GeneticAlgorithmStruct>& pop
     int tsize = target.size();
     unsigned int fitness;
 
-    for (int i=0; i<GA_POPSIZE; i++) {
-        fitness = 0;
-        for (int j=0; j<tsize; j++) {
-            fitness += abs(int(population[i].getString()[j] - target[j]));
+    // default / original heuristic
+    if (heuristicType == defaultHeuristic){
+        for (int i=0; i<GA_POPSIZE; i++) {
+            fitness = 0;
+            for (int j=0; j<tsize; j++) {
+                fitness += abs(int(population[i].getString()[j] - target[j]));
+            }
+            population[i].setFitnessValue(fitness);
         }
-
-        population[i].setFitnessValue(fitness);
+    }
+    else if (heuristicType == bullAndCow){
+        for (int i = 0; i<GA_POPSIZE; i++) {
+            fitness = tsize * 50;
+            for (int j = 0; j<tsize; j++) {
+                // if the letter on the right place we give 50 points
+                if (population[i].getString()[j] == target[j])
+                    fitness -= 50;
+                else {
+                    // if the letter in the string but not in the right place we give 10 points
+                    for (int k = j + 1; k < tsize; k++) {
+                        if (population[i].getString()[j] == target[k]) {
+                            fitness -= 10;
+                            break;
+                        }
+                    }
+                }
+            }
+            population[i].setFitnessValue(fitness);
+        }
     }
 }
 
