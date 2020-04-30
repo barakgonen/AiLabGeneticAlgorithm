@@ -230,6 +230,33 @@ string_matching/src/GeneticStringMatcher.cpp.s:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.s
 .PHONY : string_matching/src/GeneticStringMatcher.cpp.s
 
+string_matching/src/OutputFileWriter.obj: string_matching/src/OutputFileWriter.cpp.obj
+
+.PHONY : string_matching/src/OutputFileWriter.obj
+
+# target to build an object file
+string_matching/src/OutputFileWriter.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.obj
+.PHONY : string_matching/src/OutputFileWriter.cpp.obj
+
+string_matching/src/OutputFileWriter.i: string_matching/src/OutputFileWriter.cpp.i
+
+.PHONY : string_matching/src/OutputFileWriter.i
+
+# target to preprocess a source file
+string_matching/src/OutputFileWriter.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.i
+.PHONY : string_matching/src/OutputFileWriter.cpp.i
+
+string_matching/src/OutputFileWriter.s: string_matching/src/OutputFileWriter.cpp.s
+
+.PHONY : string_matching/src/OutputFileWriter.s
+
+# target to generate assembly for a file
+string_matching/src/OutputFileWriter.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.s
+.PHONY : string_matching/src/OutputFileWriter.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -251,6 +278,9 @@ help:
 	@echo ... string_matching/src/GeneticStringMatcher.obj
 	@echo ... string_matching/src/GeneticStringMatcher.i
 	@echo ... string_matching/src/GeneticStringMatcher.s
+	@echo ... string_matching/src/OutputFileWriter.obj
+	@echo ... string_matching/src/OutputFileWriter.i
+	@echo ... string_matching/src/OutputFileWriter.s
 .PHONY : help
 
 

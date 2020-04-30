@@ -92,6 +92,9 @@
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticStringMatcher.cpp">
 			<Option target="geneticString"/>
 		</Unit>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/OutputFileWriter.cpp">
+			<Option target="geneticString"/>
+		</Unit>
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

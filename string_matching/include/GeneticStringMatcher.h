@@ -13,7 +13,7 @@
 
 class GeneticStringMatcher {
 public:
-    GeneticStringMatcher(const std::string& heuristicType);
+    GeneticStringMatcher(const std::string& inputString, const std::string& heuristicType, bool shouldUseRws, bool shouldUseAging);
     void init_population(std::vector<GeneticAlgorithmStruct>& population, std::vector<GeneticAlgorithmStruct>& buffer);
     void calc_fitness(std::vector<GeneticAlgorithmStruct>& population);
 
@@ -27,6 +27,10 @@ public:
     double calculateStandardDeviation(std::vector<GeneticAlgorithmStruct>& gav, double averagedFitnessValue);
 
 private:
+    int calcRws(std::vector<GeneticAlgorithmStruct>& population);
+    bool shouldUseRws;
+    bool shouldUseAging;
+    const std::string inputString;
     std::string heuristicType;
 };
 

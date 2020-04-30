@@ -7,6 +7,7 @@
 GeneticAlgorithmStruct::GeneticAlgorithmStruct(std::string inputString, unsigned int fitnessValue)
 : str{inputString}
 , fitnessVal{fitnessValue}
+, ageVal{0}
 {
 }
 
@@ -26,6 +27,18 @@ void GeneticAlgorithmStruct::setFitnessValue(unsigned int newValue){
     fitnessVal = newValue;
 }
 
+unsigned int& GeneticAlgorithmStruct::fitness(){
+    return fitnessVal;
+}
+
 unsigned int GeneticAlgorithmStruct::getFitnessValue() const {
     return fitnessVal;
+}
+
+int& GeneticAlgorithmStruct::age(){
+    return ageVal;
+}
+
+int GeneticAlgorithmStruct::getAge() {
+    return ageVal;
 }

@@ -7,7 +7,10 @@
 #include "../include/GeneticStringMatcher.h"
 #include "../include/consts.h"
 
-GeneticStringMatcher::GeneticStringMatcher(const std::string& heuristicType)
+GeneticStringMatcher::GeneticStringMatcher(const std::string& inputString, const std::string& heuristicType, bool shouldUseRws, bool shouldUseAging)
+: shouldUseRws{shouldUseRws}
+, shouldUseAging{shouldUseAging}
+, inputString{inputString}
 {
     // not initializing via MIL because we have to preform basic input validation
     if (heuristicType != bullAndCow && heuristicType != defaultHeuristic){
@@ -20,7 +23,7 @@ GeneticStringMatcher::GeneticStringMatcher(const std::string& heuristicType)
 void GeneticStringMatcher::init_population(std::vector<GeneticAlgorithmStruct>& population,
                                                     std::vector<GeneticAlgorithmStruct>& buffer)
 {
-    int tsize = GA_TARGET.size();
+    int tsize = inputString.size();
 
     for (int i=0; i<GA_POPSIZE; i++) {
         GeneticAlgorithmStruct citizen{"", 0};
@@ -36,7 +39,7 @@ void GeneticStringMatcher::init_population(std::vector<GeneticAlgorithmStruct>& 
 
 void GeneticStringMatcher::calc_fitness(std::vector<GeneticAlgorithmStruct>& population)
 {
-    std::string target = GA_TARGET;
+    std::string target = inputString;
     int tsize = target.size();
     unsigned int fitness;
 
@@ -90,7 +93,7 @@ void GeneticStringMatcher::elitism(std::vector<GeneticAlgorithmStruct>& populati
 }
 
 void GeneticStringMatcher::mutate(GeneticAlgorithmStruct& member){
-    int tsize = GA_TARGET.size();
+    int tsize = inputString.size();
     int ipos = rand() % tsize;
     int delta = (rand() % 90) + 32;
 
@@ -98,16 +101,47 @@ void GeneticStringMatcher::mutate(GeneticAlgorithmStruct& member){
 }
 
 void GeneticStringMatcher::mate(std::vector<GeneticAlgorithmStruct>& population,
-                                    std::vector<GeneticAlgorithmStruct>& buffer){
+                                    std::vector<GeneticAlgorithmStruct>& buffer)
+{
     int esize = GA_POPSIZE * GA_ELITRATE;
-    int tsize = GA_TARGET.size(), spos, i1, i2;
+    int tsize = inputString.size(), spos, i1, i2;
+    if (shouldUseAging) {
+        for (int s = 0; s < GA_POPSIZE; s++) {
+            if (population[s].getAge() <= YOUNG_GEN_AGE)
+                population[s].fitness() += 15;
 
-    elitism(population, buffer, esize);
+            if (population[s].getAge() < ADULT_GEN_AGE)
+            {
+                population[s].fitness() -= 15;
+                if (population[s].fitness() < 1)
+                    population[s].fitness() = 1;
+                buffer[s].setString(population[s].getString());
+                buffer[s].fitness() = population[s].getFitnessValue();
+                buffer[s].age() = population[s].getAge();
+
+            }
+        }
+        for (int i = 0; i < GA_POPSIZE; i++) {
+            population[i].age()++;
+            buffer[i].age()++;
+        }
+    }
+    else{
+        elitism(population, buffer, esize);
+    }
 
     // Mate the rest
     for (int i=esize; i<GA_POPSIZE; i++) {
-        i1 = rand() % (GA_POPSIZE / 2);
-        i2 = rand() % (GA_POPSIZE / 2);
+        if (shouldUseRws){
+            i1 = calcRws(population);
+            i2 = calcRws(population);
+        }
+        else{
+            // should not use rws
+            i1 = rand() % (GA_POPSIZE / 2);
+            i2 = rand() % (GA_POPSIZE / 2);
+
+        }
         spos = rand() % tsize;
 
         buffer[i].setString(population[i1].getString().substr(0, spos) +
@@ -116,6 +150,19 @@ void GeneticStringMatcher::mate(std::vector<GeneticAlgorithmStruct>& population,
         if (rand() < GA_MUTATION)
             mutate(buffer[i]);
     }
+}
+
+int GeneticStringMatcher::calcRws(std::vector<GeneticAlgorithmStruct>& population){
+    double slice = sqrt(rand()* calculateFitnessAvg(population) / (RAND_MAX + 1));
+    double fitnes_f = 0.0f;
+    double maxFitness = 127 * inputString.size();
+    for (int p = 0; p < GA_POPSIZE; p++)
+    {
+        fitnes_f += sqrt(maxFitness - (population[p]).getFitnessValue());
+        if (fitnes_f >= slice)
+            return p;
+    }
+    return -1;
 }
 
 void GeneticStringMatcher::print_best(std::vector<GeneticAlgorithmStruct>& gav)
@@ -133,9 +180,8 @@ void GeneticStringMatcher::swap(std::vector<GeneticAlgorithmStruct>*& population
 
 double GeneticStringMatcher::calculateFitnessAvg(std::vector<GeneticAlgorithmStruct>& gav){
     double avgRes = 0;
-    for (auto val : gav){
+    for (auto val : gav)
         avgRes += val.getFitnessValue();
-    }
     return avgRes / gav.size();
 }
 
@@ -143,8 +189,7 @@ double GeneticStringMatcher::calculateStandardDeviation(std::vector<GeneticAlgor
                                                         double averagedFitnessValue)
 {
     double standardDeviation = 0;
-    for (auto val : gav){
+    for (auto val : gav)
         standardDeviation += pow(val.getFitnessValue() - averagedFitnessValue, 2);
-    }
     return standardDeviation / gav.size();
 }

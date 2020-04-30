@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj"
   "CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj"
   "CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj"
+  "CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.obj"
   "geneticString.exe"
   "geneticString.exe.manifest"
   "geneticString.pdb"

@@ -5,12 +5,14 @@
 #ifndef AILABGENETICALGORITHM_CONSTS_H
 #define AILABGENETICALGORITHM_CONSTS_H
 
-#define GA_POPSIZE		2048		// ga population size
-#define GA_MAXITER		16384		// maximum iterations
-#define GA_ELITRATE		0.10f		// elitism rate
-#define GA_MUTATIONRATE	0.25f		// mutation rate
-#define GA_MUTATION		RAND_MAX * GA_MUTATIONRATE
-#define GA_TARGET		std::string("blablabla")
+static const int GA_POPSIZE = 2048;		// ga population size
+static const int GA_MAXITER	= 16384;	// maximum iterations
+static const double GA_ELITRATE = 0.10f;		// elitism rate
+static const double GA_MUTATIONRATE = 0.25f;		// mutation rate
+static const double GA_MUTATION	= RAND_MAX * GA_MUTATIONRATE;
+static const std::string GA_TARGET = std::string("blablabla");
 static std::string defaultHeuristic = "default";
 static std::string bullAndCow = "BullAndCow";
+static const int YOUNG_GEN_AGE = 5; // consider geune as young as long as it's age is below / equals this value
+static const int ADULT_GEN_AGE = 20; // consider gune as an adult while it's below this value
 #endif //AILABGENETICALGORITHM_CONSTS_H

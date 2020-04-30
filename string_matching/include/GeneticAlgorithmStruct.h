@@ -16,11 +16,15 @@ public:
     void setString(const std::string& other);
     std::string& getString();
     void setFitnessValue(unsigned int newValue);
+    unsigned int& fitness();
     unsigned int getFitnessValue() const;
+    int& age();
+    int getAge();
 
 private:
     std::string str;
     unsigned int fitnessVal;
+    int ageVal;
 };
 
 #endif //AILABGENETICALGORITHM_GENETICALGORITHMSTRUCT_H
