@@ -10,7 +10,7 @@
 class GeneticAlgorithmStruct {
 public:
     // Default empty ctor
-    GeneticAlgorithmStruct() = default:;
+    GeneticAlgorithmStruct() = default;
     GeneticAlgorithmStruct(std::string inputString, unsigned int fitnessValue);
     void appendToString(const char c);
     void setString(const std::string& other);
