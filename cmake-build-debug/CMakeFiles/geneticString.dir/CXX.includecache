@@ -13,6 +13,8 @@ time.h
 -
 ../string_matching/include/GeneticStringMatcher.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatcher.h
+chrono
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/chrono
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticAlgorithmStruct.h
 string
@@ -25,12 +27,4 @@ algorithm
 -
 GeneticAlgorithmStruct.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticAlgorithmStruct.h
-
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticStringMatcher.cpp
-iostream
--
-cmath
--
-../include/GeneticStringMatcher.h
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatcher.h
 
