@@ -10,7 +10,7 @@
 #define GA_ELITRATE		0.10f		// elitism rate
 #define GA_MUTATIONRATE	0.25f		// mutation rate
 #define GA_MUTATION		RAND_MAX * GA_MUTATIONRATE
-#define GA_TARGET		std::string("barakg")
+#define GA_TARGET		std::string("blablabla")
 static std::string defaultHeuristic = "default";
-static std::string bullAndCow = "Bull And Cow";
+static std::string bullAndCow = "BullAndCow";
 #endif //AILABGENETICALGORITHM_CONSTS_H

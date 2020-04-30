@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/geneticString.dir/main/main.cpp.obj"
+  "CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj"
   "CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj"
   "CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj"
   "geneticString.exe"

@@ -149,6 +149,33 @@ main/main.cpp.s:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/main/main.cpp.s
 .PHONY : main/main.cpp.s
 
+nQueens/src/nQueensSolver.obj: nQueens/src/nQueensSolver.cpp.obj
+
+.PHONY : nQueens/src/nQueensSolver.obj
+
+# target to build an object file
+nQueens/src/nQueensSolver.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj
+.PHONY : nQueens/src/nQueensSolver.cpp.obj
+
+nQueens/src/nQueensSolver.i: nQueens/src/nQueensSolver.cpp.i
+
+.PHONY : nQueens/src/nQueensSolver.i
+
+# target to preprocess a source file
+nQueens/src/nQueensSolver.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.i
+.PHONY : nQueens/src/nQueensSolver.cpp.i
+
+nQueens/src/nQueensSolver.s: nQueens/src/nQueensSolver.cpp.s
+
+.PHONY : nQueens/src/nQueensSolver.s
+
+# target to generate assembly for a file
+nQueens/src/nQueensSolver.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.s
+.PHONY : nQueens/src/nQueensSolver.cpp.s
+
 string_matching/src/GeneticAlgorithmStruct.obj: string_matching/src/GeneticAlgorithmStruct.cpp.obj
 
 .PHONY : string_matching/src/GeneticAlgorithmStruct.obj
@@ -215,6 +242,9 @@ help:
 	@echo ... main/main.obj
 	@echo ... main/main.i
 	@echo ... main/main.s
+	@echo ... nQueens/src/nQueensSolver.obj
+	@echo ... nQueens/src/nQueensSolver.i
+	@echo ... nQueens/src/nQueensSolver.s
 	@echo ... string_matching/src/GeneticAlgorithmStruct.obj
 	@echo ... string_matching/src/GeneticAlgorithmStruct.i
 	@echo ... string_matching/src/GeneticAlgorithmStruct.s

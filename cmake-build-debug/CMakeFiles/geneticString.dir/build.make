@@ -69,9 +69,22 @@ CMakeFiles/geneticString.dir/main/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/geneticString.dir/main/main.cpp.s"
 	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\main\main.cpp -o CMakeFiles\geneticString.dir\main\main.cpp.s
 
+CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj: CMakeFiles/geneticString.dir/flags.make
+CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj: ../nQueens/src/nQueensSolver.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\geneticString.dir\nQueens\src\nQueensSolver.cpp.obj -c C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\nQueens\src\nQueensSolver.cpp
+
+CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\nQueens\src\nQueensSolver.cpp > CMakeFiles\geneticString.dir\nQueens\src\nQueensSolver.cpp.i
+
+CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\nQueens\src\nQueensSolver.cpp -o CMakeFiles\geneticString.dir\nQueens\src\nQueensSolver.cpp.s
+
 CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj: CMakeFiles/geneticString.dir/flags.make
 CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj: ../string_matching/src/GeneticAlgorithmStruct.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj"
 	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\geneticString.dir\string_matching\src\GeneticAlgorithmStruct.cpp.obj -c C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\string_matching\src\GeneticAlgorithmStruct.cpp
 
 CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.i: cmake_force
@@ -84,7 +97,7 @@ CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.s: c
 
 CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj: CMakeFiles/geneticString.dir/flags.make
 CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj: ../string_matching/src/GeneticStringMatcher.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj"
 	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\geneticString.dir\string_matching\src\GeneticStringMatcher.cpp.obj -c C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\string_matching\src\GeneticStringMatcher.cpp
 
 CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.i: cmake_force
@@ -98,6 +111,7 @@ CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.s: cma
 # Object files for target geneticString
 geneticString_OBJECTS = \
 "CMakeFiles/geneticString.dir/main/main.cpp.obj" \
+"CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj" \
 "CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj" \
 "CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj"
 
@@ -105,13 +119,14 @@ geneticString_OBJECTS = \
 geneticString_EXTERNAL_OBJECTS =
 
 geneticString.exe: CMakeFiles/geneticString.dir/main/main.cpp.obj
+geneticString.exe: CMakeFiles/geneticString.dir/nQueens/src/nQueensSolver.cpp.obj
 geneticString.exe: CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj
 geneticString.exe: CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj
 geneticString.exe: CMakeFiles/geneticString.dir/build.make
 geneticString.exe: CMakeFiles/geneticString.dir/linklibs.rsp
 geneticString.exe: CMakeFiles/geneticString.dir/objects1.rsp
 geneticString.exe: CMakeFiles/geneticString.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable geneticString.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable geneticString.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\geneticString.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
