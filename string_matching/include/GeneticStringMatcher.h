@@ -14,12 +14,12 @@
 #define GA_ELITRATE		0.10f		// elitism rate
 #define GA_MUTATIONRATE	0.25f		// mutation rate
 #define GA_MUTATION		RAND_MAX * GA_MUTATIONRATE
-#define GA_TARGET		std::string("Hello world!")
+#define GA_TARGET		std::string("barakg")
 
 
 class GeneticStringMatcher {
 public:
-    GeneticStringMatcher();
+    GeneticStringMatcher() = default;
     void init_population(std::vector<GeneticAlgorithmStruct>& population, std::vector<GeneticAlgorithmStruct>& buffer);
     void calc_fitness(std::vector<GeneticAlgorithmStruct>& population);
 
@@ -29,9 +29,8 @@ public:
     void mate(std::vector<GeneticAlgorithmStruct>& population, std::vector<GeneticAlgorithmStruct>& buffer);
     void print_best(std::vector<GeneticAlgorithmStruct>& gav);
     void swap(std::vector<GeneticAlgorithmStruct>*& population, std::vector<GeneticAlgorithmStruct>*& buffer);
-
-private:
-    std::vector<GeneticAlgorithmStruct> ga_vector;
+    double calculateFitnessAvg(std::vector<GeneticAlgorithmStruct>& gav);
+    double calculateStandardDeviation(std::vector<GeneticAlgorithmStruct>& gav, double averagedFitnessValue);
 };
 
 #endif //AILABGENETICALGORITHM_GENETICSTRINGMATCHER_H

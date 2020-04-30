@@ -25,7 +25,9 @@ int main(){
 
         if ((*population)[0].getFitnessValue() == 0)
             break;
-
+        double averageFitnessValue = matcher.calculateFitnessAvg(*population);
+        double standardDeviation = matcher.calculateStandardDeviation(*population, averageFitnessValue);
+        std::cout << "Averaged Fitness Value: " << averageFitnessValue << ", Standard Deviation val: " << standardDeviation << std::endl;
         matcher.mate(*population, *buffer);		// mate the population together
         swap(population, buffer);		// swap buffers
     }

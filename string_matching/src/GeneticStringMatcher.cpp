@@ -3,11 +3,8 @@
 //
 
 #include <iostream>
+#include <cmath>
 #include "../include/GeneticStringMatcher.h"
-
-GeneticStringMatcher::GeneticStringMatcher(){
-    std::cout << "Hi u" << std::endl;
-}
 
 void GeneticStringMatcher::init_population(std::vector<GeneticAlgorithmStruct>& population,
                                                     std::vector<GeneticAlgorithmStruct>& buffer)
@@ -99,4 +96,22 @@ void GeneticStringMatcher::swap(std::vector<GeneticAlgorithmStruct>*& population
     std::vector<GeneticAlgorithmStruct> *temp = population;
     population = buffer;
     buffer = temp;
+}
+
+double GeneticStringMatcher::calculateFitnessAvg(std::vector<GeneticAlgorithmStruct>& gav){
+    double avgRes = 0;
+    for (auto val : gav){
+        avgRes += val.getFitnessValue();
+    }
+    return avgRes / gav.size();
+}
+
+double GeneticStringMatcher::calculateStandardDeviation(std::vector<GeneticAlgorithmStruct>& gav,
+                                                        double averagedFitnessValue)
+{
+    double standardDeviation = 0;
+    for (auto val : gav){
+        standardDeviation += pow(val.getFitnessValue() - averagedFitnessValue, 2);
+    }
+    return standardDeviation / gav.size();
 }
