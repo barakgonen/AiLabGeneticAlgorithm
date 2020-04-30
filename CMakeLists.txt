@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(AiLabGeneticAlgorithm)
+
+set(CMAKE_C_STANDARD 11)
+FILE(GLOB SRCFILES string_matching/src/*.cpp main/main.cpp)
+ADD_EXECUTABLE(geneticString ${SRCFILES})
