@@ -6,7 +6,29 @@
 
 #IncludeRegexTransform: 
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp
+iostream
+-
+time.h
+-
+../string_matching/include/GeneticStringMatcher.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatcher.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticAlgorithmStruct.h
+string
+-
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatcher.h
+vector
+-
+algorithm
+-
+GeneticAlgorithmStruct.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticAlgorithmStruct.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticAlgorithmStruct.cpp
+../include/GeneticAlgorithmStruct.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticAlgorithmStruct.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticStringMatcher.cpp
 iostream

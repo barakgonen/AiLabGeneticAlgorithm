@@ -149,6 +149,33 @@ main/main.cpp.s:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/main/main.cpp.s
 .PHONY : main/main.cpp.s
 
+string_matching/src/GeneticAlgorithmStruct.obj: string_matching/src/GeneticAlgorithmStruct.cpp.obj
+
+.PHONY : string_matching/src/GeneticAlgorithmStruct.obj
+
+# target to build an object file
+string_matching/src/GeneticAlgorithmStruct.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj
+.PHONY : string_matching/src/GeneticAlgorithmStruct.cpp.obj
+
+string_matching/src/GeneticAlgorithmStruct.i: string_matching/src/GeneticAlgorithmStruct.cpp.i
+
+.PHONY : string_matching/src/GeneticAlgorithmStruct.i
+
+# target to preprocess a source file
+string_matching/src/GeneticAlgorithmStruct.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.i
+.PHONY : string_matching/src/GeneticAlgorithmStruct.cpp.i
+
+string_matching/src/GeneticAlgorithmStruct.s: string_matching/src/GeneticAlgorithmStruct.cpp.s
+
+.PHONY : string_matching/src/GeneticAlgorithmStruct.s
+
+# target to generate assembly for a file
+string_matching/src/GeneticAlgorithmStruct.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.s
+.PHONY : string_matching/src/GeneticAlgorithmStruct.cpp.s
+
 string_matching/src/GeneticStringMatcher.obj: string_matching/src/GeneticStringMatcher.cpp.obj
 
 .PHONY : string_matching/src/GeneticStringMatcher.obj
@@ -188,6 +215,9 @@ help:
 	@echo ... main/main.obj
 	@echo ... main/main.i
 	@echo ... main/main.s
+	@echo ... string_matching/src/GeneticAlgorithmStruct.obj
+	@echo ... string_matching/src/GeneticAlgorithmStruct.i
+	@echo ... string_matching/src/GeneticAlgorithmStruct.s
 	@echo ... string_matching/src/GeneticStringMatcher.obj
 	@echo ... string_matching/src/GeneticStringMatcher.i
 	@echo ... string_matching/src/GeneticStringMatcher.s
