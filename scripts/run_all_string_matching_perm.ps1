@@ -5,14 +5,14 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$inputString=$Args[1],
     [Parameter(Mandatory = $true)]
-    [ValidateSet("default", "BullAndCow")]
+    [ValidateSet("Random", "BullAndCow")]
     [string]$heuristic = $Args[2],
     [Parameter(Mandatory = $true)]
-    [ValidateSet("y", "n")]
-    [string]$useRws = $Args[3],
+    [ValidateSet("Random", "Tournament", "Rws")]
+    [string]$selectionMethod = $Args[3],
     [Parameter(Mandatory = $true)]
     [ValidateSet("y", "n")]
-    [string]$useAging = $Args[4]
+    [string]$useAging = $Args[5]
 )
 
 Write-Host "Parameters are:"

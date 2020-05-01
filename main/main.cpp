@@ -10,65 +10,135 @@
 
 #include "../nQueens/include/nQueensSolver.h"
 #include "../string_matching/include/OutputFileWriter.h"
-#include "../string_matching/include/IterationRawOutput.h"
+#include "../string_matching/include/HeuristicsEnum.h"
 
 using namespace std;
 
-std::string get_method_to_run(int argc, char *argv[]){
+std::string getMethodToRun(int argc, char **argv) {
     std::string method_to_run;
-    if (argc >= 2){
+    if (argc >= 2) {
         method_to_run = argv[1];
-    } else{
+    } else {
         cout << "Choose lab to run: string_matching / nQueens" << endl;
         getline(cin, method_to_run);
     }
     return method_to_run;
 }
 
-std::string get_string_to_work_with(int argc, char *argv[]){
+std::string getStringToWorkWith(int argc, char **argv) {
     std::string stringToWorkWith = GA_TARGET;
     if (argc >= 2)
         stringToWorkWith = argv[2];
     return stringToWorkWith;
 }
 
-std::string get_heuristic_to_work_with(int argc, char *argv[]){
+HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
     string heuristicType;
-    if (argc >= 3){
+    HeuristicsEnum hType;
+    if (argc >= 3) {
         heuristicType = argv[3];
-    } else{
+        if (heuristicType == defaultHeuristic)
+            hType = HeuristicsEnum::DefaultHeuristic;
+        else if (heuristicType == bullAndCow)
+            hType = HeuristicsEnum::BullAndCow;
+        else {
+            cout << "Unrecognized heuristic method, setting by default to random heuristic" << endl;
+            hType = HeuristicsEnum::DefaultHeuristic;
+        }
+    } else {
         cout << "Choose heuristic method: " << defaultHeuristic << " / " << bullAndCow << endl;
         getline(cin, heuristicType);
+        if (heuristicType == defaultHeuristic)
+            hType = HeuristicsEnum::DefaultHeuristic;
+        else if (heuristicType == bullAndCow)
+            hType = HeuristicsEnum::BullAndCow;
+        else {
+            cout << "Unrecognized heuristic method, setting by default to default heuristic" << endl;
+            hType = HeuristicsEnum::DefaultHeuristic;
+        }
     }
-    return heuristicType;
+    return hType;
 }
 
-bool get_rws_usage(int argc, char *argv[]){
-    string rwsUsage;
-    if (argc >= 4){
-        rwsUsage = argv[4];
-    } else{
-        cout << "Should use RWS? (y/n): " << endl;
-        getline(cin, rwsUsage);
+/*
+    Aging
+ */
+SelectionMethod getSelectionMethod(int argc, char **argv) {
+    SelectionMethod selectionMethod;
+    std::string selectionMethodStr = "";
+    if (argc >= 4) {
+        selectionMethodStr = argv[4];
+        if (selectionMethodStr == "Random")
+            selectionMethod = SelectionMethod::Random;
+        else if (selectionMethodStr == "Tournament")
+            selectionMethod = SelectionMethod::Tournament;
+        else if (selectionMethodStr == "Sus")
+            selectionMethod = SelectionMethod::Sus;
+        else if (selectionMethodStr == "Rws")
+            selectionMethod = SelectionMethod::Rws;
+        else if (selectionMethodStr == "Aging")
+            selectionMethod = SelectionMethod::Aging;
+        else {
+            cout << "Unrecognized selectionMethod, setting by to default selection method" << endl;
+            selectionMethod = SelectionMethod::Random;
+        }
+
+    } else {
+        cout << "Choose selection method: DefaultHeuristic / Tournament / Rws" << endl;
+        getline(cin, selectionMethodStr);
+        if (selectionMethodStr == "Random")
+            selectionMethod = SelectionMethod::Random;
+        else if (selectionMethodStr == "Tournament")
+            selectionMethod = SelectionMethod::Tournament;
+        else if (selectionMethodStr == "Sus")
+            selectionMethod = SelectionMethod::Sus;
+        else if (selectionMethodStr == "Rws")
+            selectionMethod = SelectionMethod::Rws;
+        else if (selectionMethodStr == "Aging")
+            selectionMethod = SelectionMethod::Aging;
+        else {
+            cout << "Unrecognized selectionMethod, setting by default to random selection" << endl;
+            selectionMethod = SelectionMethod::Random;
+        }
     }
-    return  rwsUsage == "y" ? true : false;;
+    return selectionMethod;
 }
 
-bool get_aging_usage(int argc, char *argv[]){
-    string shouldUseAging;
-    if (argc >= 5){
-        shouldUseAging = argv[5];
-    } else{
-        cout << "Should use Aging? (y/n): " << endl;
-        getline(cin, shouldUseAging);
+CrossoverMethod getCrossoverMethod(int argc, char **argv) {
+    CrossoverMethod crossoverMethod;
+    std::string crossoverMethodStr = "";
+    if (argc >= 4) {
+        crossoverMethodStr = argv[5];
+        if (crossoverMethodStr == "SinglePoint")
+            crossoverMethod = CrossoverMethod::SinglePoint;
+        else if (crossoverMethodStr == "TwoPoints")
+            crossoverMethod = CrossoverMethod::TwoPoints;
+        else if (crossoverMethodStr == "UniformCrossover")
+            crossoverMethod = CrossoverMethod::UniformCrossover;
+        else {
+            cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
+            crossoverMethod = CrossoverMethod::SinglePoint;
+        }
+    } else {
+        cout << "Choose selection method: TwoPoints / Tournament " << endl;
+        getline(cin, crossoverMethodStr);
+        if (crossoverMethodStr == "SinglePoint")
+            crossoverMethod = CrossoverMethod::SinglePoint;
+        else if (crossoverMethodStr == "TwoPoints")
+            crossoverMethod = CrossoverMethod::TwoPoints;
+        else if (crossoverMethodStr == "UniformCrossover")
+            crossoverMethod = CrossoverMethod::UniformCrossover;
+        else {
+            cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
+            crossoverMethod = CrossoverMethod::SinglePoint;
+        }
     }
-    return shouldUseAging == "y" ? true : false;
+    return crossoverMethod;
 }
 
 
 int main(int argc, char *argv[]) {
-    std::cout << "argc is: " << argc << std::endl;
-    string labSelector = get_method_to_run(argc, argv);
+    string labSelector = getMethodToRun(argc, argv);
 
     if (labSelector == "string_matching") {
         vector<GeneticAlgorithmStruct> pop_alpha, pop_beta;
@@ -77,13 +147,13 @@ int main(int argc, char *argv[]) {
         // Initializing each cell
         for (auto &res : rawOutputArr)
             res.id = -1;
-        string workOnString = get_string_to_work_with(argc, argv);
-        string heuristicType = get_heuristic_to_work_with(argc, argv);
-        bool shouldUseRws = get_rws_usage(argc, argv);
-        bool shouldUseAging = get_aging_usage(argc, argv);
+        string workOnString = getStringToWorkWith(argc, argv);
+        HeuristicsEnum heuristicMethod = getHeuristicToWorkWith(argc, argv);
+        SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
+        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
 
-        OutputFileWriter outputWriter{workOnString, shouldUseAging, shouldUseRws, heuristicType};
-        GeneticStringMatcher matcher{workOnString, heuristicType, shouldUseRws, shouldUseAging};
+        OutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
+        GeneticStringMatcher matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
 
         matcher.init_population(pop_alpha, pop_beta);
         population = &pop_alpha;
@@ -123,8 +193,7 @@ int main(int argc, char *argv[]) {
         std::cout << "Total runtime is: " << duration.count() << " millis" << std::endl;
 
         outputWriter.writeToFile(duration.count(), rawOutputArr);
-    }
-    else if (labSelector == "nQueens"){
+    } else if (labSelector == "nQueens") {
         nQueensSolver solver;
         std::cout << "you would like to run nqueens" << std::endl;
     }
