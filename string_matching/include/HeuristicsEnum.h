@@ -7,7 +7,7 @@
 
 enum HeuristicsEnum{
     DefaultHeuristic,
-    BullAndCow
+    BullsAndCows
 };
 
 #endif //AILABGENETICALGORITHM_HEURISTICSENUM_H

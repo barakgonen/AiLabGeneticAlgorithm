@@ -11,6 +11,8 @@ iostream
 -
 chrono
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/chrono
+time.h
+-
 ../string_matching/include/consts.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/consts.h
 ../string_matching/include/GeneticStringMatcher.h
@@ -64,5 +66,17 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matc
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/SelectionMethodEnum.h
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/consts.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticStringMatcher.cpp
+iostream
+-
+cmath
+-
+limits.h
+-
+../include/GeneticStringMatcher.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatcher.h
+../include/consts.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/consts.h
 

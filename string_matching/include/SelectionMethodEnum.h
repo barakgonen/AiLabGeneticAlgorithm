@@ -8,7 +8,6 @@
 enum SelectionMethod{
     Random, // the selection method we got, something random
     Tournament,
-    Sus,
     Rws,
     Aging
 };

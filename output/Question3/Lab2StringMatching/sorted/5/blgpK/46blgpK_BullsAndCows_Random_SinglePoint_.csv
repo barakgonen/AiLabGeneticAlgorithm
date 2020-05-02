@@ -1,0 +1,10 @@
+Averaged Fitness Value,Standard Deviation value,calculation time(milis)
+246.113281,147.881699,7
+240.820312,311.827087,6
+229.643555,576.679587,5
+212.578125,851.263428,7
+190.190430,1044.739127,7
+170.976562,1304.026794,6
+170.976562,1304.026794,6
+String tested,Total calculation time(milis)
+blgpK,46

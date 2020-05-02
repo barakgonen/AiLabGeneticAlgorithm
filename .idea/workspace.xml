@@ -30,25 +30,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4933d474-12fb-43a8-9a92-2d2ba8c5b85b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/string_matching/include/CrossoverMethod.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/string_matching/include/HeuristicsEnum.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/string_matching/include/SelectionMethodEnum.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/run_all_string_matching_perm.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/run_all_string_matching_perm.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consoleOutput" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/run_lab_part_a.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/run_lab_part_a.ps1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/string_matching/include/GeneticStringMatcher.h" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/include/GeneticStringMatcher.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/include/OutputFileWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/include/OutputFileWriter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/include/consts.h" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/include/consts.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/string_matching/src/GeneticStringMatcher.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/GeneticStringMatcher.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/src/OutputFileWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/OutputFileWriter.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +71,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -90,6 +81,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\scripts" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\string_matching\src" />
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\string_matching\include" />
@@ -97,7 +91,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="geneticString" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="&quot;string_matching&quot; &quot;blablabla&quot; &quot;BullAndCow&quot; &quot;Tournament&quot; &quot;y&quot; &quot;n&quot;" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AiLabGeneticAlgorithm" TARGET_NAME="geneticString" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AiLabGeneticAlgorithm" RUN_TARGET_NAME="geneticString">
+    <configuration name="geneticString" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="&quot;string_matching&quot; &quot;barakg istheking!!&quot; &quot;DefaultHeuristic&quot; &quot;Random&quot; &quot;SinglePoint&quot;" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AiLabGeneticAlgorithm" TARGET_NAME="geneticString" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AiLabGeneticAlgorithm" RUN_TARGET_NAME="geneticString">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -114,7 +108,9 @@
       <option name="presentableId" value="Default" />
       <updated>1588229808858</updated>
       <workItem from="1588229812848" duration="15296000" />
-      <workItem from="1588248704629" duration="19614000" />
+      <workItem from="1588248704629" duration="36642000" />
+      <workItem from="1588349694305" duration="5569000" />
+      <workItem from="1588405229064" duration="15949000" />
     </task>
     <servers />
   </component>
@@ -134,10 +130,11 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1727" y="238" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588314354078">
+    <state x="-1695" y="292" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588416872925">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state x="-1727" y="238" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314354078" />
+    <state x="-1695" y="292" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588416872925" />
+    <state x="-1089" y="281" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@0.0.1280.680" timestamp="1588328172316" />
     <state x="-1218" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588256043767">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
@@ -146,54 +143,62 @@
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
     <state x="-1230" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230059682" />
-    <state x="-751" y="252" key="#xdebugger.evaluate" timestamp="1588250952565">
+    <state x="-751" y="252" width="671" height="694" key="#xdebugger.evaluate" timestamp="1588414289779">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state x="-751" y="252" key="#xdebugger.evaluate/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588250952565" />
-    <state width="433" height="466" key="DebuggerActiveHint" timestamp="1588258223546">
+    <state x="-751" y="252" width="671" height="694" key="#xdebugger.evaluate/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588414289779" />
+    <state width="433" height="466" key="DebuggerActiveHint" timestamp="1588328330052">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="433" height="466" key="DebuggerActiveHint/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588258223546" />
+    <state width="433" height="466" key="DebuggerActiveHint/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588328330052" />
+    <state x="-1828" y="93" width="1736" height="856" key="DiffContextDialog" timestamp="1588323011395">
+      <screen x="-1920" y="1" width="1920" height="1040" />
+    </state>
+    <state x="-1828" y="93" width="1736" height="856" key="DiffContextDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588323011395" />
     <state x="-1180" y="276" key="FileChooserDialogImpl" timestamp="1588230121825">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
     <state x="-1180" y="276" key="FileChooserDialogImpl/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230121825" />
-    <state width="938" height="225" key="GridCell.Tab.0.bottom" timestamp="1588314969733">
+    <state width="1128" height="312" key="GridCell.Tab.0.bottom" timestamp="1588422897945">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
-    <state width="938" height="225" key="GridCell.Tab.0.center" timestamp="1588314969733">
+    <state width="1128" height="312" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
+    <state width="1128" height="312" key="GridCell.Tab.0.center" timestamp="1588422897945">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
-    <state width="938" height="225" key="GridCell.Tab.0.left" timestamp="1588314969733">
+    <state width="1128" height="312" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
+    <state width="1128" height="312" key="GridCell.Tab.0.left" timestamp="1588422897945">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
-    <state width="938" height="225" key="GridCell.Tab.0.right" timestamp="1588314969733">
+    <state width="1128" height="312" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
+    <state width="1128" height="312" key="GridCell.Tab.0.right" timestamp="1588422897945">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
-    <state width="938" height="225" key="GridCell.Tab.1.bottom" timestamp="1588314969733">
+    <state width="1128" height="312" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
+    <state width="1266" height="365" key="GridCell.Tab.1.bottom" timestamp="1588415827191">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
-    <state width="938" height="225" key="GridCell.Tab.1.center" timestamp="1588314969733">
+    <state width="1266" height="365" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
+    <state width="1266" height="365" key="GridCell.Tab.1.center" timestamp="1588415827191">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.1.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
-    <state width="938" height="225" key="GridCell.Tab.1.left" timestamp="1588314969733">
+    <state width="1266" height="365" key="GridCell.Tab.1.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
+    <state width="1266" height="365" key="GridCell.Tab.1.left" timestamp="1588415827191">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.1.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
-    <state width="938" height="225" key="GridCell.Tab.1.right" timestamp="1588314969733">
+    <state width="1266" height="365" key="GridCell.Tab.1.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
+    <state width="1266" height="365" key="GridCell.Tab.1.right" timestamp="1588415827191">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state width="938" height="225" key="GridCell.Tab.1.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588314969733" />
+    <state width="1266" height="365" key="GridCell.Tab.1.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
     <state x="-1459" y="166" key="SettingsEditor" timestamp="1588230598736">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
     <state x="-1459" y="166" key="SettingsEditor/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230598736" />
+    <state x="-1408" y="250" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1588321100280">
+      <screen x="-1920" y="1" width="1920" height="1040" />
+    </state>
+    <state x="-1408" y="250" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588321100280" />
     <state x="0" y="49" width="1294" height="680" key="dock-window-1" timestamp="1588233012057">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -202,6 +207,10 @@
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
     <state x="-1184" y="306" key="refactoring.ChangeSignatureDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588318845098" />
+    <state x="-1304" y="241" key="run.anything.popup" timestamp="1588324922220">
+      <screen x="-1920" y="1" width="1920" height="1040" />
+    </state>
+    <state x="-1304" y="241" key="run.anything.popup/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588324922220" />
     <state x="-1297" y="226" width="672" height="678" key="search.everywhere.popup" timestamp="1588249035677">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
@@ -211,26 +220,23 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/string_matching/src/OutputFileWriter.cpp</url>
-          <line>23</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/../../../../../../MinGW/lib/gcc/mingw32/9.2.0/include/c++/filesystem</url>
           <line>35</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main/main.cpp</url>
-          <line>194</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main/main.cpp</url>
-          <line>154</line>
-          <option name="timeStamp" value="13" />
+          <line>184</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="pop_alpha.size()" language="ObjectiveC" />
+        <watch expression="pop_beta.size()" language="ObjectiveC" />
+        <watch expression="population[i].getString()" language="ObjectiveC" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

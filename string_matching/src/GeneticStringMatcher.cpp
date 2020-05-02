@@ -8,15 +8,12 @@
 #include "../include/GeneticStringMatcher.h"
 #include "../include/consts.h"
 
-GeneticStringMatcher::GeneticStringMatcher(const std::string& inputString,
+GeneticStringMatcher::GeneticStringMatcher(const std::string &inputString,
                                            const HeuristicsEnum heuristicType,
                                            const SelectionMethod selectionMethod,
                                            const CrossoverMethod crossoverMethod)
-: inputString{inputString}
-, heuristicMethod{heuristicType}
-, selectionMethod{selectionMethod}
-, crossoverMethod{crossoverMethod}
-{
+        : inputString{inputString}, heuristicMethod{heuristicType}, selectionMethod{selectionMethod},
+          crossoverMethod{crossoverMethod} {
 }
 
 void GeneticStringMatcher::init_population(std::vector<GeneticAlgorithmStruct> &population,
@@ -24,10 +21,10 @@ void GeneticStringMatcher::init_population(std::vector<GeneticAlgorithmStruct> &
     int tsize = inputString.size();
 
     for (int i = 0; i < GA_POPSIZE; i++) {
-        GeneticAlgorithmStruct citizen{"", 0};
+        GeneticAlgorithmStruct citizen{"", 0, 0};
 
         for (int j = 0; j < tsize; j++)
-            citizen.appendToString(((rand() % 90) + 32));
+            citizen.str += (rand() % 90) + 32;
 
         population.push_back(citizen);
     }
@@ -40,34 +37,36 @@ void GeneticStringMatcher::calc_fitness(std::vector<GeneticAlgorithmStruct> &pop
     int tsize = target.size();
     unsigned int fitness;
 
-    // default / original heuristic
-    if (heuristicMethod == HeuristicsEnum::DefaultHeuristic) {
-        for (int i = 0; i < GA_POPSIZE; i++) {
-            fitness = 0;
-            for (int j = 0; j < tsize; j++) {
-                fitness += abs(int(population[i].getString()[j] - target[j]));
+    switch (heuristicMethod) {
+        case DefaultHeuristic:
+            for (int i = 0; i < GA_POPSIZE; i++) {
+                fitness = 0;
+                for (int j = 0; j < tsize; j++) {
+                    fitness += abs(int(population[i].str[j] - target[j]));
+                }
+                population[i].fitnessVal = fitness;
             }
-            population[i].setFitnessValue(fitness);
-        }
-    } else if (heuristicMethod == HeuristicsEnum::BullAndCow) {
-        for (int i = 0; i < GA_POPSIZE; i++) {
-            fitness = tsize * 50;
-            for (int j = 0; j < tsize; j++) {
-                // if the letter on the right place we give 50 points
-                if (population[i].getString()[j] == target[j])
-                    fitness -= 50;
-                else {
-                    // if the letter in the string but not in the right place we give 10 points
-                    for (int k = j + 1; k < tsize; k++) {
-                        if (population[i].getString()[j] == target[k]) {
-                            fitness -= 10;
-                            break;
+            break;
+        case BullsAndCows:
+            for (int i = 0; i < GA_POPSIZE; i++) {
+                fitness = tsize * 50;
+                for (int j = 0; j < tsize; j++) {
+                    // if the letter on the right place we give 50 points
+                    if (population[i].str[j] == target[j])
+                        fitness -= 50;
+                    else {
+                        // if the letter in the string but not in the right place we give 10 points
+                        for (int k = j + 1; k < tsize; k++) {
+                            if (population[i].str[j] == target[k]) {
+                                fitness -= 10;
+                                break;
+                            }
                         }
                     }
                 }
+                population[i].fitnessVal = fitness;
             }
-            population[i].setFitnessValue(fitness);
-        }
+            break;
     }
 }
 
@@ -75,7 +74,7 @@ void GeneticStringMatcher::sort_by_fitness(std::vector<GeneticAlgorithmStruct> &
     std::sort(population.begin(),
               population.end(),
               [](const GeneticAlgorithmStruct &x, const GeneticAlgorithmStruct &y) {
-                  return (x.getFitnessValue() < y.getFitnessValue());
+                  return (x.fitnessVal < y.fitnessVal);
               });
 }
 
@@ -83,8 +82,8 @@ void GeneticStringMatcher::elitism(std::vector<GeneticAlgorithmStruct> &populati
                                    std::vector<GeneticAlgorithmStruct> &buffer,
                                    int esize) {
     for (int i = 0; i < esize; i++) {
-        buffer[i].setString(population[i].getString());
-        buffer[i].setFitnessValue(population[i].getFitnessValue());
+        buffer[i].str = population[i].str;
+        buffer[i].fitnessVal = population[i].fitnessVal;
     }
 }
 
@@ -93,11 +92,11 @@ void GeneticStringMatcher::mutate(GeneticAlgorithmStruct &member) {
     int ipos = rand() % tsize;
     int delta = (rand() % 90) + 32;
 
-    member.getString()[ipos] = ((member.getString()[ipos] + delta) % 122);
+    member.str[ipos] = ((member.str[ipos] + delta) % 122);
 }
 
 void GeneticStringMatcher::mate(std::vector<GeneticAlgorithmStruct> &population,
-                                std::vector<GeneticAlgorithmStruct> &buffer) {
+                                std::vector<GeneticAlgorithmStruct> &buffer, const std::vector<double> &weights) {
     int esize = GA_POPSIZE * GA_ELITRATE;
     int tsize = inputString.size(), spos, spos2, i1, i2;
     elitism(population, buffer, esize);
@@ -105,31 +104,31 @@ void GeneticStringMatcher::mate(std::vector<GeneticAlgorithmStruct> &population,
     // Mate the rest
     for (int i = esize; i < GA_POPSIZE; i++) {
         switch (selectionMethod) {
-            case SelectionMethod::Aging:
-                for (int s = 0; s < GA_POPSIZE; s++) {
-                    if (population[s].getAge() <= YOUNG_GEN_AGE)
-                        population[s].fitness() += 15;
-                    if (population[s].getAge() < ADULT_GEN_AGE) {
-                        population[s].fitness() -= 15;
-                        if (population[s].fitness() < 1)
-                            population[s].fitness() = 1;
-                        buffer[s].setString(population[s].getString());
-                        buffer[s].fitness() = population[s].getFitnessValue();
-                        buffer[s].age() = population[s].getAge();
+            case SelectionMethod::Aging: {
+
+
+                std::vector<int> temp;
+                for (int i = esize; i < GA_POPSIZE / 2; i++) {
+                    if (population[i].ageVal < 10) {
+                        temp.push_back(i);
                     }
                 }
-                for (int i = 0; i < GA_POPSIZE; i++) {
-                    population[i].age()++;
-                    buffer[i].age()++;
+                random_shuffle(temp.begin(), temp.end());
+                int esize = (int) (GA_POPSIZE * GA_ELITRATE);
+
+                for (int i = 0; i < esize; i++) {
+                    population[i].ageVal = population[i].ageVal + 1;
                 }
+                i1 = rand() % temp.size();
+                i2 = rand() % temp.size();
+            }
                 break;
-            case SelectionMethod::Sus:
+            case SelectionMethod::Rws: {
+                i1 = getRws(weights);
+                i2 = getRws(weights);
                 break;
-            case SelectionMethod::Rws:
-                i1 = calcRws(population);
-                i2 = calcRws(population);
-                break;
-            case SelectionMethod::Tournament:
+            }
+            case SelectionMethod::Tournament: {
                 // choose k genes
                 int best, secondBest;
                 best = INT_MAX, secondBest = INT_MAX, i1 = 0, i2 = 0;
@@ -137,31 +136,39 @@ void GeneticStringMatcher::mate(std::vector<GeneticAlgorithmStruct> &population,
                     // random gene
                     int temp = rand() % GA_POPSIZE;
                     // if better gene found we save it
-                    if (population[temp].getFitnessValue() < best) {
+                    if (population[temp].fitnessVal < best) {
                         i2 = i1;
                         i1 = temp;
-                        best = population[i1].getFitnessValue();
+                        best = population[i1].fitnessVal;
                         if (i != 0)
-                            secondBest = population[i2].getFitnessValue();
+                            secondBest = population[i2].fitnessVal;
                     }
                         // if gene better than the second best found
-                    else if (population[temp].getFitnessValue() < secondBest) {
+                    else if (population[temp].fitnessVal < secondBest) {
                         i2 = temp;
-                        secondBest = population[i2].getFitnessValue();
+                        secondBest = population[i2].fitnessVal;
                     }
                 }
                 break;
+            }
                 // Select 2 random parents from top half
             case SelectionMethod::Random:
                 i1 = rand() % (GA_POPSIZE / 2);
                 i2 = rand() % (GA_POPSIZE / 2);
+                spos = rand() % tsize;
+
+                buffer[i].str = population[i1].str.substr(0, spos) +
+                                population[i2].str.substr(spos, tsize - spos);
                 break;
         }
         switch (crossoverMethod) {
+            // this is the selection method given in the beginning
             case CrossoverMethod::SinglePoint:
                 spos = rand() % tsize;
-                buffer[i].setString(population[i1].getString().substr(0, spos) +
-                                    population[i2].getString().substr(spos, tsize - spos));
+                buffer[i].str = population[i1].str.substr(0, spos) +
+                                population[i2].str.substr(spos, tsize - spos);
+                buffer[i].ageVal = 0;
+                if (rand() < GA_MUTATION) mutate(buffer[i]);
                 break;
             case CrossoverMethod::TwoPoints:
                 // choose two positions
@@ -174,44 +181,61 @@ void GeneticStringMatcher::mate(std::vector<GeneticAlgorithmStruct> &population,
                     spos = temp;
                 }
                 // two point crossover
-                buffer[i].setString(population[i1].getString().substr(0, spos) +
-                                    population[i2].getString().substr(spos, spos2 - spos) +
-                                    population[i1].getString().substr(spos2, tsize - spos2));
+                buffer[i].str = population[i1].str.substr(0, spos) +
+                                population[i2].str.substr(spos, spos2 - spos) +
+                                population[i1].str.substr(spos2, tsize - spos2);
+                break;
+            case CrossoverMethod::UniformCrossover:
+                int temp = inputString.size();
+                std::string temp2;
+                for (int j = 0; j < tsize; j++) {
+                    temp = (rand() % 2) ? i1 : i2;
+                    temp2 += population[temp].str[j];
+                }
+                buffer[i].str = temp2;
                 break;
         }
 
         if (rand() < GA_MUTATION)
             mutate(buffer[i]);
+
+        if (selectionMethod == SelectionMethod::Rws) {
+            // need to preform scailling
+            for (int i = 0; i < GA_POPSIZE; i++) {
+                double fitness = population[i].fitnessVal;
+                if (fitness != 0)
+                    population[i].fitnessVal = sqrt(population[i].fitnessVal);
+            }
+        }
     }
 }
 
-int GeneticStringMatcher::calcRws(std::vector<GeneticAlgorithmStruct> &population) {
-    double slice = sqrt(rand() * calculateFitnessAvg(population) / (RAND_MAX + 1));
-    double fitnes_f = 0.0f;
-    double maxFitness = 127 * inputString.size();
-    for (int p = 0; p < GA_POPSIZE; p++) {
-        fitnes_f += sqrt(maxFitness - (population[p]).getFitnessValue());
-        if (fitnes_f >= slice)
-            return p;
+int GeneticStringMatcher::getRws(const std::vector<double> &weights) {
+    // get a random value in the range
+    double value = (rand() / (double) (RAND_MAX + 1)) * weights.at(GA_POPSIZE - 1);
+    // locate the random value based on the weights
+    for (int i = 0; i < GA_POPSIZE; i++) {
+        value -= weights.at(i);
+        if (value <= 0) {
+            return i;
+        }
     }
-    return -1;
+    return 0;
 }
 
 void GeneticStringMatcher::print_best(std::vector<GeneticAlgorithmStruct> &gav) {
-    std::cout << "Best: " << gav[0].getString() << " (" << gav[0].getFitnessValue() << ")" << std::endl;
+    std::cout << "Best: " << gav[0].str << " (" << gav[0].fitnessVal << ")" << std::endl;
 }
 
-void GeneticStringMatcher::swap(std::vector<GeneticAlgorithmStruct> *&population,
-                                std::vector<GeneticAlgorithmStruct> *&buffer) {
-    std::vector<GeneticAlgorithmStruct> *temp = population;
-    population = buffer;
-    buffer = temp;
+void GeneticStringMatcher::swap(std::vector<GeneticAlgorithmStruct> &population,
+                                std::vector<GeneticAlgorithmStruct> &buffer) {
+    std::swap(population, buffer);
 }
 
 double GeneticStringMatcher::calculateFitnessAvg(std::vector<GeneticAlgorithmStruct> &gav) {
     double avgRes = 0;
     for (auto val : gav)
-        avgRes += val.getFitnessValue();
+        avgRes += val.fitnessVal;
     return avgRes / gav.size();
 }
 
@@ -219,6 +243,6 @@ double GeneticStringMatcher::calculateStandardDeviation(std::vector<GeneticAlgor
                                                         double averagedFitnessValue) {
     double standardDeviation = 0;
     for (auto val : gav)
-        standardDeviation += pow(val.getFitnessValue() - averagedFitnessValue, 2);
+        standardDeviation += pow(val.fitnessVal - averagedFitnessValue, 2);
     return standardDeviation / gav.size();
 }

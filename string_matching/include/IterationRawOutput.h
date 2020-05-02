@@ -7,9 +7,10 @@
 
 struct IterationRawOutput{
     int id;
-    int timeInMillis;
+    float elapsedTimeSeconds;
     double averageFitnessValue;
     double standardDeviation;
+    int clockTicks;
 };
 
 #endif //AILABGENETICALGORITHM_ITERATIONRAWOUTPUT_H

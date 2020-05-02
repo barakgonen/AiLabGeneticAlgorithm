@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "chrono"
-
+#include <time.h>
 #include "../string_matching/include/consts.h"
 #include "../string_matching/include/GeneticStringMatcher.h"
 
@@ -39,19 +39,19 @@ HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
         heuristicType = argv[3];
         if (heuristicType == defaultHeuristic)
             hType = HeuristicsEnum::DefaultHeuristic;
-        else if (heuristicType == bullAndCow)
-            hType = HeuristicsEnum::BullAndCow;
+        else if (heuristicType == bullsAndCows)
+            hType = HeuristicsEnum::BullsAndCows;
         else {
             cout << "Unrecognized heuristic method, setting by default to random heuristic" << endl;
             hType = HeuristicsEnum::DefaultHeuristic;
         }
     } else {
-        cout << "Choose heuristic method: " << defaultHeuristic << " / " << bullAndCow << endl;
+        cout << "Choose heuristic method: " << defaultHeuristic << " / " << bullsAndCows << endl;
         getline(cin, heuristicType);
         if (heuristicType == defaultHeuristic)
             hType = HeuristicsEnum::DefaultHeuristic;
-        else if (heuristicType == bullAndCow)
-            hType = HeuristicsEnum::BullAndCow;
+        else if (heuristicType == bullsAndCows)
+            hType = HeuristicsEnum::BullsAndCows;
         else {
             cout << "Unrecognized heuristic method, setting by default to default heuristic" << endl;
             hType = HeuristicsEnum::DefaultHeuristic;
@@ -60,9 +60,6 @@ HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
     return hType;
 }
 
-/*
-    Aging
- */
 SelectionMethod getSelectionMethod(int argc, char **argv) {
     SelectionMethod selectionMethod;
     std::string selectionMethodStr = "";
@@ -72,8 +69,6 @@ SelectionMethod getSelectionMethod(int argc, char **argv) {
             selectionMethod = SelectionMethod::Random;
         else if (selectionMethodStr == "Tournament")
             selectionMethod = SelectionMethod::Tournament;
-        else if (selectionMethodStr == "Sus")
-            selectionMethod = SelectionMethod::Sus;
         else if (selectionMethodStr == "Rws")
             selectionMethod = SelectionMethod::Rws;
         else if (selectionMethodStr == "Aging")
@@ -90,8 +85,6 @@ SelectionMethod getSelectionMethod(int argc, char **argv) {
             selectionMethod = SelectionMethod::Random;
         else if (selectionMethodStr == "Tournament")
             selectionMethod = SelectionMethod::Tournament;
-        else if (selectionMethodStr == "Sus")
-            selectionMethod = SelectionMethod::Sus;
         else if (selectionMethodStr == "Rws")
             selectionMethod = SelectionMethod::Rws;
         else if (selectionMethodStr == "Aging")
@@ -107,7 +100,7 @@ SelectionMethod getSelectionMethod(int argc, char **argv) {
 CrossoverMethod getCrossoverMethod(int argc, char **argv) {
     CrossoverMethod crossoverMethod;
     std::string crossoverMethodStr = "";
-    if (argc >= 4) {
+    if (argc >= 5) {
         crossoverMethodStr = argv[5];
         if (crossoverMethodStr == "SinglePoint")
             crossoverMethod = CrossoverMethod::SinglePoint;
@@ -136,13 +129,30 @@ CrossoverMethod getCrossoverMethod(int argc, char **argv) {
     return crossoverMethod;
 }
 
+std::string getOutputPath(int argc, char **argv) {
+    std::string outputPath = "../output/";
+    if (argc >= 7)
+        outputPath = argv[6];
+    return outputPath;
+}
+
+double calculateWeights(vector<GeneticAlgorithmStruct> &population, vector<double>& weights, double avg) {
+    double sum = 0;
+    for (int j = 0;j < GA_POPSIZE;j++) {
+        if (j != 0)
+            // we add previous weight for later use in rws function
+            weights[j] = population[j].fitnessVal / (avg*GA_POPSIZE) + weights[j - 1];
+        else
+            weights[j] = population[j].fitnessVal / (avg*GA_POPSIZE);
+    }
+    return sum;
+}
 
 int main(int argc, char *argv[]) {
     string labSelector = getMethodToRun(argc, argv);
 
     if (labSelector == "string_matching") {
-        vector<GeneticAlgorithmStruct> pop_alpha, pop_beta;
-        vector<GeneticAlgorithmStruct> *population, *buffer;
+        vector<GeneticAlgorithmStruct> population, buffer;
         IterationRawOutput rawOutputArr[GA_MAXITER];
         // Initializing each cell
         for (auto &res : rawOutputArr)
@@ -151,46 +161,60 @@ int main(int argc, char *argv[]) {
         HeuristicsEnum heuristicMethod = getHeuristicToWorkWith(argc, argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
+        std::string outputPath = getOutputPath(argc, argv);
+        clock_t t, totalTicks = 0;
 
-        OutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
+//        std::cout << "Heuristic: " << heuristicMethod << std::endl;
+//        std::cout << "selection: " << selectionMethod << std::endl;
+//        std::cout << "crossover: " << crossoverMethod << std::endl;
+//        std::cout << "input string is: " << workOnString << std::endl;
+        OutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod, outputPath};
         GeneticStringMatcher matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
 
-        matcher.init_population(pop_alpha, pop_beta);
-        population = &pop_alpha;
-        buffer = &pop_beta;
+        matcher.init_population(population, buffer);
+        std::vector<double> weights;
+        std::fill_n(std::back_inserter(weights), GA_POPSIZE, 0);
 
         auto startTimeStamp = std::chrono::high_resolution_clock::now();
-
+        t = clock();
         for (int i = 0; i < GA_MAXITER; i++) {
-            auto start = std::chrono::high_resolution_clock::now();
-            matcher.calc_fitness(*population);        // calculate fitness
-            matcher.sort_by_fitness(*population);    // sort them
-            matcher.print_best(*population);        // print the best one
+            matcher.calc_fitness(population);        // calculate fitness
+            matcher.sort_by_fitness(population);    // sort them
+            matcher.print_best(population);        // print the best one
 
-            if ((*population)[0].getFitnessValue() == 0)
-                break;
-            matcher.mate(*population, *buffer);        // mate the population together
-            swap(population, buffer);        // swap buffers
-            double averageFitnessValue = matcher.calculateFitnessAvg(*population);
-            double standardDeviation = matcher.calculateStandardDeviation(*population, averageFitnessValue);
-            auto end = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+            double averageFitnessValue = matcher.calculateFitnessAvg(population);
+            double standardDeviation = matcher.calculateStandardDeviation(population, averageFitnessValue);
+
             rawOutputArr[i].id = i;
             rawOutputArr[i].standardDeviation = standardDeviation;
             rawOutputArr[i].averageFitnessValue = averageFitnessValue;
-            rawOutputArr[i].timeInMillis = duration.count();
+            rawOutputArr[i].elapsedTimeSeconds = ((float)(clock() - t)) / CLOCKS_PER_SEC;
+            rawOutputArr[i].clockTicks = clock() - t;
+            if (population[0].fitnessVal == 0) {
+                break;
+            }
+
+            calculateWeights(population, weights, averageFitnessValue);
+            matcher.mate(population, buffer, weights);        // mate the population together
+            swap(population, buffer);        // swap buffers
+
+            t = clock();
         }
 
         auto endTimeStamp = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp);
 
         // Initializing each cell
+        int totalIterations = 0;
         for (int i = 0; i < GA_MAXITER && rawOutputArr[i].id != -1; i++) {
-            std::cout << "Averaged Fitness Value: " << rawOutputArr[i].averageFitnessValue
-                      << ", Standard Deviation val: " << rawOutputArr[i].standardDeviation
-                      << " calculation time: " << rawOutputArr[i].timeInMillis << " millis" << std::endl;
+            std::cout   << "Averaged Fitness Value: " << rawOutputArr[i].averageFitnessValue
+                        << ", Standard Deviation val: " << rawOutputArr[i].standardDeviation
+                        << ", ticks: " << rawOutputArr[i].clockTicks
+                        << ", calculation time: " << rawOutputArr[i].elapsedTimeSeconds << " seconds" << std::endl;
+            totalIterations++;
         }
-        std::cout << "Total runtime is: " << duration.count() << " millis" << std::endl;
+        std::cout << "Total runtime is: " << duration.count() << " miliseconds" << std::endl;
+        std::cout << "Total iterations: " << totalIterations << std::endl;
 
         outputWriter.writeToFile(duration.count(), rawOutputArr);
     } else if (labSelector == "nQueens") {
