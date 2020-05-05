@@ -166,11 +166,6 @@ int main(int argc, char *argv[]) {
         outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
     } else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
-//        nQueensGeneticSolver solver;
-//        nQueensBackTrackingSolver solver{29};
-//        solver.printPuzzle();
-//        solver.solvePuzzle();
-//        solver.printPuzzle();
         NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
         std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         nQueensMinimalConflictsSolver minimalConflictsSolver{board};
