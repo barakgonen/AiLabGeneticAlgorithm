@@ -83,7 +83,16 @@
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp">
 			<Option target="geneticString"/>
 		</Unit>
-		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensSolver.cpp">
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensBoard.cpp">
+			<Option target="geneticString"/>
+		</Unit>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGenericSolver.cpp">
+			<Option target="geneticString"/>
+		</Unit>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGeneticSolver.cpp">
+			<Option target="geneticString"/>
+		</Unit>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensMinimalConflictsSolver.cpp">
 			<Option target="geneticString"/>
 		</Unit>
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticAlgorithmStruct.cpp">

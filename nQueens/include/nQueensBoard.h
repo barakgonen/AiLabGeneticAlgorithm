@@ -12,12 +12,12 @@ public:
     // Default ctor
     NqBoard(int size);
     // Copy ctor in order to copy the board for each solver in order to compare them correctly
-    NqBoard(const NqBoard& other);
+    NqBoard(const NqBoard& other) = default;
     virtual ~NqBoard() = default;
 
-//    bool isSafeCell(const int row, const int col) const;
     void printBoard() const;
     int getBoardSize() const ;
+    int conflicts(int exludeRow) const;
     int conflicts() const;
     void setQueenValue(int index, int val);
     int getQueenValue(int index);

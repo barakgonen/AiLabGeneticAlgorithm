@@ -8,9 +8,12 @@
 #include "../string_matching/include/consts.h"
 #include "../string_matching/include/GeneticStringMatcher.h"
 
-#include "../nQueens/include/nQueensSolver.h"
+#include "../nQueens/include/nQueensGeneticSolver.h"
 #include "../string_matching/include/OutputFileWriter.h"
 #include "../string_matching/include/HeuristicsEnum.h"
+#include "../nQueens/include/nQueensBoard.h"
+#include "../nQueens/include/consts.h"
+#include "../nQueens/include/nQueensMinimalConflictsSolver.h"
 
 using namespace std;
 
@@ -136,16 +139,23 @@ std::string getOutputPath(int argc, char **argv) {
     return outputPath;
 }
 
-double calculateWeights(vector<GeneticAlgorithmStruct> &population, vector<double>& weights, double avg) {
+double calculateWeights(vector<GeneticAlgorithmStruct> &population, vector<double> &weights, double avg) {
     double sum = 0;
-    for (int j = 0;j < GA_POPSIZE;j++) {
+    for (int j = 0; j < GA_POPSIZE; j++) {
         if (j != 0)
             // we add previous weight for later use in rws function
-            weights[j] = population[j].fitnessVal / (avg*GA_POPSIZE) + weights[j - 1];
+            weights[j] = population[j].fitnessVal / (avg * GA_POPSIZE) + weights[j - 1];
         else
-            weights[j] = population[j].fitnessVal / (avg*GA_POPSIZE);
+            weights[j] = population[j].fitnessVal / (avg * GA_POPSIZE);
     }
     return sum;
+}
+
+int getBoardSizeAndNumberOfQueens(int argc, char **argv) {
+    int boardSizeAndNumberOfQueens = DEFAULT_NUMBER_OF_QUEENS_AND_BOARD_SIZE;
+    if (argc > 2)
+        boardSizeAndNumberOfQueens = atoi(argv[2]);
+    return boardSizeAndNumberOfQueens;
 }
 
 int main(int argc, char *argv[]) {
@@ -188,7 +198,7 @@ int main(int argc, char *argv[]) {
             rawOutputArr[i].id = i;
             rawOutputArr[i].standardDeviation = standardDeviation;
             rawOutputArr[i].averageFitnessValue = averageFitnessValue;
-            rawOutputArr[i].elapsedTimeSeconds = ((float)(clock() - t)) / CLOCKS_PER_SEC;
+            rawOutputArr[i].elapsedTimeSeconds = ((float) (clock() - t)) / CLOCKS_PER_SEC;
             rawOutputArr[i].clockTicks = clock() - t;
             if (population[0].fitnessVal == 0) {
                 break;
@@ -207,10 +217,10 @@ int main(int argc, char *argv[]) {
         // Initializing each cell
         int totalIterations = 0;
         for (int i = 0; i < GA_MAXITER && rawOutputArr[i].id != -1; i++) {
-            std::cout   << "Averaged Fitness Value: " << rawOutputArr[i].averageFitnessValue
-                        << ", Standard Deviation val: " << rawOutputArr[i].standardDeviation
-                        << ", ticks: " << rawOutputArr[i].clockTicks
-                        << ", calculation time: " << rawOutputArr[i].elapsedTimeSeconds << " seconds" << std::endl;
+            std::cout << "Averaged Fitness Value: " << rawOutputArr[i].averageFitnessValue
+                      << ", Standard Deviation val: " << rawOutputArr[i].standardDeviation
+                      << ", ticks: " << rawOutputArr[i].clockTicks
+                      << ", calculation time: " << rawOutputArr[i].elapsedTimeSeconds << " seconds" << std::endl;
             totalIterations++;
         }
         std::cout << "Total runtime is: " << duration.count() << " miliseconds" << std::endl;
@@ -218,8 +228,22 @@ int main(int argc, char *argv[]) {
 
         outputWriter.writeToFile(duration.count(), rawOutputArr);
     } else if (labSelector == "nQueens") {
-        nQueensSolver solver;
         std::cout << "you would like to run nqueens" << std::endl;
+//        nQueensGeneticSolver solver;
+//        nQueensBackTrackingSolver solver{29};
+//        solver.printPuzzle();
+//        solver.solvePuzzle();
+//        solver.printPuzzle();
+        NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
+        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
+        std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+        nQueensGeneticSolver geneticSolver{board};
+        minimalConflictsSolver.solvePuzzle();
+        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+        minimalConflictsSolver.printPuzzle();
+        std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+        geneticSolver.printPuzzle();
     }
     return 0;
 }
