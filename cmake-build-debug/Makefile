@@ -122,6 +122,87 @@ geneticString/fast:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/build
 .PHONY : geneticString/fast
 
+general_utilities/src/OutputFileWriter.obj: general_utilities/src/OutputFileWriter.cpp.obj
+
+.PHONY : general_utilities/src/OutputFileWriter.obj
+
+# target to build an object file
+general_utilities/src/OutputFileWriter.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj
+.PHONY : general_utilities/src/OutputFileWriter.cpp.obj
+
+general_utilities/src/OutputFileWriter.i: general_utilities/src/OutputFileWriter.cpp.i
+
+.PHONY : general_utilities/src/OutputFileWriter.i
+
+# target to preprocess a source file
+general_utilities/src/OutputFileWriter.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.i
+.PHONY : general_utilities/src/OutputFileWriter.cpp.i
+
+general_utilities/src/OutputFileWriter.s: general_utilities/src/OutputFileWriter.cpp.s
+
+.PHONY : general_utilities/src/OutputFileWriter.s
+
+# target to generate assembly for a file
+general_utilities/src/OutputFileWriter.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.s
+.PHONY : general_utilities/src/OutputFileWriter.cpp.s
+
+genetic_solver/src/AbstractGeneticSolver.obj: genetic_solver/src/AbstractGeneticSolver.cpp.obj
+
+.PHONY : genetic_solver/src/AbstractGeneticSolver.obj
+
+# target to build an object file
+genetic_solver/src/AbstractGeneticSolver.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj
+.PHONY : genetic_solver/src/AbstractGeneticSolver.cpp.obj
+
+genetic_solver/src/AbstractGeneticSolver.i: genetic_solver/src/AbstractGeneticSolver.cpp.i
+
+.PHONY : genetic_solver/src/AbstractGeneticSolver.i
+
+# target to preprocess a source file
+genetic_solver/src/AbstractGeneticSolver.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.i
+.PHONY : genetic_solver/src/AbstractGeneticSolver.cpp.i
+
+genetic_solver/src/AbstractGeneticSolver.s: genetic_solver/src/AbstractGeneticSolver.cpp.s
+
+.PHONY : genetic_solver/src/AbstractGeneticSolver.s
+
+# target to generate assembly for a file
+genetic_solver/src/AbstractGeneticSolver.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.s
+.PHONY : genetic_solver/src/AbstractGeneticSolver.cpp.s
+
+genetic_solver/src/GenericGeneticAlgorithmSolver.obj: genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj
+
+.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.obj
+
+# target to build an object file
+genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj
+.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj
+
+genetic_solver/src/GenericGeneticAlgorithmSolver.i: genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i
+
+.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.i
+
+# target to preprocess a source file
+genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i
+.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i
+
+genetic_solver/src/GenericGeneticAlgorithmSolver.s: genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s
+
+.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.s
+
+# target to generate assembly for a file
+genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s
+.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s
+
 main/main.obj: main/main.cpp.obj
 
 .PHONY : main/main.obj
@@ -257,86 +338,59 @@ nQueens/src/nQueensMinimalConflictsSolver.cpp.s:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.s
 .PHONY : nQueens/src/nQueensMinimalConflictsSolver.cpp.s
 
-string_matching/src/GeneticAlgorithmStruct.obj: string_matching/src/GeneticAlgorithmStruct.cpp.obj
+string_matching/src/StringMatchingGeneticSolver.obj: string_matching/src/StringMatchingGeneticSolver.cpp.obj
 
-.PHONY : string_matching/src/GeneticAlgorithmStruct.obj
-
-# target to build an object file
-string_matching/src/GeneticAlgorithmStruct.cpp.obj:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj
-.PHONY : string_matching/src/GeneticAlgorithmStruct.cpp.obj
-
-string_matching/src/GeneticAlgorithmStruct.i: string_matching/src/GeneticAlgorithmStruct.cpp.i
-
-.PHONY : string_matching/src/GeneticAlgorithmStruct.i
-
-# target to preprocess a source file
-string_matching/src/GeneticAlgorithmStruct.cpp.i:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.i
-.PHONY : string_matching/src/GeneticAlgorithmStruct.cpp.i
-
-string_matching/src/GeneticAlgorithmStruct.s: string_matching/src/GeneticAlgorithmStruct.cpp.s
-
-.PHONY : string_matching/src/GeneticAlgorithmStruct.s
-
-# target to generate assembly for a file
-string_matching/src/GeneticAlgorithmStruct.cpp.s:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.s
-.PHONY : string_matching/src/GeneticAlgorithmStruct.cpp.s
-
-string_matching/src/GeneticStringMatcher.obj: string_matching/src/GeneticStringMatcher.cpp.obj
-
-.PHONY : string_matching/src/GeneticStringMatcher.obj
+.PHONY : string_matching/src/StringMatchingGeneticSolver.obj
 
 # target to build an object file
-string_matching/src/GeneticStringMatcher.cpp.obj:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj
-.PHONY : string_matching/src/GeneticStringMatcher.cpp.obj
+string_matching/src/StringMatchingGeneticSolver.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj
+.PHONY : string_matching/src/StringMatchingGeneticSolver.cpp.obj
 
-string_matching/src/GeneticStringMatcher.i: string_matching/src/GeneticStringMatcher.cpp.i
+string_matching/src/StringMatchingGeneticSolver.i: string_matching/src/StringMatchingGeneticSolver.cpp.i
 
-.PHONY : string_matching/src/GeneticStringMatcher.i
+.PHONY : string_matching/src/StringMatchingGeneticSolver.i
 
 # target to preprocess a source file
-string_matching/src/GeneticStringMatcher.cpp.i:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.i
-.PHONY : string_matching/src/GeneticStringMatcher.cpp.i
+string_matching/src/StringMatchingGeneticSolver.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.i
+.PHONY : string_matching/src/StringMatchingGeneticSolver.cpp.i
 
-string_matching/src/GeneticStringMatcher.s: string_matching/src/GeneticStringMatcher.cpp.s
+string_matching/src/StringMatchingGeneticSolver.s: string_matching/src/StringMatchingGeneticSolver.cpp.s
 
-.PHONY : string_matching/src/GeneticStringMatcher.s
+.PHONY : string_matching/src/StringMatchingGeneticSolver.s
 
 # target to generate assembly for a file
-string_matching/src/GeneticStringMatcher.cpp.s:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.s
-.PHONY : string_matching/src/GeneticStringMatcher.cpp.s
+string_matching/src/StringMatchingGeneticSolver.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.s
+.PHONY : string_matching/src/StringMatchingGeneticSolver.cpp.s
 
-string_matching/src/OutputFileWriter.obj: string_matching/src/OutputFileWriter.cpp.obj
+string_matching/src/StringMatchingOutputFileWriter.obj: string_matching/src/StringMatchingOutputFileWriter.cpp.obj
 
-.PHONY : string_matching/src/OutputFileWriter.obj
+.PHONY : string_matching/src/StringMatchingOutputFileWriter.obj
 
 # target to build an object file
-string_matching/src/OutputFileWriter.cpp.obj:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.obj
-.PHONY : string_matching/src/OutputFileWriter.cpp.obj
+string_matching/src/StringMatchingOutputFileWriter.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj
+.PHONY : string_matching/src/StringMatchingOutputFileWriter.cpp.obj
 
-string_matching/src/OutputFileWriter.i: string_matching/src/OutputFileWriter.cpp.i
+string_matching/src/StringMatchingOutputFileWriter.i: string_matching/src/StringMatchingOutputFileWriter.cpp.i
 
-.PHONY : string_matching/src/OutputFileWriter.i
+.PHONY : string_matching/src/StringMatchingOutputFileWriter.i
 
 # target to preprocess a source file
-string_matching/src/OutputFileWriter.cpp.i:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.i
-.PHONY : string_matching/src/OutputFileWriter.cpp.i
+string_matching/src/StringMatchingOutputFileWriter.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.i
+.PHONY : string_matching/src/StringMatchingOutputFileWriter.cpp.i
 
-string_matching/src/OutputFileWriter.s: string_matching/src/OutputFileWriter.cpp.s
+string_matching/src/StringMatchingOutputFileWriter.s: string_matching/src/StringMatchingOutputFileWriter.cpp.s
 
-.PHONY : string_matching/src/OutputFileWriter.s
+.PHONY : string_matching/src/StringMatchingOutputFileWriter.s
 
 # target to generate assembly for a file
-string_matching/src/OutputFileWriter.cpp.s:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.s
-.PHONY : string_matching/src/OutputFileWriter.cpp.s
+string_matching/src/StringMatchingOutputFileWriter.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.s
+.PHONY : string_matching/src/StringMatchingOutputFileWriter.cpp.s
 
 # Help Target
 help:
@@ -347,6 +401,15 @@ help:
 	@echo ... rebuild_cache
 	@echo ... geneticString
 	@echo ... edit_cache
+	@echo ... general_utilities/src/OutputFileWriter.obj
+	@echo ... general_utilities/src/OutputFileWriter.i
+	@echo ... general_utilities/src/OutputFileWriter.s
+	@echo ... genetic_solver/src/AbstractGeneticSolver.obj
+	@echo ... genetic_solver/src/AbstractGeneticSolver.i
+	@echo ... genetic_solver/src/AbstractGeneticSolver.s
+	@echo ... genetic_solver/src/GenericGeneticAlgorithmSolver.obj
+	@echo ... genetic_solver/src/GenericGeneticAlgorithmSolver.i
+	@echo ... genetic_solver/src/GenericGeneticAlgorithmSolver.s
 	@echo ... main/main.obj
 	@echo ... main/main.i
 	@echo ... main/main.s
@@ -362,15 +425,12 @@ help:
 	@echo ... nQueens/src/nQueensMinimalConflictsSolver.obj
 	@echo ... nQueens/src/nQueensMinimalConflictsSolver.i
 	@echo ... nQueens/src/nQueensMinimalConflictsSolver.s
-	@echo ... string_matching/src/GeneticAlgorithmStruct.obj
-	@echo ... string_matching/src/GeneticAlgorithmStruct.i
-	@echo ... string_matching/src/GeneticAlgorithmStruct.s
-	@echo ... string_matching/src/GeneticStringMatcher.obj
-	@echo ... string_matching/src/GeneticStringMatcher.i
-	@echo ... string_matching/src/GeneticStringMatcher.s
-	@echo ... string_matching/src/OutputFileWriter.obj
-	@echo ... string_matching/src/OutputFileWriter.i
-	@echo ... string_matching/src/OutputFileWriter.s
+	@echo ... string_matching/src/StringMatchingGeneticSolver.obj
+	@echo ... string_matching/src/StringMatchingGeneticSolver.i
+	@echo ... string_matching/src/StringMatchingGeneticSolver.s
+	@echo ... string_matching/src/StringMatchingOutputFileWriter.obj
+	@echo ... string_matching/src/StringMatchingOutputFileWriter.i
+	@echo ... string_matching/src/StringMatchingOutputFileWriter.s
 .PHONY : help
 
 

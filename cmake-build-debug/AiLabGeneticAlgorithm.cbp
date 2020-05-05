@@ -80,6 +80,15 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/src/OutputFileWriter.cpp">
+			<Option target="geneticString"/>
+		</Unit>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/AbstractGeneticSolver.cpp">
+			<Option target="geneticString"/>
+		</Unit>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp">
+			<Option target="geneticString"/>
+		</Unit>
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp">
 			<Option target="geneticString"/>
 		</Unit>
@@ -95,13 +104,10 @@
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensMinimalConflictsSolver.cpp">
 			<Option target="geneticString"/>
 		</Unit>
-		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticAlgorithmStruct.cpp">
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/StringMatchingGeneticSolver.cpp">
 			<Option target="geneticString"/>
 		</Unit>
-		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticStringMatcher.cpp">
-			<Option target="geneticString"/>
-		</Unit>
-		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/OutputFileWriter.cpp">
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/StringMatchingOutputFileWriter.cpp">
 			<Option target="geneticString"/>
 		</Unit>
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/CMakeLists.txt">

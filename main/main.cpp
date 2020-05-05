@@ -3,15 +3,11 @@
 //
 
 #include <iostream>
-#include "chrono"
-#include <time.h>
 #include "../string_matching/include/consts.h"
-#include "../string_matching/include/GeneticStringMatcher.h"
+#include "../string_matching/include/StringMatchingGeneticSolver.h"
 
 #include "../nQueens/include/nQueensGeneticSolver.h"
-#include "../string_matching/include/OutputFileWriter.h"
-#include "../string_matching/include/HeuristicsEnum.h"
-#include "../nQueens/include/nQueensBoard.h"
+#include "../string_matching/include/StringMatchingOutputFileWriter.h"
 #include "../nQueens/include/consts.h"
 #include "../nQueens/include/nQueensMinimalConflictsSolver.h"
 
@@ -133,22 +129,16 @@ CrossoverMethod getCrossoverMethod(int argc, char **argv) {
 }
 
 std::string getOutputPath(int argc, char **argv) {
-    std::string outputPath = "../output/";
+    std::string outputPath = "output/";
+    std::string basePath = argv[0];
+    int index = basePath.find_last_of("\\");
+    basePath = basePath.substr(0, index);
+    index = basePath.find_last_of("\\");
+    basePath = basePath.substr(0, index);
     if (argc >= 7)
         outputPath = argv[6];
-    return outputPath;
-}
-
-double calculateWeights(vector<GeneticAlgorithmStruct> &population, vector<double> &weights, double avg) {
-    double sum = 0;
-    for (int j = 0; j < GA_POPSIZE; j++) {
-        if (j != 0)
-            // we add previous weight for later use in rws function
-            weights[j] = population[j].fitnessVal / (avg * GA_POPSIZE) + weights[j - 1];
-        else
-            weights[j] = population[j].fitnessVal / (avg * GA_POPSIZE);
-    }
-    return sum;
+    basePath += "\\" + outputPath;
+    return basePath;
 }
 
 int getBoardSizeAndNumberOfQueens(int argc, char **argv) {
@@ -162,71 +152,18 @@ int main(int argc, char *argv[]) {
     string labSelector = getMethodToRun(argc, argv);
 
     if (labSelector == "string_matching") {
-        vector<GeneticAlgorithmStruct> population, buffer;
-        IterationRawOutput rawOutputArr[GA_MAXITER];
-        // Initializing each cell
-        for (auto &res : rawOutputArr)
-            res.id = -1;
         string workOnString = getStringToWorkWith(argc, argv);
         HeuristicsEnum heuristicMethod = getHeuristicToWorkWith(argc, argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         std::string outputPath = getOutputPath(argc, argv);
-        clock_t t, totalTicks = 0;
-
-//        std::cout << "Heuristic: " << heuristicMethod << std::endl;
-//        std::cout << "selection: " << selectionMethod << std::endl;
-//        std::cout << "crossover: " << crossoverMethod << std::endl;
-//        std::cout << "input string is: " << workOnString << std::endl;
-        OutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod, outputPath};
-        GeneticStringMatcher matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
-
-        matcher.init_population(population, buffer);
-        std::vector<double> weights;
-        std::fill_n(std::back_inserter(weights), GA_POPSIZE, 0);
-
-        auto startTimeStamp = std::chrono::high_resolution_clock::now();
-        t = clock();
-        for (int i = 0; i < GA_MAXITER; i++) {
-            matcher.calc_fitness(population);        // calculate fitness
-            matcher.sort_by_fitness(population);    // sort them
-            matcher.print_best(population);        // print the best one
-
-            double averageFitnessValue = matcher.calculateFitnessAvg(population);
-            double standardDeviation = matcher.calculateStandardDeviation(population, averageFitnessValue);
-
-            rawOutputArr[i].id = i;
-            rawOutputArr[i].standardDeviation = standardDeviation;
-            rawOutputArr[i].averageFitnessValue = averageFitnessValue;
-            rawOutputArr[i].elapsedTimeSeconds = ((float) (clock() - t)) / CLOCKS_PER_SEC;
-            rawOutputArr[i].clockTicks = clock() - t;
-            if (population[0].fitnessVal == 0) {
-                break;
-            }
-
-            calculateWeights(population, weights, averageFitnessValue);
-            matcher.mate(population, buffer, weights);        // mate the population together
-            swap(population, buffer);        // swap buffers
-
-            t = clock();
-        }
-
-        auto endTimeStamp = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp);
-
+        StringMatchingOutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod, outputPath};
+        StringMatchingGeneticSolver matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
         // Initializing each cell
-        int totalIterations = 0;
-        for (int i = 0; i < GA_MAXITER && rawOutputArr[i].id != -1; i++) {
-            std::cout << "Averaged Fitness Value: " << rawOutputArr[i].averageFitnessValue
-                      << ", Standard Deviation val: " << rawOutputArr[i].standardDeviation
-                      << ", ticks: " << rawOutputArr[i].clockTicks
-                      << ", calculation time: " << rawOutputArr[i].elapsedTimeSeconds << " seconds" << std::endl;
-            totalIterations++;
-        }
-        std::cout << "Total runtime is: " << duration.count() << " miliseconds" << std::endl;
-        std::cout << "Total iterations: " << totalIterations << std::endl;
+        int totalRuntime = matcher.start_solve();
+        std::cout << "Total runtime is: " << totalRuntime << " miliseconds" << std::endl;
 
-        outputWriter.writeToFile(duration.count(), rawOutputArr);
+        outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
     } else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
 //        nQueensGeneticSolver solver;

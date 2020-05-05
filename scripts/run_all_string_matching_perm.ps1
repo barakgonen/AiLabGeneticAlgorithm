@@ -15,7 +15,7 @@ param(
     [string]$crossoverMethod = $Args[4]
 )
 
-$outputPath = "output/"
+$outputPath = "testOutput/"
 
 Write-Host "Parameters are:"
 Write-Host "Command to execute:" $commandToExecute
@@ -26,8 +26,8 @@ Write-Host "CrossoverMethod:" $crossoverMethod
 
 $exe = "$pwd/cmake-build-debug/geneticString.exe"
 &$exe $commandToExecute $inputString $heuristic $selectionMethod $crossoverMethod $outputPath
-For ($i=0; $i -le 1; $i++) {
-    $inputString = -join ((65..90) + (97..122) | Get-Random -Count $(Get-Random -Minimum 4 -Maximum 13)| % {[char]$_});
+For ($i=0; $i -le 20; $i++) {
+    $inputString = -join ((65..90) + (97..122) | Get-Random -Count $(Get-Random -Minimum 4 -Maximum 15)| % {[char]$_});
     Write-Host "InputString is:" $inputString
     $heuristic = "DefaultHeuristic"
     Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"

@@ -56,7 +56,7 @@ $stringExamples = @("Hello world!",
 
 Write-Host "Building solution for Question3, we have to decide wether defaultheuristic is better than bullsandcows"
 Write-Host "=================================================================================="
-$outputPath = "output/Question3/"
+$outputPath = "tmp\\"
 ForEach($inputString In $stringExamples)
 {
     $heuristic = "DefaultHeuristic"
@@ -82,7 +82,7 @@ ForEach($inputString In $stringExamples)
     Write-Host "=================================================================================="
 }
 
-$outputPath = "output/Question4/"
+$outputPath = "tmp/Question4/"
 Write-Host "Building solution for Question4, we have to decide wether Rws selection is better than what we just got as default random selection"
 ForEach($inputString In $stringExamples)
 {
@@ -125,7 +125,7 @@ ForEach($inputString In $stringExamples)
     Write-Host "=================================================================================="
 }
 
-$outputPath = "output/Question5/"
+$outputPath = "tmp/Question5/"
 Write-Host "Building solution for Question5, we have to decide wether Aging selection is better than what we just got as default random selection"
 Write-Host "=================================================================================="
 ForEach($inputString In $stringExamples)
@@ -169,7 +169,7 @@ ForEach($inputString In $stringExamples)
     Write-Host "=================================================================================="
 }
 
-$outputPath = "output/Question6/"
+$outputPath = "tmp/Question6/"
 Write-Host "Building solution for Question6, we have to decide wether Tournament selection is better than what we just got as default random selection"
 Write-Host "=================================================================================="
 ForEach($inputString In $stringExamples)
@@ -213,7 +213,7 @@ ForEach($inputString In $stringExamples)
     Write-Host "=================================================================================="
 }
 
-$outputPath = "output/Question7/"
+$outputPath = "tmp/Question7/"
 Write-Host "Building solution for Question7, we have to decide wether crossover method of 2point / uniform is better than singlepoint"
 Write-Host "=================================================================================="
 ForEach($inputString In $stringExamples)

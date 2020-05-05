@@ -4,14 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/src/OutputFileWriter.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj"
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/AbstractGeneticSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj"
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensBoard.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGenericSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGeneticSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensMinimalConflictsSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj"
-  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticAlgorithmStruct.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticAlgorithmStruct.cpp.obj"
-  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/GeneticStringMatcher.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj"
-  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/OutputFileWriter.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/OutputFileWriter.cpp.obj"
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/StringMatchingGeneticSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj"
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/StringMatchingOutputFileWriter.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
