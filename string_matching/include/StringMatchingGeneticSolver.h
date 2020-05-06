@@ -35,7 +35,20 @@ public:
 
     std::vector<IterationRawOutput> getRawOutput() const;
     std::vector<double> get_weights_vector(double avg) override;
+    std::string getBestGene() const override;
 
+    void uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize) override;
+
+protected:
+    void handle_specific_elitism(const int index) override;
+
+    void
+    set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex,
+                                                      int spos, int tsize) override;
+
+    void
+    set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex,
+                                                    int spos, int spos2, int tsize) override;
 
 private:
     const std::string inputString;

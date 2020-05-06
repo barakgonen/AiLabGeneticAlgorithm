@@ -13,9 +13,6 @@ CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj: .
 CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj: ../genetic_solver/include/consts.h
 CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj: ../genetic_solver/src/AbstractGeneticSolver.cpp
 
-CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj: ../genetic_solver/include/GenericGeneticAlgorithmSolver.h
-CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj: ../genetic_solver/src/GenericGeneticAlgorithmSolver.cpp
-
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../general_utilities/include/OutputFileWriter.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/AbstractGeneticSolver.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/CrossoverMethod.h
@@ -28,6 +25,7 @@ CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/InQueensSolve
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/consts.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/nQueensBoard.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/nQueensGenericSolver.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/nQueensGeneticAlgoStruct.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/nQueensGeneticSolver.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/nQueensMinimalConflictsSolver.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../string_matching/include/GeneticStringMatchingAlgStruct.h
@@ -44,9 +42,16 @@ CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj: ../nQueen
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj: ../nQueens/include/nQueensGenericSolver.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj: ../nQueens/src/nQueensGenericSolver.cpp
 
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/AbstractGeneticSolver.h
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/CrossoverMethod.h
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/GeneticAlgorithmBaseStruct.h
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/IGeneticAlgorithmApi.h
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/SelectionMethodEnum.h
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/consts.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/InQueensSolver.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/nQueensBoard.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/nQueensGenericSolver.h
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/nQueensGeneticAlgoStruct.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/nQueensGeneticSolver.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/src/nQueensGeneticSolver.cpp
 

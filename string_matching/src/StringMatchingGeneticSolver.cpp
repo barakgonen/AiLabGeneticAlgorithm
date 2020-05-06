@@ -152,3 +152,37 @@ std::vector<IterationRawOutput> StringMatchingGeneticSolver::getRawOutput() cons
 
     return rawOutput;
 }
+
+void StringMatchingGeneticSolver::handle_specific_elitism(const int index){
+    buffer[index].str = population[index].str;
+}
+
+void StringMatchingGeneticSolver::set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer,
+                                                                                    const int startIndex,
+                                                                                    const int endIndex, int spos,
+                                                                                    int tsize) {
+    buffer[indexInBuffer].str = population[startIndex].str.substr(0, spos) +
+                    population[endIndex].str.substr(spos, tsize - spos);
+
+}
+
+void StringMatchingGeneticSolver::set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer,
+                                                                                  const int startIndex,
+                                                                                  const int endIndex, int spos,
+                                                                                  int spos2, int tsize) {
+    buffer[indexInBuffer].str = population[startIndex].str.substr(0, spos) +
+                    population[endIndex].str.substr(spos, spos2 - spos) +
+                    population[startIndex].str.substr(spos2, tsize - spos2);
+
+}
+
+void StringMatchingGeneticSolver::uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize) {
+    int temp;
+    std::string temp2;
+    for (int j = 0; j < tsize; j++) {
+        temp = (rand() % 2) ? i1 : i2;
+        temp2 += population[temp].str[j];
+    }
+    buffer[indexInBuffer].str = temp2;
+}
+std::string StringMatchingGeneticSolver::getBestGene() const { return population[0].str; }

@@ -86,9 +86,6 @@
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/AbstractGeneticSolver.cpp">
 			<Option target="geneticString"/>
 		</Unit>
-		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp">
-			<Option target="geneticString"/>
-		</Unit>
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp">
 			<Option target="geneticString"/>
 		</Unit>

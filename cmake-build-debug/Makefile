@@ -176,33 +176,6 @@ genetic_solver/src/AbstractGeneticSolver.cpp.s:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.s
 .PHONY : genetic_solver/src/AbstractGeneticSolver.cpp.s
 
-genetic_solver/src/GenericGeneticAlgorithmSolver.obj: genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj
-
-.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.obj
-
-# target to build an object file
-genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj
-.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj
-
-genetic_solver/src/GenericGeneticAlgorithmSolver.i: genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i
-
-.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.i
-
-# target to preprocess a source file
-genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i
-.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.i
-
-genetic_solver/src/GenericGeneticAlgorithmSolver.s: genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s
-
-.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.s
-
-# target to generate assembly for a file
-genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s:
-	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s
-.PHONY : genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.s
-
 main/main.obj: main/main.cpp.obj
 
 .PHONY : main/main.obj
@@ -407,9 +380,6 @@ help:
 	@echo ... genetic_solver/src/AbstractGeneticSolver.obj
 	@echo ... genetic_solver/src/AbstractGeneticSolver.i
 	@echo ... genetic_solver/src/AbstractGeneticSolver.s
-	@echo ... genetic_solver/src/GenericGeneticAlgorithmSolver.obj
-	@echo ... genetic_solver/src/GenericGeneticAlgorithmSolver.i
-	@echo ... genetic_solver/src/GenericGeneticAlgorithmSolver.s
 	@echo ... main/main.obj
 	@echo ... main/main.i
 	@echo ... main/main.s

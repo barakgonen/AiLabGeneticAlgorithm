@@ -26,8 +26,7 @@ public:
     : selectionMethod{selectionMethod}
     , crossoverMethod{crossoverMethod}
     , population{std::vector<PopulationStruct>()}
-    , buffer{std::vector<PopulationStruct>()}
-    {
+    , buffer{std::vector<PopulationStruct>()} {
         std::cout << "Starting GeneticSolver with the following parameters:" << std::endl;
         std::cout << "selection: " << selectionMethod << std::endl;
         std::cout << "crossover: " << crossoverMethod << std::endl;
@@ -45,12 +44,12 @@ public:
 
     void elitism(const int esize) override {
         for (int i = 0; i < esize; i++) {
-            buffer[i].str = population[i].str;
             buffer[i].fitnessVal = population[i].fitnessVal;
+            handle_specific_elitism(i);
         }
     }
 
-    void aging(int& i1, int& i2, int esize) override {
+    void aging(int &i1, int &i2, int esize) override {
         std::vector<int> temp;
         for (int i = esize; i < GA_POPSIZE / 2; i++) {
             if (population[i].ageVal < 10) {
@@ -67,7 +66,7 @@ public:
         i2 = rand() % temp.size();
     }
 
-    int rws(const std::vector<double>& weights) override {
+    int rws(const std::vector<double> &weights) override {
         // get a random value in the range
         double value = (rand() / (double) (RAND_MAX + 1)) * weights.at(GA_POPSIZE - 1);
         // locate the random value based on the weights
@@ -80,13 +79,13 @@ public:
         return 0;
     }
 
-    void calc_rws(int& i1, int& i2){
+    void calc_rws(int &i1, int &i2) {
         const std::vector<double> weights = get_weights_vector(get_average_fitness());
         i1 = rws(weights);
         i2 = rws(weights);
     }
 
-    void random_selection(int& i1, int& i2, int spos, int tsize){
+    void random_selection(int &i1, int &i2, int& spos, int tsize) {
         // Select 2 random parents from top half
         i1 = rand() % (GA_POPSIZE / 2);
         i2 = rand() % (GA_POPSIZE / 2);
@@ -113,16 +112,15 @@ public:
                     break;
                 case SelectionMethod::Random:
                     random_selection(i1, i2, spos, tsize);
-                    buffer[i].str = population[i1].str.substr(0, spos) +
-                                    population[i2].str.substr(spos, tsize - spos);
+                    set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, tsize);
+
                     break;
             }
             switch (crossoverMethod) {
                 // this is the selection method given in the beginning
                 case CrossoverMethod::SinglePoint:
                     spos = rand() % tsize;
-                    buffer[i].str = population[i1].str.substr(0, spos) +
-                                    population[i2].str.substr(spos, tsize - spos);
+                    set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, tsize);
                     buffer[i].ageVal = 0;
                     if (rand() < GA_MUTATION)
                         this->mutate(buffer[i]);
@@ -138,18 +136,11 @@ public:
                         spos = temp;
                     }
                     // two point crossover
-                    buffer[i].str = population[i1].str.substr(0, spos) +
-                                    population[i2].str.substr(spos, spos2 - spos) +
-                                    population[i1].str.substr(spos2, tsize - spos2);
+                    set_data_in_buffer_vec_for_two_points_selection(i, i1, i2, spos, spos2, tsize);
+
                     break;
                 case CrossoverMethod::UniformCrossover:
-                    int temp;
-                    std::string temp2;
-                    for (int j = 0; j < tsize; j++) {
-                        temp = (rand() % 2) ? i1 : i2;
-                        temp2 += population[temp].str[j];
-                    }
-                    buffer[i].str = temp2;
+                    this->uniform_crossover(i, i1, i2, spos, tsize);
                     break;
             }
 
@@ -190,8 +181,10 @@ public:
     }
 
     void print_best() override {
-        std::cout << "Best: " << population[0].str << " (" << population[0].fitnessVal << ")" << std::endl;
+        std::cout << "Best: " << getBestGene() << " (" << population[0].fitnessVal << ")" << std::endl;
     }
+
+    virtual std::string getBestGene() const = 0;
 
     void swap() override {
         std::swap(population, buffer);
@@ -212,11 +205,18 @@ public:
     }
 
     virtual std::vector<double> get_weights_vector(double avg) override {
-        std::cout << "Returning default vector, if you see this print, you use base func instead of overriding it" << std::endl;
+        std::cout << "Returning default vector, if you see this print, you use base func instead of overriding it"
+                  << std::endl;
         return std::vector<double>();
     }
 
 protected:
+    // this function is nesseccerry for specific structs we handle in this algorithm
+    virtual void handle_specific_elitism(const int index) = 0;
+
+    virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) = 0;
+    virtual void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int spos2, int tsize) = 0;
+
     SelectionMethod selectionMethod;
     CrossoverMethod crossoverMethod;
     std::vector<PopulationStruct> population;

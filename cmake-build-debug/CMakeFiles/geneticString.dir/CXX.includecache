@@ -44,6 +44,8 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_sol
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/SelectionMethodEnum.h
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/consts.h
+
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp
 iostream
 -
@@ -74,13 +76,25 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/inc
 nQueensBoard.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensBoard.h
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticAlgoStruct.h
+../../genetic_solver/include/GeneticAlgorithmBaseStruct.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/GeneticAlgorithmBaseStruct.h
+
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticSolver.h
 nQueensGenericSolver.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
+nQueensGeneticAlgoStruct.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticAlgoStruct.h
+../../genetic_solver/include/AbstractGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensMinimalConflictsSolver.h
 nQueensGenericSolver.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGeneticSolver.cpp
+../include/nQueensGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticSolver.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatchingAlgStruct.h
 string

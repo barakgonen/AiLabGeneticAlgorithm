@@ -19,7 +19,7 @@ public:
     virtual void elitism(const int esize) = 0;
     virtual void aging(int& i1, int& i2, int esize) = 0;
     virtual void calc_rws(int& i1, int& i2) = 0;
-    virtual void random_selection(int& i1, int& i2, int spos, int tsize) = 0;
+    virtual void random_selection(int& i1, int& i2, int& spos, int tsize) = 0;
     virtual int rws(const std::vector<double>& weights) = 0;
     virtual void mate() = 0;
     virtual void tournament() = 0;
@@ -30,6 +30,7 @@ public:
     virtual double get_standard_aviation(const double averagedFitnessValue) = 0;
     virtual int get_input_size() = 0;
     virtual std::vector<double> get_weights_vector(double avg) = 0;
+    virtual void uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize) = 0;
 };
 
 #endif //AILABGENETICALGORITHM_IGENETICALGORITHMAPI_H

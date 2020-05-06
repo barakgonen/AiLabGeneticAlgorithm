@@ -166,11 +166,13 @@ int main(int argc, char *argv[]) {
         outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
     } else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
+        SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
+        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
         std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         nQueensMinimalConflictsSolver minimalConflictsSolver{board};
         std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-        nQueensGeneticSolver geneticSolver{board};
+        nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod};
         minimalConflictsSolver.solvePuzzle();
         std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         minimalConflictsSolver.printPuzzle();

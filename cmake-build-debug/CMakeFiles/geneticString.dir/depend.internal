@@ -13,9 +13,6 @@ CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/SelectionMethodEnum.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/consts.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/AbstractGeneticSolver.cpp
-CMakeFiles/geneticString.dir/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp.obj
- C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/GenericGeneticAlgorithmSolver.h
- C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/GenericGeneticAlgorithmSolver.cpp
 CMakeFiles/geneticString.dir/main/main.cpp.obj
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/OutputFileWriter.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
@@ -29,6 +26,7 @@ CMakeFiles/geneticString.dir/main/main.cpp.obj
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/consts.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensBoard.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticAlgoStruct.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensMinimalConflictsSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatchingAlgStruct.h
@@ -45,9 +43,16 @@ CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGenericSolver.cpp
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/CrossoverMethod.h
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/GeneticAlgorithmBaseStruct.h
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/IGeneticAlgorithmApi.h
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/SelectionMethodEnum.h
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/consts.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/InQueensSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensBoard.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticAlgoStruct.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGeneticSolver.cpp
 CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj
