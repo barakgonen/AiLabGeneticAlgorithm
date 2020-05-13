@@ -9,10 +9,14 @@
 #include "nQueensGenericSolver.h"
 #include "nQueensGeneticAlgoStruct.h"
 #include "../../genetic_solver/include/AbstractGeneticSolver.h"
+#include "../../genetic_solver/include/MutationOperators.h"
 
 class nQueensGeneticSolver : public nQueensGenericSolver, public AbstractGeneticSolver<nQueensGeneticAlgoStruct>{
 public:
-    nQueensGeneticSolver(const NqBoard& board, const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod);
+    nQueensGeneticSolver(const NqBoard& board,
+                         const SelectionMethod selectionMethod,
+                         const CrossoverMethod crossoverMethod,
+                         const MutationOperator mutationOperator);
 
     void solvePuzzle() override;
 
@@ -30,10 +34,16 @@ public:
 
     std::string getBestGene() const override;
 
-    void uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize) override;
-
+    void pmx(const int i, const int i1, const int i2) override ;
+    void ox(const int i, const int i1, const int i2) override ;
+    void elitism(const int esize) override;
 
 protected:
+    void setQueenPosition(const int index, const int val);
+    void addToConflictsVec(int &currentMinConflicts,
+                      int &currentConflictsNumber,
+                      std::vector<int> &conflictsVec,
+                      int i) const;
     void handle_specific_elitism(const int index) override;
 
     void
@@ -43,6 +53,8 @@ protected:
     void
     set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex,
                                                     int spos, int spos2, int tsize) override;
+
+    MutationOperator mutataionOperator;
 };
 
 

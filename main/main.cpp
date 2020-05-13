@@ -59,73 +59,154 @@ HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
     return hType;
 }
 
-SelectionMethod getSelectionMethod(int argc, char **argv) {
+SelectionMethod getSelectionMethod(int argc, char **argv, bool isStringMatching=true) {
     SelectionMethod selectionMethod;
     std::string selectionMethodStr = "";
-    if (argc >= 4) {
-        selectionMethodStr = argv[4];
-        if (selectionMethodStr == "Random")
-            selectionMethod = SelectionMethod::Random;
-        else if (selectionMethodStr == "Tournament")
-            selectionMethod = SelectionMethod::Tournament;
-        else if (selectionMethodStr == "Rws")
-            selectionMethod = SelectionMethod::Rws;
-        else if (selectionMethodStr == "Aging")
-            selectionMethod = SelectionMethod::Aging;
-        else {
-            cout << "Unrecognized selectionMethod, setting by to default selection method" << endl;
-            selectionMethod = SelectionMethod::Random;
-        }
+    if (isStringMatching)
+    {
+        if (argc >= 4) {
+            selectionMethodStr = argv[4];
+            if (selectionMethodStr == "Random")
+                selectionMethod = SelectionMethod::Random;
+            else if (selectionMethodStr == "Tournament")
+                selectionMethod = SelectionMethod::Tournament;
+            else if (selectionMethodStr == "Rws")
+                selectionMethod = SelectionMethod::Rws;
+            else if (selectionMethodStr == "Aging")
+                selectionMethod = SelectionMethod::Aging;
+            else {
+                cout << "Unrecognized selectionMethod, setting by to default selection method" << endl;
+                selectionMethod = SelectionMethod::Random;
+            }
 
-    } else {
-        cout << "Choose selection method: DefaultHeuristic / Tournament / Rws" << endl;
-        getline(cin, selectionMethodStr);
-        if (selectionMethodStr == "Random")
-            selectionMethod = SelectionMethod::Random;
-        else if (selectionMethodStr == "Tournament")
-            selectionMethod = SelectionMethod::Tournament;
-        else if (selectionMethodStr == "Rws")
-            selectionMethod = SelectionMethod::Rws;
-        else if (selectionMethodStr == "Aging")
-            selectionMethod = SelectionMethod::Aging;
-        else {
-            cout << "Unrecognized selectionMethod, setting by default to random selection" << endl;
-            selectionMethod = SelectionMethod::Random;
+        } else {
+            cout << "Choose selection method: DefaultHeuristic / Tournament / Rws" << endl;
+            getline(cin, selectionMethodStr);
+            if (selectionMethodStr == "Random")
+                selectionMethod = SelectionMethod::Random;
+            else if (selectionMethodStr == "Tournament")
+                selectionMethod = SelectionMethod::Tournament;
+            else if (selectionMethodStr == "Rws")
+                selectionMethod = SelectionMethod::Rws;
+            else if (selectionMethodStr == "Aging")
+                selectionMethod = SelectionMethod::Aging;
+            else {
+                cout << "Unrecognized selectionMethod, setting by default to random selection" << endl;
+                selectionMethod = SelectionMethod::Random;
+            }
+        }
+    }
+    else {
+        if (argc >= 3) {
+            selectionMethodStr = argv[3];
+            if (selectionMethodStr == "Random")
+                selectionMethod = SelectionMethod::Random;
+            else if (selectionMethodStr == "Rws")
+                selectionMethod = SelectionMethod::Rws;
+            else {
+                cout << "Unrecognized selectionMethod, setting by to default selection method" << endl;
+                selectionMethod = SelectionMethod::Random;
+            }
+        } else {
+            cout << "Choose selection method: Default / Rws" << endl;
+            getline(cin, selectionMethodStr);
+            if (selectionMethodStr == "Random")
+                selectionMethod = SelectionMethod::Random;
+            else if (selectionMethodStr == "Rws")
+                selectionMethod = SelectionMethod::Rws;
+            else {
+                cout << "Unrecognized selectionMethod, setting by default to random selection" << endl;
+                selectionMethod = SelectionMethod::Random;
+            }
         }
     }
     return selectionMethod;
 }
 
-CrossoverMethod getCrossoverMethod(int argc, char **argv) {
+CrossoverMethod getCrossoverMethod(int argc, char **argv, bool isStringMatching=true) {
     CrossoverMethod crossoverMethod;
     std::string crossoverMethodStr = "";
-    if (argc >= 5) {
-        crossoverMethodStr = argv[5];
-        if (crossoverMethodStr == "SinglePoint")
-            crossoverMethod = CrossoverMethod::SinglePoint;
-        else if (crossoverMethodStr == "TwoPoints")
-            crossoverMethod = CrossoverMethod::TwoPoints;
-        else if (crossoverMethodStr == "UniformCrossover")
-            crossoverMethod = CrossoverMethod::UniformCrossover;
-        else {
-            cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
-            crossoverMethod = CrossoverMethod::SinglePoint;
+    if (isStringMatching){
+        if (argc >= 5) {
+            crossoverMethodStr = argv[5];
+            if (crossoverMethodStr == "SinglePoint")
+                crossoverMethod = CrossoverMethod::SinglePoint;
+            else if (crossoverMethodStr == "TwoPoints")
+                crossoverMethod = CrossoverMethod::TwoPoints;
+            else if (crossoverMethodStr == "UniformCrossover")
+                crossoverMethod = CrossoverMethod::UniformCrossover;
+            else {
+                cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
+                crossoverMethod = CrossoverMethod::SinglePoint;
+            }
+        } else {
+            cout << "Choose crossover method: TwoPoints / Tournament " << endl;
+            getline(cin, crossoverMethodStr);
+            if (crossoverMethodStr == "SinglePoint")
+                crossoverMethod = CrossoverMethod::SinglePoint;
+            else if (crossoverMethodStr == "TwoPoints")
+                crossoverMethod = CrossoverMethod::TwoPoints;
+            else if (crossoverMethodStr == "UniformCrossover")
+                crossoverMethod = CrossoverMethod::UniformCrossover;
+            else {
+                cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
+                crossoverMethod = CrossoverMethod::SinglePoint;
+            }
         }
-    } else {
-        cout << "Choose selection method: TwoPoints / Tournament " << endl;
-        getline(cin, crossoverMethodStr);
-        if (crossoverMethodStr == "SinglePoint")
-            crossoverMethod = CrossoverMethod::SinglePoint;
-        else if (crossoverMethodStr == "TwoPoints")
-            crossoverMethod = CrossoverMethod::TwoPoints;
-        else if (crossoverMethodStr == "UniformCrossover")
-            crossoverMethod = CrossoverMethod::UniformCrossover;
-        else {
-            cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
-            crossoverMethod = CrossoverMethod::SinglePoint;
+    }
+    else{
+        if (argc >= 4) {
+            crossoverMethodStr = argv[4];
+            if (crossoverMethodStr == "Ox")
+                crossoverMethod = CrossoverMethod::Ox;
+            else if (crossoverMethodStr == "Pmx")
+                crossoverMethod = CrossoverMethod::Pmx;
+            else {
+                cout << "Unrecognized crossover method, setting to Ox" << endl;
+                crossoverMethod = CrossoverMethod::Ox;
+            }
+        } else {
+            cout << "Choose crossover method: Ox / Pmx " << endl;
+            getline(cin, crossoverMethodStr);
+            if (crossoverMethodStr == "Ox")
+                crossoverMethod = CrossoverMethod::Ox;
+            else if (crossoverMethodStr == "Pmx")
+                crossoverMethod = CrossoverMethod::Pmx;
+            else {
+                cout << "Unrecognized crossover method, setting to Ox" << endl;
+                crossoverMethod = CrossoverMethod::Ox;
+            }
         }
     }
     return crossoverMethod;
+}
+
+MutationOperator getMutationOperator(int argc, char **argv) {
+    MutationOperator mutationOperator;
+    std::string mutationOperatorStr = "";
+    if (argc >= 5) {
+        mutationOperatorStr = argv[5];
+        if (mutationOperatorStr == "Inversion")
+            mutationOperator = MutationOperator::Inversion;
+        else if (mutationOperatorStr == "Exchange")
+            mutationOperator = MutationOperator::Exchange;
+        else {
+            cout << "Unrecognized mutation operator, setting to Inversion" << endl;
+            mutationOperator = MutationOperator::Inversion;
+        }
+    } else {
+        cout << "Choose mutation operator Inversion / Exchange " << endl;
+        getline(cin, mutationOperatorStr);
+        if (mutationOperatorStr == "Inversion")
+            mutationOperator = MutationOperator::Inversion;
+        else if (mutationOperatorStr == "Exchange")
+            mutationOperator = MutationOperator::Exchange;
+        else {
+            cout << "Unrecognized crossover method, setting to Inversion" << endl;
+            mutationOperator = MutationOperator::Inversion;
+        }
+    }
+    return mutationOperator;
 }
 
 std::string getOutputPath(int argc, char **argv) {
@@ -135,7 +216,7 @@ std::string getOutputPath(int argc, char **argv) {
     basePath = basePath.substr(0, index);
     index = basePath.find_last_of("\\");
     basePath = basePath.substr(0, index);
-    if (argc >= 7)
+    if (argc >= 6)
         outputPath = argv[6];
     basePath += "\\" + outputPath;
     return basePath;
@@ -166,16 +247,18 @@ int main(int argc, char *argv[]) {
         outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
     } else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
-        SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
-        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
+        MutationOperator mutationOperator = getMutationOperator(argc, argv);
+        SelectionMethod selectionMethod = getSelectionMethod(argc, argv, false);
+        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv, false);
         std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         nQueensMinimalConflictsSolver minimalConflictsSolver{board};
         std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-        nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod};
-        minimalConflictsSolver.solvePuzzle();
-        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-        minimalConflictsSolver.printPuzzle();
+        nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator};
+//        minimalConflictsSolver.solvePuzzle();
+        geneticSolver.solvePuzzle();
+//        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+//        minimalConflictsSolver.printPuzzle();
         std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         geneticSolver.printPuzzle();
     }

@@ -6,7 +6,6 @@
 
 nQueensGenericSolver::nQueensGenericSolver(const NqBoard &board)
 : board{board}
-, boardSize{board.getBoardSize()}
 {
     printPuzzle();
 }

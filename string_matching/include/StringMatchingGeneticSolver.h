@@ -34,7 +34,6 @@ public:
     void print_results() override;
 
     std::vector<IterationRawOutput> getRawOutput() const;
-    std::vector<double> get_weights_vector(double avg) override;
     std::string getBestGene() const override;
 
     void uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize) override;

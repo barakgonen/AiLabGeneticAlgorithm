@@ -132,19 +132,6 @@ void StringMatchingGeneticSolver::print_results() {
     std::cout << "Total iterations: " << totalIterations << std::endl;
 }
 
-std::vector<double> StringMatchingGeneticSolver::get_weights_vector(double avg) {
-    std::vector<double> weights;
-    double bla = population.at(0).fitnessVal;
-    for (int j = 0; j < GA_POPSIZE; j++) {
-        if (j != 0)
-            // we add previous weight for later use in rws function
-            weights.push_back(population.at(j).fitnessVal / (avg * GA_POPSIZE) + weights[j - 1]);
-        else
-            weights.push_back(population.at(j).fitnessVal / (avg * GA_POPSIZE));
-    }
-    return weights;
-}
-
 std::vector<IterationRawOutput> StringMatchingGeneticSolver::getRawOutput() const {
     std::vector<IterationRawOutput> rawOutput;
     for (int i = 0; i < GA_MAXITER && rawOutputArr[i].id != -1; i++)

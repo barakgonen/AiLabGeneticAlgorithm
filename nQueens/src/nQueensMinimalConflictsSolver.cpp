@@ -1,141 +1,87 @@
 //
-// Created by barak on 03/05/2020.
+// Created by barak on 09/05/2020.
 //
 
-#include <iostream>
 #include <limits>
+#include <cstdlib>
 #include <chrono>
-#include "../include/nQueensMinimalConflictsSolver.h"
-
-nQueensMinimalConflictsSolver::nQueensMinimalConflictsSolver(const NqBoard &board)
+#include <iostream>
+#include <math.h>
+#include "../include/barakMinimalConflictsSolver.h"
+barakMinimalConflictsSolver::barakMinimalConflictsSolver(const NqBoard &board)
 : nQueensGenericSolver{board}
 {
 }
 
-// First step of the algorithm, is assigning columns greedily minimizing conflicts, and then solver starts to work
-void nQueensMinimalConflictsSolver::initializeBoard() {
-    std::vector<int> minConflictCols;
-
-    // choose first queen randomly
-    setQueenPosition(0, rand() % boardSize);
-
-    // i=row index
-    for (int i = 1; i < boardSize; i++) {
-        minConflictCols.clear();
-        int minConflicts = std::numeric_limits<int>::max();
-        // j=col index
-        for (int j = 0; j < boardSize; j++) {
-            int tempConflicts = ((board.getColCount()[j] + 1) * board.getColCount()[j]) / 2;
-            tempConflicts += ((board.getUpperDiagCount()[j + i] + 1) * board.getUpperDiagCount()[j + i]) / 2;
-            tempConflicts += ((board.getLowerDiagCount()[(boardSize - j) + i - 1] + 1) *
-                              board.getLowerDiagCount()[(boardSize - j) + i - 1]) / 2;
-
-            addToConflictsVec(minConflicts, tempConflicts, minConflictCols, i);
-        }
-        // Setting initial position for ith queen
-        setQueenPosition(i, minConflictCols[rand() % minConflictCols.size()]);
-    }
-}
-
-void nQueensMinimalConflictsSolver::setQueenPosition(const int index, const int val) {
-    board.setQueenValue(index, val);
-    board.getColCount()[board.getQueenValue(index)] += 1;
-    board.getUpperDiagCount()[board.getQueenValue(index) + index] += 1;
-    board.getLowerDiagCount()[(boardSize - board.getQueenValue(index)) + index - 1] += 1;
-}
-
-void nQueensMinimalConflictsSolver::solvePuzzle() {
-    auto startTimeStamp = std::chrono::high_resolution_clock::now();
-    initializeBoard();
-    int previousConflicts = board.conflicts();
-    int newConflicts;
-
-    std::cout << "Initial conflicts: " << previousConflicts << std::endl;
-
+int barakMinimalConflictsSolver::calculateConflictsForSpecificQueen(int queenRow) {
     int count = 0;
-    int steps = 0;
-
-    std::cout << "Solving..." << std::endl;
-
-    while (previousConflicts != 0) {
-        MinConflicts();
-        steps++;
-        newConflicts = board.conflicts();
-        if (previousConflicts == newConflicts) {
+    // iterate every raw
+    for (int rawToTest = 0; rawToTest < board.getBoardSize(); rawToTest++) {
+        if (rawToTest == queenRow)
+            continue;
+        // diagonal collisions or if in the same col
+        if ((abs(rawToTest - queenRow) == abs(board.myGetQueenCol(rawToTest) - board.myGetQueenCol(queenRow))))
             count++;
-            if (count > 1) {
-                board.setQueenValue(rand() % board.getBoardSize(), rand() % board.getBoardSize());
-                count = 0;
+    }
+//    std::cout << "raw number: " << queenRow << ", num of conflicts is: " << count << std::endl;
+    return count;
+}
+
+void barakMinimalConflictsSolver::solvePuzzle() {
+    auto startTimeStamp = std::chrono::high_resolution_clock::now();
+    std::vector <int> worstRows;
+    int steps = 0;
+    int maxConflicts = 0;
+    int currentRowConflicts = 0;
+    int j = 0;
+    while (j<16384) {
+        maxConflicts = 0;
+        // search for the worst queen
+        for (int row = 0; row < board.getBoardSize(); row++) {
+            // calculate currentRowConflicts of the queen in column row
+            currentRowConflicts = calculateConflictsForSpecificQueen(row);
+            if (currentRowConflicts == maxConflicts) {
+                // push to the vector of the max queen's currentRowConflicts
+                worstRows.push_back(row);
+            }
+            else if (currentRowConflicts > maxConflicts) {
+                worstRows.clear();
+                worstRows.push_back(row);
+                maxConflicts = currentRowConflicts;
             }
         }
-        previousConflicts = newConflicts;
+
+        if (maxConflicts == 0)
+            break;
+        // choose among the max currentRowConflicts queens randomly
+        int chosenRow = worstRows[rand() % worstRows.size()];
+        worstRows.clear();
+        std::vector <int> bestRows;
+        int minConflicts = pow(board.getBoardSize(), 2);
+        // search for best row for queen in the chosen column
+        for (int row = 0; row < board.getBoardSize(); row++) {
+            // change row
+            board.myMoveQueenToColumn(chosenRow, row);
+            currentRowConflicts = calculateConflictsForSpecificQueen(chosenRow);
+            // meaning we have several queens with the same minimal currentRowConflicts number
+            if (currentRowConflicts == minConflicts)
+                bestRows.push_back(row);
+            else if (currentRowConflicts < minConflicts) {
+                // clear vector
+                bestRows.clear();
+                bestRows.push_back(row);
+                minConflicts = currentRowConflicts;
+            }
+        }
+        // choose row for the column among the rows with minimal currentRowConflicts
+        if (!bestRows.empty())
+            board.myMoveQueenToColumn(chosenRow, bestRows[rand() % bestRows.size()]);
+        bestRows.clear();
+        j++;
+        steps++;
     }
 
     auto endTimeStamp = std::chrono::high_resolution_clock::now();
     auto calculationTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp);
     std::cout << "number of steps is: " << steps << ", it took just: " << calculationTime.count() << " millis" << std::endl;
-}
-
-void nQueensMinimalConflictsSolver::MinConflicts() {
-    int highestConflictRow = HighestConflicts();
-
-    int minConflicts = std::numeric_limits<int>::max();
-    int tempConflicts;
-    // min conflicts cols for queen
-    std::vector<int> minConflictCols;
-    board.conflicts(highestConflictRow);
-
-    // i=col index
-    for (int i = 0; i < board.getBoardSize(); i++) {
-        tempConflicts = ((board.getColCount()[i] + 1) * board.getColCount()[i]) / 2;
-        tempConflicts += ((board.getUpperDiagCount()[i + highestConflictRow] + 1) *
-                          board.getUpperDiagCount()[i + highestConflictRow]) / 2;
-        tempConflicts += ((board.getLowerDiagCount()[(board.getBoardSize() - i) + highestConflictRow - 1] + 1) *
-                          board.getLowerDiagCount()[(board.getBoardSize() - i) + highestConflictRow - 1]) / 2;
-
-        addToConflictsVec(minConflicts, tempConflicts, minConflictCols, i);
-    }
-    board.setQueenValue(highestConflictRow, minConflictCols[rand() % minConflictCols.size()]);
-}
-
-void nQueensMinimalConflictsSolver::addToConflictsVec(int &currentMinConflicts,
-                                                      int &currentConflictsNumber,
-                                                      std::vector<int> &conflictsVec,
-                                                      int i) const {
-    if (currentConflictsNumber < currentMinConflicts) {
-        currentMinConflicts = currentConflictsNumber;
-        conflictsVec.clear();
-        conflictsVec.push_back(i);
-    } else if (currentConflictsNumber == currentMinConflicts) {
-        conflictsVec.push_back(i);
-    }
-}
-
-int nQueensMinimalConflictsSolver::HighestConflicts() {
-    int rowConflicts = 0;
-    int tempConflicts;
-    std::vector<int> maxConflictRows;
-
-    for (int i = 0; i < board.getBoardSize(); i++) {
-        tempConflicts =
-                ((board.getColCount()[board.getQueenValue(i)] - 1) * board.getColCount()[board.getQueenValue(i)]) / 2;
-        tempConflicts += ((board.getUpperDiagCount()[board.getQueenValue(i) + i] - 1) *
-                          board.getUpperDiagCount()[board.getQueenValue(i) + i]) / 2;
-        tempConflicts += ((board.getLowerDiagCount()[(board.getBoardSize() - board.getQueenValue(i)) + i - 1] - 1) *
-                          board.getLowerDiagCount()[(board.getBoardSize() - board.getQueenValue(i)) + i - 1]) / 2;
-
-        addToMaxConflictRowsVec(rowConflicts, tempConflicts, maxConflictRows, i);
-    }
-    return maxConflictRows[rand() % maxConflictRows.size()];
-}
-
-void nQueensMinimalConflictsSolver::addToMaxConflictRowsVec(int &rowConflicts, int &tempConflicts,
-                                                            std::vector<int> &maxConflictRows, int i) const {
-    if (tempConflicts > rowConflicts) {
-        rowConflicts = tempConflicts;
-        maxConflictRows.clear();
-        maxConflictRows.push_back(i);
-    } else if (tempConflicts == rowConflicts) {
-        maxConflictRows.push_back(i);
-    }
 }

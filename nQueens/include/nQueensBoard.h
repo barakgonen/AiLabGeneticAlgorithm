@@ -9,7 +9,6 @@
 
 class NqBoard {
 public:
-    // Default ctor
     NqBoard(int size);
     // Copy ctor in order to copy the board for each solver in order to compare them correctly
     NqBoard(const NqBoard& other) = default;
@@ -26,7 +25,7 @@ public:
     int* getLowerDiagCount();
 
 private:
-    const int boardSize;
+    int boardSize;
     int* colCount;
     int* upperDiagCount;
     int* lowerDiagCount;

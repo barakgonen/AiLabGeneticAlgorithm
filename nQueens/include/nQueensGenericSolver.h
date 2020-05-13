@@ -14,7 +14,6 @@ public:
     void printPuzzle() override;
 protected:
     NqBoard board;
-    const int boardSize;
 };
 
 #endif //AILABGENETICALGORITHM_NQUEENSGENERICSOLVER_H
