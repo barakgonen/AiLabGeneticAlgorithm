@@ -13,6 +13,11 @@
 #include "SelectionMethodEnum.h"
 #include "CrossoverMethod.h"
 #include "cmath"
+#include <thread>
+#include <mutex>
+#include <random>
+#include <functional>
+
 
 // This abstract class defines generic behavior of any genetic solver, each specific
 // solver (for specific problem such as string matching / nQueens) should inherit this function
@@ -27,9 +32,9 @@ public:
     , crossoverMethod{crossoverMethod}
     , population{std::vector<PopulationStruct>()}
     , buffer{std::vector<PopulationStruct>()} {
-        std::cout << "Starting GeneticSolver with the following parameters:" << std::endl;
-        std::cout << "selection: " << selectionMethod << std::endl;
-        std::cout << "crossover: " << crossoverMethod << std::endl;
+//        std::cout << "Starting GeneticSolver with the following parameters:" << std::endl;
+//        std::cout << "selection: " << selectionMethod << std::endl;
+//        std::cout << "crossover: " << crossoverMethod << std::endl;
     }
 
     virtual ~AbstractGeneticSolver() = default;
@@ -44,7 +49,7 @@ public:
 
     void elitism(const int esize) override {
         for (int i = 0; i < esize; i++) {
-            buffer[i].fitnessVal = population[i].fitnessVal;
+            buffer.at(i).fitnessVal = population.at(i).fitnessVal;
             handle_specific_elitism(i);
         }
     }
@@ -108,12 +113,12 @@ public:
                     calc_rws(i1, i2);
                     break;
                 case SelectionMethod::Tournament:
-                    tournament();
+                    i1 = tournament();
+                    i2 = tournament();
                     break;
                 case SelectionMethod::Random:
                     random_selection(i1, i2, spos, tsize);
                     set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, tsize);
-
                     break;
             }
             switch (crossoverMethod) {
@@ -121,9 +126,9 @@ public:
                 case CrossoverMethod::SinglePoint:
                     spos = rand() % tsize;
                     set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, tsize);
-                    buffer[i].ageVal = 0;
+//                    buffer[i].ageVal = 0;
                     if (rand() < GA_MUTATION)
-                        this->mutate(buffer[i]);
+                        this->mutate(buffer.at(i));
                     break;
                 case CrossoverMethod::TwoPoints:
                     // choose two positions
@@ -142,10 +147,16 @@ public:
                 case CrossoverMethod::UniformCrossover:
                     this->uniform_crossover(i, i1, i2, spos, tsize);
                     break;
+                case CrossoverMethod::Ox:
+                    this->ox(i);
+                    break;
+                case CrossoverMethod::Pmx:
+                    this->pmx(i, i1, i2);
+                    break;
             }
 
             if (rand() < GA_MUTATION)
-                this->mutate(buffer[i]);
+                this->mutate(buffer.at(i));
 
             if (selectionMethod == SelectionMethod::Rws) {
                 // need to preform scailling
@@ -158,60 +169,82 @@ public:
         }
     }
 
-    virtual void tournament() override {
+    int tournament() override {
         // choose k genes
-        int best = INT_MAX, secondBest = INT_MAX, i1 = 0, i2 = 0;
-        for (int i = 0; i < K; i++) {
-            // random gene
-            int temp = rand() % GA_POPSIZE;
-            // if better gene found we save it
-            if (population[temp].fitnessVal < best) {
-                i2 = i1;
-                i1 = temp;
-                best = population[i1].fitnessVal;
-                if (i != 0)
-                    secondBest = population[i2].fitnessVal;
-            }
-                // if gene better than the second best found
-            else if (population[temp].fitnessVal < secondBest) {
-                i2 = temp;
-                secondBest = population[i2].fitnessVal;
-            }
+//        int best = INT_MAX, secondBest = INT_MAX, i1 = 0, i2 = 0;
+//        for (int i = 0; i < K; i++) {
+//            // random gene
+//            int temp = rand() % GA_POPSIZE;
+//            // if better gene found we save it
+//            if (population[temp].fitnessVal < best) {
+//                i2 = i1;
+//                i1 = temp;
+//                best = population[i1].fitnessVal;
+//                if (i != 0)
+//                    secondBest = population[i2].fitnessVal;
+//            }
+//                // if gene better than the second best found
+//            else if (population[temp].fitnessVal < secondBest) {
+//                i2 = temp;
+//                secondBest = population[i2].fitnessVal;
+//            }
+//        }
+//        bestG = best;
+//        secondBestG = secondBest;
+
+        int bestGene, randomGene;
+        int firstGene, secondGene;
+        bestGene = rand() % (GA_POPSIZE);
+        for (int i = 0; i < 20; i++)
+        {
+            randomGene = rand() % (GA_POPSIZE);
+            if (population[randomGene].fitnessVal < population[bestGene].fitnessVal) /*smaller is better*/
+                bestGene = randomGene;
         }
+        return bestGene;
     }
 
     void print_best() override {
-        std::cout << "Best: " << getBestGene() << " (" << population[0].fitnessVal << ")" << std::endl;
+        std::cout << "Best: " << getBestGene() << " (" << population.at(getBestGeneIndex()).fitnessVal << ")" << std::endl;
     }
 
     virtual std::string getBestGene() const = 0;
+    virtual int getBestGeneIndex() const {return 0;}
 
-    void swap() override {
+    virtual void swap() override {
         std::swap(population, buffer);
     }
 
     double get_average_fitness() override {
-        double avgRes = 0;
-        for (auto val : population)
-            avgRes += val.fitnessVal;
-        return avgRes / population.size();
+        double avg = 0;
+
+        for (const auto& citizen : population)
+            avg += citizen.fitnessVal;
+
+        return avg / GA_POPSIZE;
     }
 
-    double get_standard_aviation(const double averagedFitnessValue) override {
-        double standardDeviation = 0;
-        for (auto val : population)
-            standardDeviation += pow(val.fitnessVal - averagedFitnessValue, 2);
-        return standardDeviation / population.size();
+    double get_standard_deviation(const double averagedFitnessValue) override {
+        double sum = 0;
+        for (const auto& citizen : population)
+            sum += pow(citizen.fitnessVal - averagedFitnessValue, 2);
+        return sqrt(sum / GA_POPSIZE);
     }
 
     virtual std::vector<double> get_weights_vector(double avg) override {
-        std::cout << "Returning default vector, if you see this print, you use base func instead of overriding it"
-                  << std::endl;
-        return std::vector<double>();
+        std::vector<double> weights;
+        for (int j = 0; j < GA_POPSIZE; j++) {
+            if (j != 0)
+                // we add previous weight for later use in rws function
+                weights.push_back(population.at(j).fitnessVal / (avg * GA_POPSIZE) + weights[j - 1]);
+            else
+                weights.push_back(population.at(j).fitnessVal / (avg * GA_POPSIZE));
+        }
+        return weights;
     }
 
 protected:
-    // this function is nesseccerry for specific structs we handle in this algorithm
+    // this function is necessary for specific structs we handle in this algorithm
     virtual void handle_specific_elitism(const int index) = 0;
 
     virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) = 0;

@@ -1,6 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj"
   "CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj"
+  "CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj"
+  "CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.obj"
+  "CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj"
   "CMakeFiles/geneticString.dir/main/main.cpp.obj"
   "CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj"
   "CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj"

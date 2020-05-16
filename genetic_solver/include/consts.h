@@ -4,6 +4,8 @@
 
 #ifndef AILABGENETICALGORITHM_GENETIC_SOLVER_CONSTS_H
 #define AILABGENETICALGORITHM_GENETIC_SOLVER_CONSTS_H
+
+#include "stdlib.h"
 static const double GA_ELITRATE = 0.10f;		// elitism rate
 static const double GA_MUTATIONRATE = 0.25f;		// mutation rate
 static const int GA_POPSIZE = 2048;		// ga population size

@@ -4,50 +4,40 @@
 
 #ifndef AILABGENETICALGORITHM_KNAPSACKGENETICSOLVER_H
 #define AILABGENETICALGORITHM_KNAPSACKGENETICSOLVER_H
+
+#include <GeneticAlgorithmBaseStruct.h>
 #include "vector"
 #include "KnapSackStaticDataSetInitializer.h"
 #include "memory"
+#include "AbstractGeneticSolver.h"
 
-#define W 26
-
-struct ga_struct {
+struct ga_struct : public GeneticAlgorithmBaseStruct {
     ga_struct() = default;
-
-    unsigned int fitness;
-    double sumweight;
-    std::vector<double> sack;
-//    double sack[N];
-//    std::unique_ptr<int[]> sack;
+    double sigmaWeight;
+    std::vector<int> sack;
 };
 
 typedef std::vector<ga_struct> ga_vector;// for brevity
 
-class KnapSackGeneticSolver {
+class KnapSackGeneticSolver : public AbstractGeneticSolver<ga_struct>{
 
 public:
-    KnapSackGeneticSolver(const int puzzleKey, const KnapSackStaticDataSetInitializer& staticDataSetInitializer);
-
+    KnapSackGeneticSolver(const int puzzleKey, const KnapSackStaticDataSetInitializer& staticDataSetInitializer,
+                            SelectionMethod selectionMethod, CrossoverMethod crossoverMethod);
     std::vector<int> solve();
+    std::string getBestGene() const override;
+    int start_solve() override;
+    void print_results() override;
+    void init_population() override;
+    void calc_fitness() override;
+    int get_input_size() override;
+    void mutate(ga_struct &member) override;
+    void handle_specific_elitism(const int index) override;
+    virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) override ;
+    virtual void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int spos2, int tsize) override ;
+    virtual int getBestGeneIndex() const override;
 protected:
-    void init_population(ga_vector &population, ga_vector &buffer);
-    void calc_fitness(ga_vector &population);
-    void Standard_deviation(double avg);
-    double calcStandardDeviation(ga_vector &population, double avg);
-    double calcAvgFitness(ga_vector &population);
-    void sort_by_fitness(ga_vector &population);
-    void elitism(ga_vector &population, ga_vector &buffer, int esize);
-    void mutate(ga_struct &member);
-    void mutate2(ga_struct &member);
-    int tournamentSelection(ga_vector &population);
-    int RWS(ga_vector &population);
-    void mate(ga_vector &population, ga_vector &buffer, int TournamentSelection = 0, int rws = 0, int twoPointCross = 0,
-                                     int Mutate = 0);
-    void set_profits(const int puzzleID, const KnapSackStaticDataSetInitializer& staticDataSetInitializer);
-    void set_weights(const int puzzleID, const KnapSackStaticDataSetInitializer& staticDataSetInitializer);
-    void print_best(ga_vector &gav);
-    void swap(ga_vector *&population, ga_vector *&buffer);
-    const int sackSize;
-    std::vector<int> optimalSelection;
+    const int capacity;
     std::vector<int> profits;
     std::vector<int> weights;
     const int N;

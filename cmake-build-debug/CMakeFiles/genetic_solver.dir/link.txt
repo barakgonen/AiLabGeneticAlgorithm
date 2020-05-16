@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc libgenetic_solver.a  CMakeFiles/genetic_solver.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj
+C:\MinGW\bin\ranlib.exe libgenetic_solver.a

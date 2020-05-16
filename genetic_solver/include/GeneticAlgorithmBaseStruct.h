@@ -10,6 +10,7 @@ struct GeneticAlgorithmBaseStruct {
     : fitnessVal{0}
     , ageVal{0}
     {}
+
     // Default empty ctor
     unsigned int fitnessVal;
     int ageVal;

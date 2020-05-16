@@ -176,6 +176,87 @@ genetic_solver/src/AbstractGeneticSolver.cpp.s:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.s
 .PHONY : genetic_solver/src/AbstractGeneticSolver.cpp.s
 
+knap_sack/src/KnapSackGeneticSolver.obj: knap_sack/src/KnapSackGeneticSolver.cpp.obj
+
+.PHONY : knap_sack/src/KnapSackGeneticSolver.obj
+
+# target to build an object file
+knap_sack/src/KnapSackGeneticSolver.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj
+.PHONY : knap_sack/src/KnapSackGeneticSolver.cpp.obj
+
+knap_sack/src/KnapSackGeneticSolver.i: knap_sack/src/KnapSackGeneticSolver.cpp.i
+
+.PHONY : knap_sack/src/KnapSackGeneticSolver.i
+
+# target to preprocess a source file
+knap_sack/src/KnapSackGeneticSolver.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.i
+.PHONY : knap_sack/src/KnapSackGeneticSolver.cpp.i
+
+knap_sack/src/KnapSackGeneticSolver.s: knap_sack/src/KnapSackGeneticSolver.cpp.s
+
+.PHONY : knap_sack/src/KnapSackGeneticSolver.s
+
+# target to generate assembly for a file
+knap_sack/src/KnapSackGeneticSolver.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.s
+.PHONY : knap_sack/src/KnapSackGeneticSolver.cpp.s
+
+knap_sack/src/KnapSackPuzzleData.obj: knap_sack/src/KnapSackPuzzleData.cpp.obj
+
+.PHONY : knap_sack/src/KnapSackPuzzleData.obj
+
+# target to build an object file
+knap_sack/src/KnapSackPuzzleData.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.obj
+.PHONY : knap_sack/src/KnapSackPuzzleData.cpp.obj
+
+knap_sack/src/KnapSackPuzzleData.i: knap_sack/src/KnapSackPuzzleData.cpp.i
+
+.PHONY : knap_sack/src/KnapSackPuzzleData.i
+
+# target to preprocess a source file
+knap_sack/src/KnapSackPuzzleData.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.i
+.PHONY : knap_sack/src/KnapSackPuzzleData.cpp.i
+
+knap_sack/src/KnapSackPuzzleData.s: knap_sack/src/KnapSackPuzzleData.cpp.s
+
+.PHONY : knap_sack/src/KnapSackPuzzleData.s
+
+# target to generate assembly for a file
+knap_sack/src/KnapSackPuzzleData.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.s
+.PHONY : knap_sack/src/KnapSackPuzzleData.cpp.s
+
+knap_sack/src/KnapSackStaticDataSetInitializer.obj: knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj
+
+.PHONY : knap_sack/src/KnapSackStaticDataSetInitializer.obj
+
+# target to build an object file
+knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj
+.PHONY : knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj
+
+knap_sack/src/KnapSackStaticDataSetInitializer.i: knap_sack/src/KnapSackStaticDataSetInitializer.cpp.i
+
+.PHONY : knap_sack/src/KnapSackStaticDataSetInitializer.i
+
+# target to preprocess a source file
+knap_sack/src/KnapSackStaticDataSetInitializer.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.i
+.PHONY : knap_sack/src/KnapSackStaticDataSetInitializer.cpp.i
+
+knap_sack/src/KnapSackStaticDataSetInitializer.s: knap_sack/src/KnapSackStaticDataSetInitializer.cpp.s
+
+.PHONY : knap_sack/src/KnapSackStaticDataSetInitializer.s
+
+# target to generate assembly for a file
+knap_sack/src/KnapSackStaticDataSetInitializer.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.s
+.PHONY : knap_sack/src/KnapSackStaticDataSetInitializer.cpp.s
+
 main/main.obj: main/main.cpp.obj
 
 .PHONY : main/main.obj
@@ -380,6 +461,15 @@ help:
 	@echo ... genetic_solver/src/AbstractGeneticSolver.obj
 	@echo ... genetic_solver/src/AbstractGeneticSolver.i
 	@echo ... genetic_solver/src/AbstractGeneticSolver.s
+	@echo ... knap_sack/src/KnapSackGeneticSolver.obj
+	@echo ... knap_sack/src/KnapSackGeneticSolver.i
+	@echo ... knap_sack/src/KnapSackGeneticSolver.s
+	@echo ... knap_sack/src/KnapSackPuzzleData.obj
+	@echo ... knap_sack/src/KnapSackPuzzleData.i
+	@echo ... knap_sack/src/KnapSackPuzzleData.s
+	@echo ... knap_sack/src/KnapSackStaticDataSetInitializer.obj
+	@echo ... knap_sack/src/KnapSackStaticDataSetInitializer.i
+	@echo ... knap_sack/src/KnapSackStaticDataSetInitializer.s
 	@echo ... main/main.obj
 	@echo ... main/main.i
 	@echo ... main/main.s

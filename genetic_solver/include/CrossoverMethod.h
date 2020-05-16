@@ -7,6 +7,8 @@
 enum CrossoverMethod{
     SinglePoint,
     TwoPoints,
-    UniformCrossover
+    UniformCrossover,
+    Ox,
+    Pmx
 };
 #endif //AILABGENETICALGORITHM_CROSSOVERMETHOD_H

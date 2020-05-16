@@ -6,6 +6,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/src/OutputFileWriter.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/src/AbstractGeneticSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj"
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/src/KnapSackGeneticSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj"
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/src/KnapSackPuzzleData.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.obj"
+  "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/src/KnapSackStaticDataSetInitializer.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensBoard.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj"
   "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGenericSolver.cpp" "C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj"
@@ -18,6 +21,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../genetic_solver/include"
   )
 
 # Targets to which this target links.

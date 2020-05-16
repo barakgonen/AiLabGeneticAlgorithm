@@ -12,8 +12,9 @@ KnapSackStaticDataSetInitializer::KnapSackStaticDataSetInitializer(const std::st
     addToStaticDataSet(5, basePath);
     addToStaticDataSet(6, basePath);
     addToStaticDataSet(7, basePath);
-    addToStaticDataSet(8, basePath);
+//    addToStaticDataSet(8, basePath);
 }
+
 bool KnapSackStaticDataSetInitializer::isOptimalSelectionReached(const int exampleNum,
                                                                  std::vector<int> actualOptimalSelection) const {
     const auto& expectedOptimalSelection = dataSet.at(exampleNum).getOptimalSelection();
@@ -38,16 +39,24 @@ std::vector<int> KnapSackStaticDataSetInitializer::getPuzzlesIDs() const{
 }
 
 const int KnapSackStaticDataSetInitializer::getCapacity(const int puzzleID) const {
-    return dataSet.at(puzzleID).getCapacity();
+    for (const auto val : dataSet)
+        if (val.first == puzzleID)
+            return val.second.getCapacity();
 }
 const std::vector<int> KnapSackStaticDataSetInitializer::getWeights(const int puzzleID) const {
-    return dataSet.at(puzzleID).getWeights();
+    for (const auto val : dataSet)
+        if (val.first == puzzleID)
+            return val.second.getWeights();
 }
 
 const std::vector<int> KnapSackStaticDataSetInitializer::getProfits(const int puzzleID) const{
-    return dataSet.at(puzzleID).getProfits();
+    for (const auto val : dataSet)
+        if (val.first == puzzleID)
+            return val.second.getProfits();
 }
 
 const std::vector<int> KnapSackStaticDataSetInitializer::getOptimalSelection(const int puzzleID) const{
-    return dataSet.at(puzzleID).getOptimalSelection();
+    for (const auto val : dataSet)
+        if (val.first == puzzleID)
+            return val.second.getOptimalSelection();
 }

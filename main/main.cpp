@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <functional>
 #include "../string_matching/include/consts.h"
 #include "../string_matching/include/StringMatchingGeneticSolver.h"
 
@@ -10,182 +11,93 @@
 #include "../string_matching/include/StringMatchingOutputFileWriter.h"
 #include "../nQueens/include/consts.h"
 #include "../nQueens/include/nQueensMinimalConflictsSolver.h"
+#include "../general_utilities/include/random_collection_generator.h"
+#include "../nQueens/include/nQueensMinimalConflictsSolver.h"
+#include "../knap_sack/include/KnapSackGeneticSolver.h"
+#include "../knap_sack/include/KnapSackStaticDataSetInitializer.h"
 
 using namespace std;
 
+// .exe path always is the fist program argument
+std::string getRunningPath(char **argv) {
+    std::string basePath = argv[0];
+    int index = basePath.find_last_of("\\");
+    basePath = basePath.substr(0, index);
+    index = basePath.find_last_of("\\");
+    basePath = basePath.substr(0, index);
+    return basePath;
+}
+
+// Command to execute always is the second parameter
 std::string getMethodToRun(int argc, char **argv) {
     std::string method_to_run;
     if (argc >= 2) {
         method_to_run = argv[1];
     } else {
-        cout << "Choose lab to run: string_matching / nQueens" << endl;
+        cout << "Choose lab to run: string_matching / nQueens / KnapSack" << endl;
         getline(cin, method_to_run);
     }
     return method_to_run;
 }
 
-std::string getStringToWorkWith(int argc, char **argv) {
-    std::string stringToWorkWith = GA_TARGET;
-    if (argc >= 2)
-        stringToWorkWith = argv[2];
-    return stringToWorkWith;
-}
-
-HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
-    string heuristicType;
-    HeuristicsEnum hType;
-    if (argc >= 3) {
-        heuristicType = argv[3];
-        if (heuristicType == defaultHeuristic)
-            hType = HeuristicsEnum::DefaultHeuristic;
-        else if (heuristicType == bullsAndCows)
-            hType = HeuristicsEnum::BullsAndCows;
-        else {
-            cout << "Unrecognized heuristic method, setting by default to random heuristic" << endl;
-            hType = HeuristicsEnum::DefaultHeuristic;
-        }
-    } else {
-        cout << "Choose heuristic method: " << defaultHeuristic << " / " << bullsAndCows << endl;
-        getline(cin, heuristicType);
-        if (heuristicType == defaultHeuristic)
-            hType = HeuristicsEnum::DefaultHeuristic;
-        else if (heuristicType == bullsAndCows)
-            hType = HeuristicsEnum::BullsAndCows;
-        else {
-            cout << "Unrecognized heuristic method, setting by default to default heuristic" << endl;
-            hType = HeuristicsEnum::DefaultHeuristic;
-        }
-    }
-    return hType;
-}
-
-SelectionMethod getSelectionMethod(int argc, char **argv, bool isStringMatching=true) {
+// Selection method always is the 3rd argument, index = 2
+SelectionMethod getSelectionMethod(int argc, char **argv) {
     SelectionMethod selectionMethod;
     std::string selectionMethodStr = "";
-    if (isStringMatching)
-    {
-        if (argc >= 4) {
-            selectionMethodStr = argv[4];
-            if (selectionMethodStr == "Random")
-                selectionMethod = SelectionMethod::Random;
-            else if (selectionMethodStr == "Tournament")
-                selectionMethod = SelectionMethod::Tournament;
-            else if (selectionMethodStr == "Rws")
-                selectionMethod = SelectionMethod::Rws;
-            else if (selectionMethodStr == "Aging")
-                selectionMethod = SelectionMethod::Aging;
-            else {
-                cout << "Unrecognized selectionMethod, setting by to default selection method" << endl;
-                selectionMethod = SelectionMethod::Random;
-            }
-
-        } else {
-            cout << "Choose selection method: DefaultHeuristic / Tournament / Rws" << endl;
-            getline(cin, selectionMethodStr);
-            if (selectionMethodStr == "Random")
-                selectionMethod = SelectionMethod::Random;
-            else if (selectionMethodStr == "Tournament")
-                selectionMethod = SelectionMethod::Tournament;
-            else if (selectionMethodStr == "Rws")
-                selectionMethod = SelectionMethod::Rws;
-            else if (selectionMethodStr == "Aging")
-                selectionMethod = SelectionMethod::Aging;
-            else {
-                cout << "Unrecognized selectionMethod, setting by default to random selection" << endl;
-                selectionMethod = SelectionMethod::Random;
-            }
-        }
-    }
+    if (argc >= 3)
+        selectionMethodStr = argv[2];
     else {
-        if (argc >= 3) {
-            selectionMethodStr = argv[3];
-            if (selectionMethodStr == "Random")
-                selectionMethod = SelectionMethod::Random;
-            else if (selectionMethodStr == "Rws")
-                selectionMethod = SelectionMethod::Rws;
-            else {
-                cout << "Unrecognized selectionMethod, setting by to default selection method" << endl;
-                selectionMethod = SelectionMethod::Random;
-            }
-        } else {
-            cout << "Choose selection method: Default / Rws" << endl;
-            getline(cin, selectionMethodStr);
-            if (selectionMethodStr == "Random")
-                selectionMethod = SelectionMethod::Random;
-            else if (selectionMethodStr == "Rws")
-                selectionMethod = SelectionMethod::Rws;
-            else {
-                cout << "Unrecognized selectionMethod, setting by default to random selection" << endl;
-                selectionMethod = SelectionMethod::Random;
-            }
-        }
+        cout << "Choose selection method: Random / Tournament / Rws / Aging " << endl;
+        getline(cin, selectionMethodStr);
+    }
+    if (selectionMethodStr == "Random")
+        selectionMethod = SelectionMethod::Random;
+    else if (selectionMethodStr == "Tournament")
+        selectionMethod = SelectionMethod::Tournament;
+    else if (selectionMethodStr == "Rws")
+        selectionMethod = SelectionMethod::Rws;
+    else if (selectionMethodStr == "Aging")
+        selectionMethod = SelectionMethod::Aging;
+    else {
+        cout << "Unrecognized selectionMethod, setting by to default selection method" << endl;
+        selectionMethod = SelectionMethod::Random;
     }
     return selectionMethod;
 }
 
-CrossoverMethod getCrossoverMethod(int argc, char **argv, bool isStringMatching=true) {
+// Crossover method always the 4th argument, index = 3
+CrossoverMethod getCrossoverMethod(int argc, char **argv) {
     CrossoverMethod crossoverMethod;
     std::string crossoverMethodStr = "";
-    if (isStringMatching){
-        if (argc >= 5) {
-            crossoverMethodStr = argv[5];
-            if (crossoverMethodStr == "SinglePoint")
-                crossoverMethod = CrossoverMethod::SinglePoint;
-            else if (crossoverMethodStr == "TwoPoints")
-                crossoverMethod = CrossoverMethod::TwoPoints;
-            else if (crossoverMethodStr == "UniformCrossover")
-                crossoverMethod = CrossoverMethod::UniformCrossover;
-            else {
-                cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
-                crossoverMethod = CrossoverMethod::SinglePoint;
-            }
-        } else {
-            cout << "Choose crossover method: TwoPoints / Tournament " << endl;
-            getline(cin, crossoverMethodStr);
-            if (crossoverMethodStr == "SinglePoint")
-                crossoverMethod = CrossoverMethod::SinglePoint;
-            else if (crossoverMethodStr == "TwoPoints")
-                crossoverMethod = CrossoverMethod::TwoPoints;
-            else if (crossoverMethodStr == "UniformCrossover")
-                crossoverMethod = CrossoverMethod::UniformCrossover;
-            else {
-                cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
-                crossoverMethod = CrossoverMethod::SinglePoint;
-            }
-        }
+    if (argc >= 4)
+        crossoverMethodStr = argv[3];
+    else {
+        cout << "Choose crossover method: SinglePoint / TwoPoints / UniformCrossover / Ox / Pmx " << endl;
+        getline(cin, crossoverMethodStr);
     }
-    else{
-        if (argc >= 4) {
-            crossoverMethodStr = argv[4];
-            if (crossoverMethodStr == "Ox")
-                crossoverMethod = CrossoverMethod::Ox;
-            else if (crossoverMethodStr == "Pmx")
-                crossoverMethod = CrossoverMethod::Pmx;
-            else {
-                cout << "Unrecognized crossover method, setting to Ox" << endl;
-                crossoverMethod = CrossoverMethod::Ox;
-            }
-        } else {
-            cout << "Choose crossover method: Ox / Pmx " << endl;
-            getline(cin, crossoverMethodStr);
-            if (crossoverMethodStr == "Ox")
-                crossoverMethod = CrossoverMethod::Ox;
-            else if (crossoverMethodStr == "Pmx")
-                crossoverMethod = CrossoverMethod::Pmx;
-            else {
-                cout << "Unrecognized crossover method, setting to Ox" << endl;
-                crossoverMethod = CrossoverMethod::Ox;
-            }
-        }
+    if (crossoverMethodStr == "SinglePoint")
+        crossoverMethod = CrossoverMethod::SinglePoint;
+    else if (crossoverMethodStr == "TwoPoints")
+        crossoverMethod = CrossoverMethod::TwoPoints;
+    else if (crossoverMethodStr == "UniformCrossover")
+        crossoverMethod = CrossoverMethod::UniformCrossover;
+    else if (crossoverMethodStr == "Ox")
+        crossoverMethod = CrossoverMethod::Ox;
+    else if (crossoverMethodStr == "Pmx")
+        crossoverMethod = CrossoverMethod::Pmx;
+    else {
+        cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
+        crossoverMethod = CrossoverMethod::SinglePoint;
     }
     return crossoverMethod;
 }
 
+// nQueens specific!
 MutationOperator getMutationOperator(int argc, char **argv) {
     MutationOperator mutationOperator;
     std::string mutationOperatorStr = "";
     if (argc >= 5) {
-        mutationOperatorStr = argv[5];
+        mutationOperatorStr = argv[4];
         if (mutationOperatorStr == "Inversion")
             mutationOperator = MutationOperator::Inversion;
         else if (mutationOperatorStr == "Exchange")
@@ -209,6 +121,52 @@ MutationOperator getMutationOperator(int argc, char **argv) {
     return mutationOperator;
 }
 
+// Relevant for nQueens & String matching
+HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
+    string heuristicType;
+    HeuristicsEnum hType;
+    if (argc >= 6) {
+        heuristicType = argv[5];
+        if (heuristicType == defaultHeuristic)
+            hType = HeuristicsEnum::DefaultHeuristic;
+        else if (heuristicType == bullsAndCows)
+            hType = HeuristicsEnum::BullsAndCows;
+        else {
+            cout << "Unrecognized heuristic method, setting by default to random heuristic" << endl;
+            hType = HeuristicsEnum::DefaultHeuristic;
+        }
+    } else {
+        cout << "Choose heuristic method: " << defaultHeuristic << " / " << bullsAndCows << endl;
+        getline(cin, heuristicType);
+        if (heuristicType == defaultHeuristic)
+            hType = HeuristicsEnum::DefaultHeuristic;
+        else if (heuristicType == bullsAndCows)
+            hType = HeuristicsEnum::BullsAndCows;
+        else {
+            cout << "Unrecognized heuristic method, setting by default to default heuristic" << endl;
+            hType = HeuristicsEnum::DefaultHeuristic;
+        }
+    }
+    return hType;
+}
+
+// String matching specifics!
+std::string getStringToWorkWith(int argc, char **argv) {
+    std::string stringToWorkWith = GA_TARGET;
+    if (argc >= 7)
+        stringToWorkWith = argv[6];
+    return stringToWorkWith;
+}
+
+// Nqueens specific, it's the same function as the one above, they will share the same index
+int getBoardSizeAndNumberOfQueens(int argc, char **argv) {
+    int boardSizeAndNumberOfQueens = DEFAULT_NUMBER_OF_QUEENS_AND_BOARD_SIZE;
+    if (argc >= 7)
+        boardSizeAndNumberOfQueens = atoi(argv[6]);
+    return boardSizeAndNumberOfQueens;
+}
+
+// Assuming output path always is the last argument given
 std::string getOutputPath(int argc, char **argv) {
     std::string outputPath = "output/";
     std::string basePath = argv[0];
@@ -216,17 +174,9 @@ std::string getOutputPath(int argc, char **argv) {
     basePath = basePath.substr(0, index);
     index = basePath.find_last_of("\\");
     basePath = basePath.substr(0, index);
-    if (argc >= 6)
-        outputPath = argv[6];
+    outputPath = argv[argc];
     basePath += "\\" + outputPath;
     return basePath;
-}
-
-int getBoardSizeAndNumberOfQueens(int argc, char **argv) {
-    int boardSizeAndNumberOfQueens = DEFAULT_NUMBER_OF_QUEENS_AND_BOARD_SIZE;
-    if (argc > 2)
-        boardSizeAndNumberOfQueens = atoi(argv[2]);
-    return boardSizeAndNumberOfQueens;
 }
 
 int main(int argc, char *argv[]) {
@@ -249,18 +199,63 @@ int main(int argc, char *argv[]) {
         std::cout << "you would like to run nqueens" << std::endl;
         NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
         MutationOperator mutationOperator = getMutationOperator(argc, argv);
-        SelectionMethod selectionMethod = getSelectionMethod(argc, argv, false);
-        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv, false);
-        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
-        std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-        nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator};
-//        minimalConflictsSolver.solvePuzzle();
-        geneticSolver.solvePuzzle();
+        SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
+        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
+        int errorsCounter = 0;
+        int passed = 0;
+        std::srand(std::time(nullptr)); // use current time as seed for random generator
+//        for (int i = 0; i < 100000; i++)
+//        {
+//            int x =rand() % getBoardSizeAndNumberOfQueens(argc, argv) + 3;
+//            NqBoard board{x};
+//            if (board.myConflicts() != board.conflicts()){
+//                std::cout << "Diff, orig: " << board.conflicts() << ", mine: " << board.myConflicts() << std::endl;
+//                errorsCounter++;
+//            } else
+//                passed++;
+//        }
+//        std::cout << "Total number of errors: " << errorsCounter << std::endl;
+//        std::cout << "Total tests passed: " << passed << std::endl;
+
+//        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+//        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
 //        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+//        minimalConflictsSolver.solvePuzzle();
 //        minimalConflictsSolver.printPuzzle();
-        std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+        std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+        nQueensGeneticSolver geneticSolver{board, SelectionMethod::Random, crossoverMethod, mutationOperator};
         geneticSolver.printPuzzle();
+        geneticSolver.solvePuzzle();
+//        geneticSolver.printPuzzle();
     }
+    else if (labSelector == "KnapSack") {
+        std::cout << "You have chosen KnapSack" << std::endl;
+        string basePath = getRunningPath(argv);
+        SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
+        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
+        KnapSackStaticDataSetInitializer initializer{basePath};
+        int i;
+        int failures = 0;
+        int passedCounter = 0;
+        int c = 5;
+
+        for (i = 0; i < c; i++){
+            for (const auto key : initializer.getPuzzlesIDs()) {
+//                int key = 1;
+                KnapSackGeneticSolver solver{key, initializer, selectionMethod, crossoverMethod};
+                const auto result = solver.solve();
+                if (initializer.isOptimalSelectionReached(key, result)) {
+                    std::cout << "Puzzle " << key << " solved in optiomal solution!" << std::endl;
+                    passedCounter++;
+                } else {
+                    failures++;
+                }
+            }
+        }
+        std::cout << "i is: " << i << std::endl;
+        std::cout << "Totally solved: " << passedCounter << "/" << initializer.getPuzzlesIDs().size() * c << " puzzles!" << std::endl;
+        std::cout << "failures: "<<failures << std::endl;
+    }
+
     return 0;
 }

@@ -6,6 +6,34 @@
 
 #IncludeRegexTransform: 
 
+../genetic_solver/include/AbstractGeneticSolver.h
+algorithm
+-
+iostream
+-
+limits.h
+-
+IGeneticAlgorithmApi.h
+../genetic_solver/include/IGeneticAlgorithmApi.h
+consts.h
+../genetic_solver/include/consts.h
+SelectionMethodEnum.h
+../genetic_solver/include/SelectionMethodEnum.h
+CrossoverMethod.h
+../genetic_solver/include/CrossoverMethod.h
+cmath
+../genetic_solver/include/cmath
+thread
+-
+mutex
+-
+random
+-
+functional
+-
+
+../genetic_solver/include/GeneticAlgorithmBaseStruct.h
+
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/OutputFileWriter.h
 string
 -
@@ -13,6 +41,18 @@ vector
 -
 ../../genetic_solver/include/IterationRawOutput.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/IterationRawOutput.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/random_collection_generator.h
+algorithm
+-
+random
+-
+time.h
+-
+ctime
+-
+vector
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/vector
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
 algorithm
@@ -31,6 +71,14 @@ CrossoverMethod.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/CrossoverMethod.h
 cmath
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/cmath
+thread
+-
+mutex
+-
+random
+-
+functional
+-
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/CrossoverMethod.h
 
@@ -42,12 +90,44 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_sol
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/IterationRawOutput.h
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/MutationOperators.h
+
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/SelectionMethodEnum.h
 
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/consts.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackGeneticSolver.h
+GeneticAlgorithmBaseStruct.h
+-
+vector
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/vector
+KnapSackStaticDataSetInitializer.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackStaticDataSetInitializer.h
+memory
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/memory
+AbstractGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/AbstractGeneticSolver.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackPuzzleData.h
+vector
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/vector
+string
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/string
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackStaticDataSetInitializer.h
+map
+-
+vector
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/vector
+KnapSackPuzzleData.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackPuzzleData.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/src/KnapSackStaticDataSetInitializer.cpp
+../include/KnapSackStaticDataSetInitializer.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackStaticDataSetInitializer.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp
 iostream
+-
+functional
 -
 ../string_matching/include/consts.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/consts.h
@@ -61,6 +141,14 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matc
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/consts.h
 ../nQueens/include/nQueensMinimalConflictsSolver.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensMinimalConflictsSolver.h
+../general_utilities/include/random_collection_generator.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/random_collection_generator.h
+../nQueens/include/nQueensMinimalConflictsSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensMinimalConflictsSolver.h
+../knap_sack/include/KnapSackGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackGeneticSolver.h
+../knap_sack/include/KnapSackStaticDataSetInitializer.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackStaticDataSetInitializer.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/InQueensSolver.h
 
@@ -87,14 +175,12 @@ nQueensGeneticAlgoStruct.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticAlgoStruct.h
 ../../genetic_solver/include/AbstractGeneticSolver.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
+../../genetic_solver/include/MutationOperators.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/MutationOperators.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensMinimalConflictsSolver.h
 nQueensGenericSolver.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
-
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGeneticSolver.cpp
-../include/nQueensGeneticSolver.h
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticSolver.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatchingAlgStruct.h
 string

@@ -13,13 +13,39 @@ CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj: .
 CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj: ../genetic_solver/include/consts.h
 CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj: ../genetic_solver/src/AbstractGeneticSolver.cpp
 
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../genetic_solver/include/AbstractGeneticSolver.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../genetic_solver/include/CrossoverMethod.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../genetic_solver/include/GeneticAlgorithmBaseStruct.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../genetic_solver/include/IGeneticAlgorithmApi.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../genetic_solver/include/SelectionMethodEnum.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../genetic_solver/include/consts.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../knap_sack/include/KnapSackGeneticSolver.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../knap_sack/include/KnapSackPuzzleData.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../knap_sack/include/KnapSackStaticDataSetInitializer.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../knap_sack/src/KnapSackGeneticSolver.cpp
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj: ../string_matching/include/consts.h
+
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.obj: ../knap_sack/include/KnapSackPuzzleData.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.obj: ../knap_sack/src/KnapSackPuzzleData.cpp
+
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj: ../knap_sack/include/KnapSackPuzzleData.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj: ../knap_sack/include/KnapSackStaticDataSetInitializer.h
+CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj: ../knap_sack/src/KnapSackStaticDataSetInitializer.cpp
+
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/AbstractGeneticSolver.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/GeneticAlgorithmBaseStruct.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../general_utilities/include/OutputFileWriter.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../general_utilities/include/random_collection_generator.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/AbstractGeneticSolver.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/CrossoverMethod.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/GeneticAlgorithmBaseStruct.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/IGeneticAlgorithmApi.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/IterationRawOutput.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/MutationOperators.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../genetic_solver/include/SelectionMethodEnum.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../knap_sack/include/KnapSackGeneticSolver.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../knap_sack/include/KnapSackPuzzleData.h
+CMakeFiles/geneticString.dir/main/main.cpp.obj: ../knap_sack/include/KnapSackStaticDataSetInitializer.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../main/main.cpp
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/InQueensSolver.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../nQueens/include/consts.h
@@ -34,6 +60,7 @@ CMakeFiles/geneticString.dir/main/main.cpp.obj: ../string_matching/include/Strin
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../string_matching/include/StringMatchingOutputFileWriter.h
 CMakeFiles/geneticString.dir/main/main.cpp.obj: ../string_matching/include/consts.h
 
+CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj: ../general_utilities/include/random_collection_generator.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj: ../nQueens/include/nQueensBoard.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj: ../nQueens/src/nQueensBoard.cpp
 
@@ -46,6 +73,7 @@ CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../geneti
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/CrossoverMethod.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/GeneticAlgorithmBaseStruct.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/IGeneticAlgorithmApi.h
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/MutationOperators.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/SelectionMethodEnum.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../genetic_solver/include/consts.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/InQueensSolver.h
@@ -54,6 +82,7 @@ CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueen
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/nQueensGeneticAlgoStruct.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/include/nQueensGeneticSolver.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../nQueens/src/nQueensGeneticSolver.cpp
+CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj: ../string_matching/include/consts.h
 
 CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj: ../nQueens/include/InQueensSolver.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj: ../nQueens/include/nQueensBoard.h
