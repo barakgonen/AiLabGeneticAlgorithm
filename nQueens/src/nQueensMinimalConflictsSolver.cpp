@@ -7,13 +7,13 @@
 #include <chrono>
 #include <iostream>
 #include <math.h>
-#include "../include/barakMinimalConflictsSolver.h"
-barakMinimalConflictsSolver::barakMinimalConflictsSolver(const NqBoard &board)
+#include "../include/nQueensMinimalConflictsSolver.h"
+nQueensMinimalConflictsSolver::nQueensMinimalConflictsSolver(const NqBoard &board)
 : nQueensGenericSolver{board}
 {
 }
 
-int barakMinimalConflictsSolver::calculateConflictsForSpecificQueen(int queenRow) {
+int nQueensMinimalConflictsSolver::calculateConflictsForSpecificQueen(int queenRow) {
     int count = 0;
     // iterate every raw
     for (int rawToTest = 0; rawToTest < board.getBoardSize(); rawToTest++) {
@@ -27,7 +27,7 @@ int barakMinimalConflictsSolver::calculateConflictsForSpecificQueen(int queenRow
     return count;
 }
 
-void barakMinimalConflictsSolver::solvePuzzle() {
+void nQueensMinimalConflictsSolver::solvePuzzle() {
     auto startTimeStamp = std::chrono::high_resolution_clock::now();
     std::vector <int> worstRows;
     int steps = 0;

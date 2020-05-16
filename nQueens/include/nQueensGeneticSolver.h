@@ -34,16 +34,15 @@ public:
 
     std::string getBestGene() const override;
 
-    void pmx(const int i, const int i1, const int i2) override ;
-    void ox(const int i, const int i1, const int i2) override ;
-    void elitism(const int esize) override;
+    void pmx(const int i, const int i1, const int i2) override;
+    void ox(const int i) override;
 
 protected:
-    void setQueenPosition(const int index, const int val);
-    void addToConflictsVec(int &currentMinConflicts,
-                      int &currentConflictsNumber,
-                      std::vector<int> &conflictsVec,
-                      int i) const;
+//    void setQueenPosition(const int index, const int val);
+//    void addToConflictsVec(int &currentMinConflicts,
+//                      int &currentConflictsNumber,
+//                      std::vector<int> &conflictsVec,
+//                      int i) const;
     void handle_specific_elitism(const int index) override;
 
     void
@@ -53,6 +52,8 @@ protected:
     void
     set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex,
                                                     int spos, int spos2, int tsize) override;
+
+    int buffer_contains(const nQueensGeneticAlgoStruct& member, int num);
 
     MutationOperator mutataionOperator;
 };

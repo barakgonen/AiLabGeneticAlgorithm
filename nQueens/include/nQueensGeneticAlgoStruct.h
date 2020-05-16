@@ -8,9 +8,14 @@
 #include "../../genetic_solver/include/GeneticAlgorithmBaseStruct.h"
 
 struct nQueensGeneticAlgoStruct : public GeneticAlgorithmBaseStruct {
-    nQueensGeneticAlgoStruct(const NqBoard& nqBoard)
+    nQueensGeneticAlgoStruct()
     : GeneticAlgorithmBaseStruct{}
-    , nQueensBoard{nqBoard}
+    , nQueensBoard{}
+    {};
+
+    nQueensGeneticAlgoStruct(const int boardSize)
+    : GeneticAlgorithmBaseStruct{}
+    , nQueensBoard{boardSize}
     {};
 
     NqBoard nQueensBoard;

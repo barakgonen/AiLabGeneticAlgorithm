@@ -7,7 +7,6 @@
 nQueensGenericSolver::nQueensGenericSolver(const NqBoard &board)
 : board{board}
 {
-    printPuzzle();
 }
 
 void nQueensGenericSolver::printPuzzle() {

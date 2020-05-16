@@ -7,8 +7,12 @@
 
 #include "vector"
 
+#define queensAttack std::pair<int, int>
+
 class NqBoard {
 public:
+    // Empty ctor
+    NqBoard();
     NqBoard(int size);
     // Copy ctor in order to copy the board for each solver in order to compare them correctly
     NqBoard(const NqBoard& other) = default;
@@ -23,12 +27,18 @@ public:
     int* getColCount();
     int* getUpperDiagCount();
     int* getLowerDiagCount();
-
+    void printQueensPosition() const;
+    int myConflicts() const;
+    int myGetQueenCol(const int raw) const;
+    void myMoveQueenToColumn(const int raw, const int val);
+    void myInitializeBoard(const int boardSize);
 private:
+    bool rowHasDiagonalClashes(int row) const;
+    bool shareDiagonal(const int row0, const int col0, const int row1, const int col1) const;
     int boardSize;
-    int* colCount;
-    int* upperDiagCount;
-    int* lowerDiagCount;
-    std::vector<int> queens;
+//    int* colCount;
+//    int* upperDiagCount;
+//    int* lowerDiagCount;
+    std::vector<int> qN;
 };
 #endif //AILABGENETICALGORITHM_BOARD_H
