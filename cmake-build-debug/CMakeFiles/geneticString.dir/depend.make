@@ -89,6 +89,7 @@ CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj: 
 CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj: ../nQueens/include/nQueensGenericSolver.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj: ../nQueens/include/nQueensMinimalConflictsSolver.h
 CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj: ../nQueens/src/nQueensMinimalConflictsSolver.cpp
+CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj: ../string_matching/include/consts.h
 
 CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj: ../genetic_solver/include/AbstractGeneticSolver.h
 CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj: ../genetic_solver/include/CrossoverMethod.h

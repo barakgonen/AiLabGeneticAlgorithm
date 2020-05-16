@@ -20,25 +20,12 @@ public:
 
     void printBoard() const;
     int getBoardSize() const ;
-    int conflicts(int exludeRow) const;
-    int conflicts() const;
-    void setQueenValue(int index, int val);
-    int getQueenValue(int index);
-    int* getColCount();
-    int* getUpperDiagCount();
-    int* getLowerDiagCount();
+    int calculateCollisionsAtColumn(int col);
     void printQueensPosition() const;
-    int myConflicts() const;
-    int myGetQueenCol(const int raw) const;
-    void myMoveQueenToColumn(const int raw, const int val);
-    void myInitializeBoard(const int boardSize);
+    int myGetQueenCol(const int col) const;
+    void myMoveQueenToColumn(const int col, const int val);
 private:
-    bool rowHasDiagonalClashes(int row) const;
-    bool shareDiagonal(const int row0, const int col0, const int row1, const int col1) const;
     int boardSize;
-//    int* colCount;
-//    int* upperDiagCount;
-//    int* lowerDiagCount;
     std::vector<int> qN;
 };
 #endif //AILABGENETICALGORITHM_BOARD_H

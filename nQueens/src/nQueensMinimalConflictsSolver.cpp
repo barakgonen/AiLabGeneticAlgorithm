@@ -2,86 +2,65 @@
 // Created by barak on 09/05/2020.
 //
 
-#include <limits>
 #include <cstdlib>
-#include <chrono>
-#include <iostream>
-#include <math.h>
 #include "../include/nQueensMinimalConflictsSolver.h"
+#include "../../string_matching/include/consts.h"
+
 nQueensMinimalConflictsSolver::nQueensMinimalConflictsSolver(const NqBoard &board)
-: nQueensGenericSolver{board}
+: nQueensGenericSolver{board, "MINIMAL CONFLICTS "}
 {
 }
 
-int nQueensMinimalConflictsSolver::calculateConflictsForSpecificQueen(int queenRow) {
-    int count = 0;
-    // iterate every raw
-    for (int rawToTest = 0; rawToTest < board.getBoardSize(); rawToTest++) {
-        if (rawToTest == queenRow)
-            continue;
-        // diagonal collisions or if in the same col
-        if ((abs(rawToTest - queenRow) == abs(board.myGetQueenCol(rawToTest) - board.myGetQueenCol(queenRow))))
-            count++;
-    }
-//    std::cout << "raw number: " << queenRow << ", num of conflicts is: " << count << std::endl;
-    return count;
-}
-
-void nQueensMinimalConflictsSolver::solvePuzzle() {
-    auto startTimeStamp = std::chrono::high_resolution_clock::now();
-    std::vector <int> worstRows;
-    int steps = 0;
+int nQueensMinimalConflictsSolver::runSolver() {
+    std::vector <int> worstColumns;
     int maxConflicts = 0;
-    int currentRowConflicts = 0;
-    int j = 0;
-    while (j<16384) {
+    int conflicts = 0;
+    int iterationsCounter = 0;
+    while (iterationsCounter < GA_MAXITER) {
         maxConflicts = 0;
         // search for the worst queen
-        for (int row = 0; row < board.getBoardSize(); row++) {
-            // calculate currentRowConflicts of the queen in column row
-            currentRowConflicts = calculateConflictsForSpecificQueen(row);
-            if (currentRowConflicts == maxConflicts) {
-                // push to the vector of the max queen's currentRowConflicts
-                worstRows.push_back(row);
+        for (int i = 0; i < board.getBoardSize(); i++) {
+            // calculate conflicts of the queen in column i
+            conflicts = board.calculateCollisionsAtColumn(i);
+            if (conflicts == maxConflicts) {
+                // push to the vector of the max queen's conflicts
+                worstColumns.push_back(i);
             }
-            else if (currentRowConflicts > maxConflicts) {
-                worstRows.clear();
-                worstRows.push_back(row);
-                maxConflicts = currentRowConflicts;
+            else if (conflicts > maxConflicts) {
+                worstColumns.clear();
+                worstColumns.push_back(i);
+                maxConflicts = conflicts;
             }
         }
-
+        // meaning no conflicts
         if (maxConflicts == 0)
             break;
-        // choose among the max currentRowConflicts queens randomly
-        int chosenRow = worstRows[rand() % worstRows.size()];
-        worstRows.clear();
+        // choose among the max conflicts queens randomly
+        int columnChosen = worstColumns[rand() % worstColumns.size()];
+        worstColumns.clear();
         std::vector <int> bestRows;
-        int minConflicts = pow(board.getBoardSize(), 2);
+        int minConflicts = board.getBoardSize() * board.getBoardSize();
         // search for best row for queen in the chosen column
-        for (int row = 0; row < board.getBoardSize(); row++) {
+        for (int i = 0; i < board.getBoardSize(); i++) {
             // change row
-            board.myMoveQueenToColumn(chosenRow, row);
-            currentRowConflicts = calculateConflictsForSpecificQueen(chosenRow);
-            // meaning we have several queens with the same minimal currentRowConflicts number
-            if (currentRowConflicts == minConflicts)
-                bestRows.push_back(row);
-            else if (currentRowConflicts < minConflicts) {
+            board.myMoveQueenToColumn(columnChosen, i);
+            conflicts = (board, columnChosen);
+            // meaning we have several queens with the same minimal conflicts number
+            if (conflicts == minConflicts)
+                bestRows.push_back(i);
+            else if (conflicts < minConflicts) {
                 // clear vector
                 bestRows.clear();
-                bestRows.push_back(row);
-                minConflicts = currentRowConflicts;
+                bestRows.push_back(i);
+                minConflicts = conflicts;
             }
-        }
-        // choose row for the column among the rows with minimal currentRowConflicts
-        if (!bestRows.empty())
-            board.myMoveQueenToColumn(chosenRow, bestRows[rand() % bestRows.size()]);
-        bestRows.clear();
-        j++;
-        steps++;
-    }
 
-    auto endTimeStamp = std::chrono::high_resolution_clock::now();
-    auto calculationTime = std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp);
-    std::cout << "number of steps is: " << steps << ", it took just: " << calculationTime.count() << " millis" << std::endl;
+        }
+        // choose row for the column among the rows with minimal conflicts
+        if (!bestRows.empty())
+            board.myMoveQueenToColumn(columnChosen, bestRows[rand() % bestRows.size()]);
+        bestRows.clear();
+        iterationsCounter++;
+    }
+    return iterationsCounter;
 }

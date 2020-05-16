@@ -10,24 +10,29 @@
 #include <time.h>
 #include <ctime>
 #include "vector"
+#include <random>
+#include <functional>
 
 class RandomCollectionGenerator {
 public:
     static std::vector<int> getUniqueVectorWithValuesInRange(const int boardSize, const int min=0) {
+        std::vector<int> randomizedVec(boardSize);
+        std::default_random_engine generator;
+        std::uniform_int_distribution<int> distribution(1, boardSize - 1);
+        auto dice = std::bind(distribution, generator);
+        for (auto& v : randomizedVec)
+            v = dice();
+        std::random_shuffle(randomizedVec.begin(), randomizedVec.end());
         std::vector<int> boardCells(boardSize);
+        std::fill(boardCells.begin(), boardCells.end(), 0);
 
-        int pos;
-        // if something bad happens, it's becasue i started the loop from 0 instead of 1
-        for (int j = 0; j < boardSize; j++) {
+        for (int j = 1; j < boardSize; j++) {
             // choose random column for the queen in row j
-            pos = rand() % boardSize;
-            while (boardCells[pos] != 0)
-                pos = rand() % boardSize;
-            boardCells[pos] = j;
+            boardCells.at(j) = randomizedVec.at(j);
         }
+
         return boardCells;
     }
-
 
 };
 

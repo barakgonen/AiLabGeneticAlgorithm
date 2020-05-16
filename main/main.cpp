@@ -161,8 +161,8 @@ std::string getStringToWorkWith(int argc, char **argv) {
 // Nqueens specific, it's the same function as the one above, they will share the same index
 int getBoardSizeAndNumberOfQueens(int argc, char **argv) {
     int boardSizeAndNumberOfQueens = DEFAULT_NUMBER_OF_QUEENS_AND_BOARD_SIZE;
-    if (argc >= 7)
-        boardSizeAndNumberOfQueens = atoi(argv[6]);
+    if (argc >= 6)
+        boardSizeAndNumberOfQueens = atoi(argv[5]);
     return boardSizeAndNumberOfQueens;
 }
 
@@ -195,15 +195,16 @@ int main(int argc, char *argv[]) {
         std::cout << "Total runtime is: " << totalRuntime << " miliseconds" << std::endl;
 
         outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
-    } else if (labSelector == "nQueens") {
+    }
+    else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
-        NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
-        MutationOperator mutationOperator = getMutationOperator(argc, argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
+        MutationOperator mutationOperator = getMutationOperator(argc, argv);
+        NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
         int errorsCounter = 0;
         int passed = 0;
-        std::srand(std::time(nullptr)); // use current time as seed for random generator
+//        std::srand(std::time(nullptr)); // use current time as seed for random generator
 //        for (int i = 0; i < 100000; i++)
 //        {
 //            int x =rand() % getBoardSizeAndNumberOfQueens(argc, argv) + 3;
@@ -217,16 +218,10 @@ int main(int argc, char *argv[]) {
 //        std::cout << "Total number of errors: " << errorsCounter << std::endl;
 //        std::cout << "Total tests passed: " << passed << std::endl;
 
-//        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-//        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
-//        std::cout << "~~~~~~~~~~~~~~~~~~~~MIINIMAL CONFLICTS AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-//        minimalConflictsSolver.solvePuzzle();
-//        minimalConflictsSolver.printPuzzle();
-        std::cout << "~~~~~~~~~~~~~~~~~~~~GENETICS BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-        nQueensGeneticSolver geneticSolver{board, SelectionMethod::Random, crossoverMethod, mutationOperator};
-        geneticSolver.printPuzzle();
+        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
+        minimalConflictsSolver.solvePuzzle();
+        nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator};
         geneticSolver.solvePuzzle();
-//        geneticSolver.printPuzzle();
     }
     else if (labSelector == "KnapSack") {
         std::cout << "You have chosen KnapSack" << std::endl;

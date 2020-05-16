@@ -90,6 +90,7 @@ CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensMinimalConflictsSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensMinimalConflictsSolver.cpp
+ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/consts.h
 CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
  C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/CrossoverMethod.h

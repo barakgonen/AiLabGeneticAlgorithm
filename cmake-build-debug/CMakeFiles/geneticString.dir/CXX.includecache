@@ -53,6 +53,10 @@ ctime
 -
 vector
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/vector
+random
+-
+functional
+-
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
 algorithm
@@ -94,6 +98,10 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_sol
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/SelectionMethodEnum.h
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/consts.h
+stdlib.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/stdlib.h
+
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackGeneticSolver.h
 GeneticAlgorithmBaseStruct.h
 -
@@ -119,10 +127,6 @@ vector
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/vector
 KnapSackPuzzleData.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackPuzzleData.h
-
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/src/KnapSackStaticDataSetInitializer.cpp
-../include/KnapSackStaticDataSetInitializer.h
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackStaticDataSetInitializer.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/main/main.cpp
 iostream
@@ -163,6 +167,8 @@ InQueensSolver.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/InQueensSolver.h
 nQueensBoard.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensBoard.h
+string
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/string
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticAlgoStruct.h
 ../../genetic_solver/include/GeneticAlgorithmBaseStruct.h
@@ -181,6 +187,14 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_sol
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensMinimalConflictsSolver.h
 nQueensGenericSolver.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGenericSolver.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensGeneticSolver.cpp
+ctime
+-
+../include/nQueensGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensGeneticSolver.h
+../../string_matching/include/consts.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/consts.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/GeneticStringMatchingAlgStruct.h
 string
@@ -229,4 +243,6 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_sol
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/OutputFileWriter.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/consts.h
+string
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/include/string
 
