@@ -9,6 +9,7 @@ enum SelectionMethod{
     Random, // the selection method we got, something random
     Tournament,
     Rws,
-    Aging
+    Aging,
+    None
 };
 #endif //AILABGENETICALGORITHM_SELECTIONMETHODENUM_H

@@ -31,7 +31,7 @@ public:
     virtual int get_input_size() = 0;
     virtual std::vector<double> get_weights_vector(double avg) = 0;
     virtual void uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize){};
-    virtual void pmx(const int i, const int i1, const int i2){};
+    virtual void pmx(const int i){};
     virtual void ox(const int i){};
 
 };

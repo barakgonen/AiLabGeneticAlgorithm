@@ -18,42 +18,23 @@ public:
                          const CrossoverMethod crossoverMethod,
                          const MutationOperator mutationOperator);
 
-    void solvePuzzle() override;
-
-    int start_solve() override;
-
-    void print_results() override;
-
-    void init_population() override;
-
-    void calc_fitness() override;
-
-    void mutate(nQueensGeneticAlgoStruct &member) override;
-
-    int get_input_size() override;
-
-    std::string getBestGene() const override;
-
-    void pmx(const int i, const int i1, const int i2) override;
-    void ox(const int i) override;
-
 protected:
-//    void setQueenPosition(const int index, const int val);
-//    void addToConflictsVec(int &currentMinConflicts,
-//                      int &currentConflictsNumber,
-//                      std::vector<int> &conflictsVec,
-//                      int i) const;
+    void ox(const int i) override;
+    std::string getBestGene() const override;
     void handle_specific_elitism(const int index) override;
+    void pmx(const int i) override;
+    int start_solve() override;
+    int get_input_size() override;
+    void init_population() override;
+    void calc_fitness() override;
+    void mutate(nQueensGeneticAlgoStruct &member) override;
+    void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex,
+                                                            const int endIndex, int spos, int tsize) override;
+    void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex,
+                                                         const int endIndex, int spos, int spos2, int tsize) override;
 
-    void
-    set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex,
-                                                      int spos, int tsize) override;
-
-    void
-    set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex,
-                                                    int spos, int spos2, int tsize) override;
-
-    int buffer_contains(const nQueensGeneticAlgoStruct& member, int num);
+    int runSolver() override;
+    void print_results() override;
 
     MutationOperator mutataionOperator;
 };

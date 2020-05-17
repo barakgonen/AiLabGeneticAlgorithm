@@ -18,6 +18,11 @@ struct nQueensGeneticAlgoStruct : public GeneticAlgorithmBaseStruct {
     , nQueensBoard{boardSize}
     {};
 
+    nQueensGeneticAlgoStruct(const NqBoard& nQueensBoard)
+    : GeneticAlgorithmBaseStruct{}
+    , nQueensBoard{nQueensBoard}
+    {};
+
     NqBoard nQueensBoard;
 };
 #endif //AILABGENETICALGORITHM_NQUEENSGENETICALGOSTRUCT_H

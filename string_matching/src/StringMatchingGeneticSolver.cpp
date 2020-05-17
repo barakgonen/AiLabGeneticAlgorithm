@@ -29,7 +29,9 @@ void StringMatchingGeneticSolver::init_population() {
         for (int j = 0; j < tsize; j++)
             citizen.str += (rand() % 90) + 32;
 
-        population.push_back(citizen);
+        population[i] = citizen;
+
+//        population.push_back(citizen);
     }
 
     buffer.resize(GA_POPSIZE);
@@ -47,7 +49,7 @@ int StringMatchingGeneticSolver::start_solve() {
         print_best();                       // print the best one
 
         double averageFitnessValue = get_average_fitness();
-        double standardDeviation = get_standard_aviation(averageFitnessValue);
+        double standardDeviation = get_standard_deviation(averageFitnessValue);
 
         rawOutputArr[i].id = i;
         rawOutputArr[i].standardDeviation = standardDeviation;

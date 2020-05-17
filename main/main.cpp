@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <functional>
+#include <set>
 #include "../string_matching/include/consts.h"
 #include "../string_matching/include/StringMatchingGeneticSolver.h"
 
@@ -204,6 +205,12 @@ int main(int argc, char *argv[]) {
         NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
         int errorsCounter = 0;
         int passed = 0;
+      std::vector<int> ssv{3,0,4,1,4,2}; // value 1 trusted
+//      std::vector<int> ssv{0, 1, 1, 6, 1, 2, 5, 4}; // value 9 trusted
+//      std::vector<int> ssv{0, 1, 3, 6, 2, 1, 4, 4, 6}; // value 8 trusted
+//      std::vector<int> ssv{0, 3, 7, 9, 8, 4, 5, 2, 1, 7}; // value 9 trusted
+//      std::vector<int> ssv{1, 9, 2, 11, 4, 1, 13, 6, 0, 4, 2, 1}; // value 11 trusted
+
 //        std::srand(std::time(nullptr)); // use current time as seed for random generator
 //        for (int i = 0; i < 100000; i++)
 //        {
@@ -218,9 +225,35 @@ int main(int argc, char *argv[]) {
 //        std::cout << "Total number of errors: " << errorsCounter << std::endl;
 //        std::cout << "Total tests passed: " << passed << std::endl;
 
-        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
-        minimalConflictsSolver.solvePuzzle();
-        nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator};
+//        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
+//        minimalConflictsSolver.solvePuzzle();
+
+            // My OX
+//            std::vector<int> parent1Vec = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+//            std::vector<int> parent2Vec = {5, 7, 4, 9, 1, 3, 6, 2, 8};
+//            std::vector<int> copyOfParent2Vec;
+//            std::copy(parent2Vec.begin(), parent2Vec.end(), back_inserter(copyOfParent2Vec));
+//            std::vector<int> indexesFromParent1 = {2,3,4,5};
+//            std::generate(indexesFromParent1.begin(), indexesFromParent1.end(), [n = random(0, half-1)] () mutable { return n++; });
+//            std::vector<int> oxVec(parent2Vec.size());
+//            std::fill(oxVec.begin(), oxVec.end(), -1);
+//            // First loop initializing first part
+//            for (const auto parentOneIndex : indexesFromParent1){
+//                oxVec.at(parentOneIndex) = parent1Vec.at(parentOneIndex);
+//                copyOfParent2Vec.erase(std::find(copyOfParent2Vec.begin(), copyOfParent2Vec.end(), parent1Vec.at(parentOneIndex)));
+//            }
+//
+//            for (const auto parent2Val : copyOfParent2Vec){
+//                for (int i = 0; i < oxVec.size(); i++) {
+//                    if (oxVec.at(i) == -1) {
+//                        oxVec.at(i) = parent2Val;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            std::cout << "BLA" << std::endl;
+        nQueensGeneticSolver geneticSolver{board, SelectionMethod::None, crossoverMethod, mutationOperator};
         geneticSolver.solvePuzzle();
     }
     else if (labSelector == "KnapSack") {

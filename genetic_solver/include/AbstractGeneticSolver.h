@@ -120,6 +120,8 @@ public:
                     random_selection(i1, i2, spos, tsize);
                     set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, tsize);
                     break;
+                case SelectionMethod::None:
+                    break;
             }
             switch (crossoverMethod) {
                 // this is the selection method given in the beginning
@@ -142,7 +144,6 @@ public:
                     }
                     // two point crossover
                     set_data_in_buffer_vec_for_two_points_selection(i, i1, i2, spos, spos2, tsize);
-
                     break;
                 case CrossoverMethod::UniformCrossover:
                     this->uniform_crossover(i, i1, i2, spos, tsize);
@@ -151,12 +152,13 @@ public:
                     this->ox(i);
                     break;
                 case CrossoverMethod::Pmx:
-                    this->pmx(i, i1, i2);
+                    this->pmx(i);
                     break;
             }
 
-            if (rand() < GA_MUTATION)
+            if (rand() < GA_MUTATION){
                 this->mutate(buffer.at(i));
+            }
 
             if (selectionMethod == SelectionMethod::Rws) {
                 // need to preform scailling

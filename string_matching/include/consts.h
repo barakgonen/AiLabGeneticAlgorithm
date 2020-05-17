@@ -5,6 +5,8 @@
 #ifndef AILABGENETICALGORITHM_STRING_MATCHING_CONSTS_H
 #define AILABGENETICALGORITHM_STRING_MATCHING_CONSTS_H
 
+#include "string"
+
 static const int GA_MAXITER	= 16384;	// maximum iterations
 static const std::string GA_TARGET = std::string("blablabla");
 static std::string defaultHeuristic = "DefaultHeuristic";
