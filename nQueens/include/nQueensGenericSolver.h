@@ -12,11 +12,11 @@
 class nQueensGenericSolver : public InQueensSolver {
 public:
     nQueensGenericSolver(const NqBoard& board, std::string solverType);
-    void solvePuzzle() override;
+    std::pair<int, int> solvePuzzle() override;
 
 protected:
     virtual int runSolver() = 0;
-    void printPuzzle() override;
+    virtual void printPuzzle() override;
     const std::string solverType;
     NqBoard board;
 };

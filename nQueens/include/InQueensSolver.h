@@ -5,9 +5,10 @@
 #ifndef AILABGENETICALGORITHM_INQUEENSSOLVER_H
 #define AILABGENETICALGORITHM_INQUEENSSOLVER_H
 
+#include <utility>
 class InQueensSolver{
 public:
-    virtual void solvePuzzle() = 0;
+    virtual std::pair<int, int> solvePuzzle() = 0;
     virtual void printPuzzle() = 0;
 };
 

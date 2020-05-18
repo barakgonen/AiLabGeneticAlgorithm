@@ -199,6 +199,7 @@ int main(int argc, char *argv[]) {
     }
     else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
+        std::vector<std::pair<int,int>> results;
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         MutationOperator mutationOperator = getMutationOperator(argc, argv);
@@ -253,8 +254,30 @@ int main(int argc, char *argv[]) {
 //            }
 //
 //            std::cout << "BLA" << std::endl;
-        nQueensGeneticSolver geneticSolver{board, SelectionMethod::None, crossoverMethod, mutationOperator};
-        geneticSolver.solvePuzzle();
+        int repets = 10;
+        for (int i = 0; i < repets; i++)
+        {
+            nQueensGeneticSolver geneticSolver{board, SelectionMethod::None, crossoverMethod, mutationOperator};
+            results.push_back(geneticSolver.solvePuzzle());
+            std::cout << "============== " <<  i << "/" << repets << " ===========================================" << std::endl;
+        }
+
+        int sum = 0;
+        int steps = 0;
+        for (const auto res : results){
+            sum += res.second;
+            steps += res.first;
+        }
+        std::cout << "avg time (millis) is: for ox / exchange on board size " << board.getBoardSize() << " [ num of tries: " << results.size() << "] " << sum / results.size() << std::endl;
+        std::cout << "avg steps counter [ num of tries: " << results.size() << "] " << steps / results.size() << std::endl;
+        std::cout << "Raw data: " << std::endl;
+        for (const auto res : results)
+            std::cout << "Time: " << res.second << ", steps: " << res.first << std::endl;
+        if (steps / results.size() > 21221) // for 120 runs, so make sure if you change this value
+            std::cout << "Something went wron bro" << std::endl;
+        else
+            std::cout << "You didn't break a thing! nice!" << std::endl;
+
     }
     else if (labSelector == "KnapSack") {
         std::cout << "You have chosen KnapSack" << std::endl;
