@@ -31,140 +31,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4933d474-12fb-43a8-9a92-2d2ba8c5b85b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/AiLabGeneticAlgorithm.cbp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeCache.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeCCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeCXXCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeRCCompiler.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeSystem.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdC/a.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/clion-environment.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/cmake.check_cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/CXX.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/includes_CXX.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/linklibs.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/main/main.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects1.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmake-build-release/geneticString.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nQueens/include/nQueensOutputFileWriter.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nQueens/include/nQueensSolutionData.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nQueens/src/nQueensOutputFileWriter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LabReportGraphs.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/LabReportGraphs.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/AiLabGeneticAlgorithm.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/AiLabGeneticAlgorithm.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/DependInfo.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/build.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/cmake_clean.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/cmake_clean_target.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/link.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/progress.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects1.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/progress.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/DependInfo.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/build.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/cmake_clean.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/cmake_clean_target.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/flags.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/link.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/progress.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/DependInfo.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/build.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/cmake_clean.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/cmake_clean_target.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/flags.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/link.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/progress.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/DependInfo.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/build.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/cmake_clean.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/cmake_clean_target.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/depend.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/flags.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/link.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/progress.make" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/general_utilities/include/OutputFileWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/general_utilities/include/OutputFileWriter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/general_utilities/include/random_collection_generator.h" beforeDir="false" afterPath="$PROJECT_DIR$/general_utilities/include/random_collection_generator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/genetic_solver/include/AbstractGeneticSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/genetic_solver/include/AbstractGeneticSolver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/genetic_solver/include/CrossoverMethod.h" beforeDir="false" afterPath="$PROJECT_DIR$/genetic_solver/include/CrossoverMethod.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knap_sack/include/KnapSackGeneticSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/knap_sack/include/KnapSackGeneticSolver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knap_sack/src/KnapSackGeneticSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/knap_sack/src/KnapSackGeneticSolver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/knap_sack/src/KnapSackStaticDataSetInitializer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/knap_sack/src/KnapSackStaticDataSetInitializer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nQueens/include/InQueensSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/InQueensSolver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nQueens/include/nQueensGenericSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/nQueensGenericSolver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nQueens/include/nQueensGeneticSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/nQueensGeneticSolver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nQueens/include/nQueensMinimalConflictsSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/nQueensMinimalConflictsSolver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nQueens/src/nQueensGenericSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/src/nQueensGenericSolver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nQueens/src/nQueensGeneticSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/src/nQueensGeneticSolver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nQueens/src/nQueensMinimalConflictsSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/src/nQueensMinimalConflictsSolver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/include/StringMatchingOutputFileWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/include/StringMatchingOutputFileWriter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/src/StringMatchingGeneticSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/StringMatchingGeneticSolver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/src/StringMatchingOutputFileWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/StringMatchingOutputFileWriter.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,7 +143,7 @@
       <workItem from="1589982775311" duration="10314000" />
       <workItem from="1590049975521" duration="2547000" />
       <workItem from="1590052578294" duration="1072000" />
-      <workItem from="1590053784613" duration="887000" />
+      <workItem from="1590053784613" duration="1228000" />
     </task>
     <servers />
   </component>
@@ -343,38 +211,38 @@
     </state>
     <state x="-1180" y="276" key="FileChooserDialogImpl/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230121825" />
     <state x="987" y="275" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1589974299076" />
-    <state width="2517" height="463" key="GridCell.Tab.0.bottom" timestamp="1590053547030">
+    <state width="2517" height="582" key="GridCell.Tab.0.bottom" timestamp="1590054675617">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135917" />
     <state width="1237" height="176" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="2517" height="463" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
-    <state width="2517" height="463" key="GridCell.Tab.0.center" timestamp="1590053547030">
+    <state width="2517" height="582" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590054675617" />
+    <state width="2517" height="582" key="GridCell.Tab.0.center" timestamp="1590054675616">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.center/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.center/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135916" />
     <state width="1237" height="176" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="2517" height="463" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
-    <state width="2517" height="463" key="GridCell.Tab.0.left" timestamp="1590053547030">
+    <state width="2517" height="582" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590054675616" />
+    <state width="2517" height="582" key="GridCell.Tab.0.left" timestamp="1590054675616">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.left/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.left/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135916" />
     <state width="1237" height="176" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="2517" height="463" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
-    <state width="2517" height="463" key="GridCell.Tab.0.right" timestamp="1590053547030">
+    <state width="2517" height="582" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590054675616" />
+    <state width="2517" height="582" key="GridCell.Tab.0.right" timestamp="1590054675617">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.right/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.right/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135917" />
     <state width="1237" height="176" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="2517" height="463" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
+    <state width="2517" height="582" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590054675617" />
     <state width="2517" height="463" key="GridCell.Tab.1.bottom" timestamp="1590053547031">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>

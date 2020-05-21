@@ -194,17 +194,6 @@ public:
             }
         }
         return best;
-        //
-//        int bestGene, randomGene;
-//        int firstGene, secondGene;
-//        bestGene = rand() % (GA_POPSIZE);
-//        for (int i = 0; i < 20; i++)
-//        {
-//            randomGene = rand() % (GA_POPSIZE);
-//            if (population[randomGene].fitnessVal < population[bestGene].fitnessVal) /*smaller is better*/
-//                bestGene = randomGene;
-//        }
-//        return bestGene;
     }
 
     void print_best() override {
