@@ -112,6 +112,9 @@
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensMinimalConflictsSolver.cpp">
 			<Option target="geneticString"/>
 		</Unit>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/src/nQueensOutputFileWriter.cpp">
+			<Option target="geneticString"/>
+		</Unit>
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/string_matching/src/StringMatchingGeneticSolver.cpp">
 			<Option target="geneticString"/>
 		</Unit>

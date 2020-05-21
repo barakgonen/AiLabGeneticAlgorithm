@@ -392,6 +392,33 @@ nQueens/src/nQueensMinimalConflictsSolver.cpp.s:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.s
 .PHONY : nQueens/src/nQueensMinimalConflictsSolver.cpp.s
 
+nQueens/src/nQueensOutputFileWriter.obj: nQueens/src/nQueensOutputFileWriter.cpp.obj
+
+.PHONY : nQueens/src/nQueensOutputFileWriter.obj
+
+# target to build an object file
+nQueens/src/nQueensOutputFileWriter.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensOutputFileWriter.cpp.obj
+.PHONY : nQueens/src/nQueensOutputFileWriter.cpp.obj
+
+nQueens/src/nQueensOutputFileWriter.i: nQueens/src/nQueensOutputFileWriter.cpp.i
+
+.PHONY : nQueens/src/nQueensOutputFileWriter.i
+
+# target to preprocess a source file
+nQueens/src/nQueensOutputFileWriter.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensOutputFileWriter.cpp.i
+.PHONY : nQueens/src/nQueensOutputFileWriter.cpp.i
+
+nQueens/src/nQueensOutputFileWriter.s: nQueens/src/nQueensOutputFileWriter.cpp.s
+
+.PHONY : nQueens/src/nQueensOutputFileWriter.s
+
+# target to generate assembly for a file
+nQueens/src/nQueensOutputFileWriter.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/nQueens/src/nQueensOutputFileWriter.cpp.s
+.PHONY : nQueens/src/nQueensOutputFileWriter.cpp.s
+
 string_matching/src/StringMatchingGeneticSolver.obj: string_matching/src/StringMatchingGeneticSolver.cpp.obj
 
 .PHONY : string_matching/src/StringMatchingGeneticSolver.obj
@@ -485,6 +512,9 @@ help:
 	@echo ... nQueens/src/nQueensMinimalConflictsSolver.obj
 	@echo ... nQueens/src/nQueensMinimalConflictsSolver.i
 	@echo ... nQueens/src/nQueensMinimalConflictsSolver.s
+	@echo ... nQueens/src/nQueensOutputFileWriter.obj
+	@echo ... nQueens/src/nQueensOutputFileWriter.i
+	@echo ... nQueens/src/nQueensOutputFileWriter.s
 	@echo ... string_matching/src/StringMatchingGeneticSolver.obj
 	@echo ... string_matching/src/StringMatchingGeneticSolver.i
 	@echo ... string_matching/src/StringMatchingGeneticSolver.s

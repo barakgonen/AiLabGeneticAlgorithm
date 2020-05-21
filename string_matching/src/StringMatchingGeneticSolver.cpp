@@ -44,7 +44,7 @@ int StringMatchingGeneticSolver::start_solve() {
     init_population();
     t = clock();
     for (int i = 0; i < GA_MAXITER; i++) {
-        calc_fitness();                     // calculate fitness
+        calc_fitness();                     // calculate fitnessVal
         sort_population_by_fitnes();        // sort them
         print_best();                       // print the best one
 

@@ -12,7 +12,7 @@ KnapSackStaticDataSetInitializer::KnapSackStaticDataSetInitializer(const std::st
     addToStaticDataSet(5, basePath);
     addToStaticDataSet(6, basePath);
     addToStaticDataSet(7, basePath);
-//    addToStaticDataSet(8, basePath);
+    addToStaticDataSet(8, basePath);
 }
 
 bool KnapSackStaticDataSetInitializer::isOptimalSelectionReached(const int exampleNum,

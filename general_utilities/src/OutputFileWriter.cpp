@@ -7,9 +7,12 @@
 #include "../include/OutputFileWriter.h"
 #include "../../string_matching/include/consts.h"
 
-OutputFileWriter::OutputFileWriter(const std::string& outputPath, const std::string testedObject)
+OutputFileWriter::OutputFileWriter(const std::string& outputPath, const std::string testedObject,
+                                   const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod)
 : outputPath{outputPath}
 , testedObject{testedObject}
+, selectionMethod{selectionMethod}
+, crossoverMethod{crossoverMethod}
 {
     create_output_directories();
 }
@@ -38,6 +41,9 @@ void OutputFileWriter::create_output_directories(){
     baseOutputPath = outputPath;
     baseOutputPath.append(LAB2OutputPath);
     baseOutputPath.append("stats/");
+    mkdir(baseOutputPath.c_str());
+    baseOutputPath = outputPath;
+    baseOutputPath.append("nQueensRes/");
     mkdir(baseOutputPath.c_str());
 }
 
@@ -72,4 +78,45 @@ void OutputFileWriter::writeToOutputFile(const std::string outputFileName, int t
     lineToWrite += testedObject + "," + std::to_string(totalDurationInMs) + "\n";
     outputFile.write(lineToWrite.c_str(), lineToWrite.size());
     outputFile.close();
+}
+
+std::string OutputFileWriter::getSelectionMethodStr() const {
+    std::string selectionMethodStr = "";
+    switch (selectionMethod) {
+        case Random:
+            selectionMethodStr = "Random";
+            break;
+        case Tournament:
+            selectionMethodStr = "Tournament";
+            break;
+        case Rws:
+            selectionMethodStr = "Rws";
+            break;
+        case Aging:
+            selectionMethodStr = "Aging";
+            break;
+    }
+    return selectionMethodStr;
+}
+
+std::string OutputFileWriter::getCrossoverMethodStr() const {
+    std::string crossoverMethodStr = "";
+    switch (crossoverMethod) {
+        case SinglePoint:
+            crossoverMethodStr = "SinglePoint";
+            break;
+        case TwoPoints:
+            crossoverMethodStr = "TwoPoints";
+            break;
+        case UniformCrossover:
+            crossoverMethodStr = "UniformCrossover";
+            break;
+        case Ox:
+            crossoverMethodStr = "Ox";
+            break;
+        case Pmx:
+            crossoverMethodStr = "Pmx";
+            break;
+    }
+    return crossoverMethodStr;
 }

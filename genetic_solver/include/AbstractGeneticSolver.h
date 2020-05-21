@@ -171,39 +171,40 @@ public:
         }
     }
 
+
+
     int tournament() override {
         // choose k genes
-//        int best = INT_MAX, secondBest = INT_MAX, i1 = 0, i2 = 0;
-//        for (int i = 0; i < K; i++) {
-//            // random gene
-//            int temp = rand() % GA_POPSIZE;
-//            // if better gene found we save it
-//            if (population[temp].fitnessVal < best) {
-//                i2 = i1;
-//                i1 = temp;
-//                best = population[i1].fitnessVal;
-//                if (i != 0)
-//                    secondBest = population[i2].fitnessVal;
-//            }
-//                // if gene better than the second best found
-//            else if (population[temp].fitnessVal < secondBest) {
-//                i2 = temp;
-//                secondBest = population[i2].fitnessVal;
-//            }
-//        }
-//        bestG = best;
-//        secondBestG = secondBest;
-
-        int bestGene, randomGene;
-        int firstGene, secondGene;
-        bestGene = rand() % (GA_POPSIZE);
-        for (int i = 0; i < 20; i++)
-        {
-            randomGene = rand() % (GA_POPSIZE);
-            if (population[randomGene].fitnessVal < population[bestGene].fitnessVal) /*smaller is better*/
-                bestGene = randomGene;
+        int best = INT_MAX, secondBest = INT_MAX, i1 = 0, i2 = 0;
+        for (int i = 0; i < K; i++) {
+            // random gene
+            int temp = rand() % GA_POPSIZE;
+            // if better gene found we save it
+            if (population[temp].fitnessVal < best) {
+                i2 = i1;
+                i1 = temp;
+                best = population[i1].fitnessVal;
+                if (i != 0)
+                    secondBest = population[i2].fitnessVal;
+            }
+                // if gene better than the second best found
+            else if (population[temp].fitnessVal < secondBest) {
+                i2 = temp;
+                secondBest = population[i2].fitnessVal;
+            }
         }
-        return bestGene;
+        return best;
+        //
+//        int bestGene, randomGene;
+//        int firstGene, secondGene;
+//        bestGene = rand() % (GA_POPSIZE);
+//        for (int i = 0; i < 20; i++)
+//        {
+//            randomGene = rand() % (GA_POPSIZE);
+//            if (population[randomGene].fitnessVal < population[bestGene].fitnessVal) /*smaller is better*/
+//                bestGene = randomGene;
+//        }
+//        return bestGene;
     }
 
     void print_best() override {
@@ -249,8 +250,8 @@ protected:
     // this function is necessary for specific structs we handle in this algorithm
     virtual void handle_specific_elitism(const int index) = 0;
 
-    virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) = 0;
-    virtual void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int spos2, int tsize) = 0;
+    virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) {};
+    virtual void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int spos2, int tsize) {};
 
     SelectionMethod selectionMethod;
     CrossoverMethod crossoverMethod;

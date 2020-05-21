@@ -11,15 +11,13 @@
 #include "memory"
 #include "AbstractGeneticSolver.h"
 
-struct ga_struct : public GeneticAlgorithmBaseStruct {
-    ga_struct() = default;
+struct KnapSackGeneticStruct : public GeneticAlgorithmBaseStruct {
+    KnapSackGeneticStruct() = default;
     double sigmaWeight;
     std::vector<int> sack;
 };
 
-typedef std::vector<ga_struct> ga_vector;// for brevity
-
-class KnapSackGeneticSolver : public AbstractGeneticSolver<ga_struct>{
+class KnapSackGeneticSolver : public AbstractGeneticSolver<KnapSackGeneticStruct>{
 
 public:
     KnapSackGeneticSolver(const int puzzleKey, const KnapSackStaticDataSetInitializer& staticDataSetInitializer,
@@ -31,7 +29,7 @@ public:
     void init_population() override;
     void calc_fitness() override;
     int get_input_size() override;
-    void mutate(ga_struct &member) override;
+    void mutate(KnapSackGeneticStruct &member) override;
     void handle_specific_elitism(const int index) override;
     virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) override ;
     virtual void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int spos2, int tsize) override ;

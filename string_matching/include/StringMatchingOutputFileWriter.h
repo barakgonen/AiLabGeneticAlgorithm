@@ -14,7 +14,7 @@
 #include "../../genetic_solver/include/CrossoverMethod.h"
 #include "../../general_utilities/include/OutputFileWriter.h"
 
-class StringMatchingOutputFileWriter : public OutputFileWriter{
+class StringMatchingOutputFileWriter : public OutputFileWriter {
 public:
     StringMatchingOutputFileWriter(const std::string &testedString, const HeuristicsEnum heuristicType,
                                    const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod,
@@ -22,15 +22,11 @@ public:
 
 protected:
     const HeuristicsEnum heuristicType;
-    const SelectionMethod selectionMethod;
-    const CrossoverMethod crossoverMethod;
     void create_output_directories() override;
 
 private:
     std::string getOutputFileName(const std::string& basePath) override;
     std::string getOutputFileProperties() override;
-    std::string getCrossoverMethodStr() const;
-    std::string getSelectionMethodStr() const;
     std::string getUsedHeuristicStr() const;
 };
 

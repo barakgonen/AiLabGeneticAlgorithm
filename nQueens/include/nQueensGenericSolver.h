@@ -8,11 +8,13 @@
 #include "InQueensSolver.h"
 #include "nQueensBoard.h"
 #include "string"
+#include "nQueensSolutionData.h"
+#include "list"
 
 class nQueensGenericSolver : public InQueensSolver {
 public:
     nQueensGenericSolver(const NqBoard& board, std::string solverType);
-    std::pair<int, int> solvePuzzle() override;
+    nQueensSolutionData solvePuzzle() override;
 
 protected:
     virtual int runSolver() = 0;

@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libnQueens.a  CMakeFiles/nQueens.dir/nQueens/src/nQueensBoard.cpp.obj CMakeFiles/nQueens.dir/nQueens/src/nQueensGenericSolver.cpp.obj CMakeFiles/nQueens.dir/nQueens/src/nQueensGeneticSolver.cpp.obj CMakeFiles/nQueens.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj
-C:\MinGW\bin\ranlib.exe libnQueens.a

@@ -9,10 +9,8 @@
 StringMatchingOutputFileWriter::StringMatchingOutputFileWriter(const std::string &testedString, const HeuristicsEnum heuristicType,
                                                                const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod,
                                                                const std::string &outputPath)
-: OutputFileWriter{outputPath, testedString}
+: OutputFileWriter{outputPath, testedString, selectionMethod, crossoverMethod}
 , heuristicType{heuristicType}
-, selectionMethod{selectionMethod}
-, crossoverMethod{crossoverMethod}
 {
     create_output_directories();
 }
@@ -43,40 +41,7 @@ std::string StringMatchingOutputFileWriter::getUsedHeuristicStr() const {
     return usedHeuristic;
 }
 
-std::string StringMatchingOutputFileWriter::getSelectionMethodStr() const {
-    std::string selectionMethod = "";
-    switch (StringMatchingOutputFileWriter::selectionMethod) {
-        case Random:
-            selectionMethod = "Random";
-            break;
-        case Tournament:
-            selectionMethod = "Tournament";
-            break;
-        case Rws:
-            selectionMethod = "Rws";
-            break;
-        case Aging:
-            selectionMethod = "Aging";
-            break;
-    }
-    return selectionMethod;
-}
 
-std::string StringMatchingOutputFileWriter::getCrossoverMethodStr() const {
-    std::string crossoverMethodStr = "";
-    switch (crossoverMethod) {
-        case SinglePoint:
-            crossoverMethodStr = "SinglePoint";
-            break;
-        case TwoPoints:
-            crossoverMethodStr = "TwoPoints";
-            break;
-        case UniformCrossover:
-            crossoverMethodStr = "UniformCrossover";
-            break;
-    }
-    return crossoverMethodStr;
-}
 
 void StringMatchingOutputFileWriter::create_output_directories(){
     OutputFileWriter::create_output_directories();

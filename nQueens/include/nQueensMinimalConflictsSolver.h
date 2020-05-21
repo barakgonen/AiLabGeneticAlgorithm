@@ -9,8 +9,11 @@
 
 class nQueensMinimalConflictsSolver : public nQueensGenericSolver {
 public:
-    nQueensMinimalConflictsSolver(const NqBoard& board);
+    nQueensMinimalConflictsSolver(const NqBoard& board, bool isQuietMode=false);
     int runSolver() override;
+
+protected:
+    bool isQuietMode;
 };
 
 

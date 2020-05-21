@@ -25,20 +25,146 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" />
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4933d474-12fb-43a8-9a92-2d2ba8c5b85b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/AiLabGeneticAlgorithm.cbp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeCache.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeCCompiler.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeCXXCompiler.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeRCCompiler.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CMakeSystem.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdC/a.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/clion-environment.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/cmake.check_cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/CXX.includecache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/DependInfo.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/build.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/cmake_clean.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.internal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/includes_CXX.rsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackPuzzleData.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/link.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/linklibs.rsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/main/main.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects.a" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects1.rsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/progress.make" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/progress.marks" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/cmake_install.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-release/geneticString.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nQueens/include/nQueensOutputFileWriter.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nQueens/include/nQueensSolutionData.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nQueens/src/nQueensOutputFileWriter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LabReportGraphs.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/LabReportGraphs.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/AiLabGeneticAlgorithm.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/AiLabGeneticAlgorithm.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdC/a.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.16.5/CompilerIdCXX/a.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/cmake_clean_target.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/general_utilities.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/knap_sack/src/KnapSackStaticDataSetInitializer.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/main/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensBoard.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGenericSolver.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensGeneticSolver.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/nQueens/src/nQueensMinimalConflictsSolver.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/GeneticStringMatcher.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/cmake_clean_target.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/genetic_solver.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/cmake_clean_target.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/nQueens.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/cmake_clean_target.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/string_matching.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consoleOutput" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/run_lab_part_a.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/run_lab_part_a.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/include/GeneticStringMatcher.h" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/include/GeneticStringMatcher.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/string_matching/src/GeneticStringMatcher.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/GeneticStringMatcher.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/general_utilities/include/OutputFileWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/general_utilities/include/OutputFileWriter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/general_utilities/include/random_collection_generator.h" beforeDir="false" afterPath="$PROJECT_DIR$/general_utilities/include/random_collection_generator.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/genetic_solver/include/AbstractGeneticSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/genetic_solver/include/AbstractGeneticSolver.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/genetic_solver/include/CrossoverMethod.h" beforeDir="false" afterPath="$PROJECT_DIR$/genetic_solver/include/CrossoverMethod.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knap_sack/include/KnapSackGeneticSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/knap_sack/include/KnapSackGeneticSolver.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knap_sack/src/KnapSackGeneticSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/knap_sack/src/KnapSackGeneticSolver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/knap_sack/src/KnapSackStaticDataSetInitializer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/knap_sack/src/KnapSackStaticDataSetInitializer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nQueens/include/InQueensSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/InQueensSolver.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nQueens/include/nQueensGenericSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/nQueensGenericSolver.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nQueens/include/nQueensGeneticSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/nQueensGeneticSolver.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nQueens/include/nQueensMinimalConflictsSolver.h" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/include/nQueensMinimalConflictsSolver.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nQueens/src/nQueensGenericSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/src/nQueensGenericSolver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nQueens/src/nQueensGeneticSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/src/nQueensGeneticSolver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nQueens/src/nQueensMinimalConflictsSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/nQueens/src/nQueensMinimalConflictsSolver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/string_matching/include/StringMatchingOutputFileWriter.h" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/include/StringMatchingOutputFileWriter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/string_matching/src/StringMatchingGeneticSolver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/StringMatchingGeneticSolver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/string_matching/src/StringMatchingOutputFileWriter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/string_matching/src/StringMatchingOutputFileWriter.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +174,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -63,39 +189,48 @@
   <component name="ProjectId" id="1bFZTQApz2RaR6VuPdbvHn9Sh5E" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Compilers/compilers_exercise_3" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\knap_sack\static_input_files" />
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\scripts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\string_matching\src" />
-      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\string_matching\include" />
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\nQueens\src" />
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\knap_sack\src" />
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\general_utilities\src" />
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\genetic_solver\src" />
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\genetic_solver\include" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="geneticString" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="&quot;string_matching&quot; &quot;barakg istheking!!&quot; &quot;DefaultHeuristic&quot; &quot;Random&quot; &quot;SinglePoint&quot;" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AiLabGeneticAlgorithm" TARGET_NAME="geneticString" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="AiLabGeneticAlgorithm" RUN_TARGET_NAME="geneticString">
+    <configuration name="geneticString" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="&quot;nQueens&quot; &quot;&quot; &quot;Pmx&quot; &quot;Exchange&quot; &quot;9999&quot; &quot;nQueensResultsQue10&quot;" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AiLabGeneticAlgorithm" TARGET_NAME="geneticString" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="AiLabGeneticAlgorithm" RUN_TARGET_NAME="geneticString">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",KIND" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -110,7 +245,37 @@
       <workItem from="1588229812848" duration="15296000" />
       <workItem from="1588248704629" duration="36642000" />
       <workItem from="1588349694305" duration="5569000" />
-      <workItem from="1588405229064" duration="15949000" />
+      <workItem from="1588405229064" duration="30859000" />
+      <workItem from="1588484694993" duration="9808000" />
+      <workItem from="1588572992955" duration="3769000" />
+      <workItem from="1588578640109" duration="11969000" />
+      <workItem from="1588658872369" duration="10664000" />
+      <workItem from="1588669718660" duration="6246000" />
+      <workItem from="1588748995764" duration="1714000" />
+      <workItem from="1588750727807" duration="7156000" />
+      <workItem from="1588839507744" duration="640000" />
+      <workItem from="1589007401866" duration="30997000" />
+      <workItem from="1589119025972" duration="10876000" />
+      <workItem from="1589211185219" duration="3066000" />
+      <workItem from="1589214367493" duration="2182000" />
+      <workItem from="1589269897974" duration="1791000" />
+      <workItem from="1589289461259" duration="13648000" />
+      <workItem from="1589303279371" duration="4328000" />
+      <workItem from="1589368483584" duration="2160000" />
+      <workItem from="1589377026664" duration="12486000" />
+      <workItem from="1589450820887" duration="17688000" />
+      <workItem from="1589540283609" duration="17746000" />
+      <workItem from="1589611755418" duration="29515000" />
+      <workItem from="1589653086467" duration="2933000" />
+      <workItem from="1589693907282" duration="4010000" />
+      <workItem from="1589699582194" duration="32733000" />
+      <workItem from="1589784860671" duration="2077000" />
+      <workItem from="1589786974806" duration="42450000" />
+      <workItem from="1589965565188" duration="3833000" />
+      <workItem from="1589982775311" duration="10314000" />
+      <workItem from="1590049975521" duration="2547000" />
+      <workItem from="1590052578294" duration="1072000" />
+      <workItem from="1590053784613" duration="887000" />
     </task>
     <servers />
   </component>
@@ -130,113 +295,205 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1695" y="292" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588416872925">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="869" y="206" width="1446" height="526" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590052593300">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="-1695" y="292" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588416872925" />
+    <state x="-1569" y="104" width="1569" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675129980" />
     <state x="-1089" y="281" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@0.0.1280.680" timestamp="1588328172316" />
-    <state x="-1218" y="323" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1588256043767">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="2295" y="291" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589556404249" />
+    <state x="196" y="139" width="723" height="525" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1589884372715" />
+    <state x="869" y="206" width="1446" height="526" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1590052593300" />
+    <state x="936" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1589303214698">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="-1218" y="323" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588256043767" />
-    <state x="-1230" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1588230059682">
+    <state x="936" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1589303214698" />
+    <state x="-1297" y="408" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1588667458806">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
-    <state x="-1230" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230059682" />
-    <state x="-751" y="252" width="671" height="694" key="#xdebugger.evaluate" timestamp="1588414289779">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="-1297" y="408" key="#com.intellij.ide.macro.MacrosDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588667458806" />
+    <state x="1020" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1589799860533">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="-751" y="252" width="671" height="694" key="#xdebugger.evaluate/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588414289779" />
-    <state width="433" height="466" key="DebuggerActiveHint" timestamp="1588328330052">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="-1155" y="227" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588751084826" />
+    <state x="1020" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1589799860533" />
+    <state x="920" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589038375586">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="433" height="466" key="DebuggerActiveHint/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588328330052" />
+    <state x="-1230" y="268" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675651623" />
+    <state x="920" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1589038375586" />
+    <state x="1100" y="416" width="1706" height="548" key="#xdebugger.evaluate" timestamp="1589623715287">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="-1774" y="446" width="1706" height="548" key="#xdebugger.evaluate/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674511721" />
+    <state x="1100" y="416" key="#xdebugger.evaluate/0.0.2560.1040@0.0.2560.1040" timestamp="1589623715287" />
+    <state width="1002" height="716" key="DebuggerActiveHint" timestamp="1590053641774">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="751" height="466" key="DebuggerActiveHint/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588668780583" />
+    <state width="752" height="808" key="DebuggerActiveHint/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589540839617" />
+    <state width="501" height="474" key="DebuggerActiveHint/0.0.1280.680@0.0.1280.680" timestamp="1589884331265" />
+    <state width="1002" height="716" key="DebuggerActiveHint/0.0.2560.1040@0.0.2560.1040" timestamp="1590053641774" />
     <state x="-1828" y="93" width="1736" height="856" key="DiffContextDialog" timestamp="1588323011395">
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
     <state x="-1828" y="93" width="1736" height="856" key="DiffContextDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588323011395" />
-    <state x="-1180" y="276" key="FileChooserDialogImpl" timestamp="1588230121825">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="987" y="275" key="FileChooserDialogImpl" timestamp="1589974299076">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="-1180" y="276" key="FileChooserDialogImpl/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230121825" />
-    <state width="1128" height="312" key="GridCell.Tab.0.bottom" timestamp="1588422897945">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="987" y="275" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1589974299076" />
+    <state width="2517" height="463" key="GridCell.Tab.0.bottom" timestamp="1590053547030">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1128" height="312" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
-    <state width="1128" height="312" key="GridCell.Tab.0.center" timestamp="1588422897945">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1417" height="155" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
+    <state width="1237" height="23" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
+    <state width="1877" height="509" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135917" />
+    <state width="1237" height="176" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
+    <state width="2517" height="463" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
+    <state width="2517" height="463" key="GridCell.Tab.0.center" timestamp="1590053547030">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1128" height="312" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
-    <state width="1128" height="312" key="GridCell.Tab.0.left" timestamp="1588422897945">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1417" height="155" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
+    <state width="1237" height="23" key="GridCell.Tab.0.center/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
+    <state width="1877" height="509" key="GridCell.Tab.0.center/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135916" />
+    <state width="1237" height="176" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
+    <state width="2517" height="463" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
+    <state width="2517" height="463" key="GridCell.Tab.0.left" timestamp="1590053547030">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1128" height="312" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
-    <state width="1128" height="312" key="GridCell.Tab.0.right" timestamp="1588422897945">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1417" height="155" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
+    <state width="1237" height="23" key="GridCell.Tab.0.left/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
+    <state width="1877" height="509" key="GridCell.Tab.0.left/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135916" />
+    <state width="1237" height="176" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
+    <state width="2517" height="463" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
+    <state width="2517" height="463" key="GridCell.Tab.0.right" timestamp="1590053547030">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1128" height="312" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588422897945" />
-    <state width="1266" height="365" key="GridCell.Tab.1.bottom" timestamp="1588415827191">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1417" height="155" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
+    <state width="1237" height="23" key="GridCell.Tab.0.right/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
+    <state width="1877" height="509" key="GridCell.Tab.0.right/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135917" />
+    <state width="1237" height="176" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
+    <state width="2517" height="463" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
+    <state width="2517" height="463" key="GridCell.Tab.1.bottom" timestamp="1590053547031">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1266" height="365" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
-    <state width="1266" height="365" key="GridCell.Tab.1.center" timestamp="1588415827191">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1353" height="311" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
+    <state width="1877" height="424" key="GridCell.Tab.1.bottom/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
+    <state width="1237" height="276" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
+    <state width="2517" height="463" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547031" />
+    <state width="2517" height="463" key="GridCell.Tab.1.center" timestamp="1590053547031">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1266" height="365" key="GridCell.Tab.1.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
-    <state width="1266" height="365" key="GridCell.Tab.1.left" timestamp="1588415827191">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1353" height="311" key="GridCell.Tab.1.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
+    <state width="1877" height="424" key="GridCell.Tab.1.center/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
+    <state width="1237" height="276" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
+    <state width="2517" height="463" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547031" />
+    <state width="2517" height="463" key="GridCell.Tab.1.left" timestamp="1590053547030">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1266" height="365" key="GridCell.Tab.1.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
-    <state width="1266" height="365" key="GridCell.Tab.1.right" timestamp="1588415827191">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1353" height="311" key="GridCell.Tab.1.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
+    <state width="1877" height="424" key="GridCell.Tab.1.left/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
+    <state width="1237" height="276" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
+    <state width="2517" height="463" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
+    <state width="2517" height="463" key="GridCell.Tab.1.right" timestamp="1590053547031">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state width="1266" height="365" key="GridCell.Tab.1.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588415827191" />
-    <state x="-1459" y="166" key="SettingsEditor" timestamp="1588230598736">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state width="1353" height="311" key="GridCell.Tab.1.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
+    <state width="1877" height="424" key="GridCell.Tab.1.right/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
+    <state width="1237" height="276" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
+    <state width="2517" height="463" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547031" />
+    <state x="615" y="165" width="1284" height="710" key="SettingsEditor" timestamp="1589785345586">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="-1459" y="166" key="SettingsEditor/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230598736" />
-    <state x="-1408" y="250" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1588321100280">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="-1459" y="166" width="1284" height="710" key="SettingsEditor/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588749294724" />
+    <state x="615" y="165" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1589785345586" />
+    <state x="683" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1589297946807">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="-1408" y="250" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588321100280" />
-    <state x="0" y="49" width="1294" height="680" key="dock-window-1" timestamp="1588233012057">
+    <state x="683" y="249" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.2560.1040@0.0.2560.1040" timestamp="1589297946807" />
+    <state x="1303" y="159" width="982" height="667" key="dock-window-1" timestamp="1589708202366">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="0" y="0" width="1294" height="738" key="dock-window-1/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588752414516" />
+    <state x="633" y="0" width="653" height="687" key="dock-window-1/0.0.1280.680@0.0.1280.680" timestamp="1589697940733" />
+    <state x="1303" y="159" width="982" height="667" key="dock-window-1/0.0.2560.1040@0.0.2560.1040" timestamp="1589708202366" />
+    <state x="981" y="305" width="448" height="417" key="refactoring.ChangeSignatureDialog" timestamp="1589634746979">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="-1184" y="306" width="448" height="417" key="refactoring.ChangeSignatureDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588751486306" />
+    <state x="981" y="305" key="refactoring.ChangeSignatureDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1589634746979" />
+    <state x="411" y="157" key="run.anything.popup" timestamp="1589779666720">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="0" y="49" width="1294" height="680" key="dock-window-1/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588233012057" />
-    <state x="-1184" y="306" key="refactoring.ChangeSignatureDialog" timestamp="1588318845098">
-      <screen x="-1920" y="1" width="1920" height="1040" />
-    </state>
-    <state x="-1184" y="306" key="refactoring.ChangeSignatureDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588318845098" />
-    <state x="-1304" y="241" key="run.anything.popup" timestamp="1588324922220">
-      <screen x="-1920" y="1" width="1920" height="1040" />
-    </state>
     <state x="-1304" y="241" key="run.anything.popup/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588324922220" />
-    <state x="-1297" y="226" width="672" height="678" key="search.everywhere.popup" timestamp="1588249035677">
-      <screen x="-1920" y="1" width="1920" height="1040" />
+    <state x="2536" y="149" key="run.anything.popup/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589555846998" />
+    <state x="411" y="157" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1589779666720" />
+    <state x="821" y="240" key="run.anything.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1589694436762" />
+    <state x="831" y="225" width="896" height="678" key="search.everywhere.popup" timestamp="1589881616361">
+      <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="-1297" y="226" width="672" height="678" key="search.everywhere.popup/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588249035677" />
+    <state x="-1297" y="226" width="672" height="678" key="search.everywhere.popup/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588749587161" />
+    <state x="831" y="225" width="896" height="678" key="search.everywhere.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1589881616361" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/../../../../../../MinGW/lib/gcc/mingw32/9.2.0/include/c++/filesystem</url>
           <line>35</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/string_matching/src/StringMatchingOutputFileWriter.cpp</url>
+          <line>56</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/string_matching/src/StringMatchingOutputFileWriter.cpp</url>
+          <line>51</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp</url>
+          <line>36</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp</url>
+          <line>39</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp</url>
+          <line>43</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/general_utilities/src/OutputFileWriter.cpp</url>
+          <line>33</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/nQueens/src/nQueensBoard.cpp</url>
+          <line>98</line>
+          <option name="timeStamp" value="152" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main/main.cpp</url>
-          <line>184</line>
-          <option name="timeStamp" value="20" />
+          <line>243</line>
+          <option name="timeStamp" value="306" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/nQueens/src/nQueensOutputFileWriter.cpp</url>
+          <line>60</line>
+          <option name="timeStamp" value="308" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="CidrExceptionBreakpoint" />
+      </default-breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="CMakeRunConfiguration">
-        <watch expression="pop_alpha.size()" language="ObjectiveC" />
-        <watch expression="pop_beta.size()" language="ObjectiveC" />
-        <watch expression="population[i].getString()" language="ObjectiveC" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

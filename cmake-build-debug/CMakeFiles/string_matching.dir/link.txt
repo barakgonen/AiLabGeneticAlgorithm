@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libstring_matching.a  CMakeFiles/string_matching.dir/string_matching/src/StringMatchingGeneticSolver.cpp.obj CMakeFiles/string_matching.dir/string_matching/src/StringMatchingOutputFileWriter.cpp.obj
-C:\MinGW\bin\ranlib.exe libstring_matching.a

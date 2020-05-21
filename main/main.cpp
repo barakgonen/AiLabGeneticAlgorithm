@@ -16,6 +16,7 @@
 #include "../nQueens/include/nQueensMinimalConflictsSolver.h"
 #include "../knap_sack/include/KnapSackGeneticSolver.h"
 #include "../knap_sack/include/KnapSackStaticDataSetInitializer.h"
+#include "../nQueens/include/nQueensOutputFileWriter.h"
 
 using namespace std;
 
@@ -175,7 +176,7 @@ std::string getOutputPath(int argc, char **argv) {
     basePath = basePath.substr(0, index);
     index = basePath.find_last_of("\\");
     basePath = basePath.substr(0, index);
-    outputPath = argv[argc];
+    outputPath = argv[argc - 1];
     basePath += "\\" + outputPath;
     return basePath;
 }
@@ -196,87 +197,59 @@ int main(int argc, char *argv[]) {
         std::cout << "Total runtime is: " << totalRuntime << " miliseconds" << std::endl;
 
         outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
+
+        int a = 4;
+
     }
     else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
-        std::vector<std::pair<int,int>> results;
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         MutationOperator mutationOperator = getMutationOperator(argc, argv);
-        NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
-        int errorsCounter = 0;
-        int passed = 0;
-      std::vector<int> ssv{3,0,4,1,4,2}; // value 1 trusted
-//      std::vector<int> ssv{0, 1, 1, 6, 1, 2, 5, 4}; // value 9 trusted
-//      std::vector<int> ssv{0, 1, 3, 6, 2, 1, 4, 4, 6}; // value 8 trusted
-//      std::vector<int> ssv{0, 3, 7, 9, 8, 4, 5, 2, 1, 7}; // value 9 trusted
-//      std::vector<int> ssv{1, 9, 2, 11, 4, 1, 13, 6, 0, 4, 2, 1}; // value 11 trusted
-
-//        std::srand(std::time(nullptr)); // use current time as seed for random generator
-//        for (int i = 0; i < 100000; i++)
-//        {
-//            int x =rand() % getBoardSizeAndNumberOfQueens(argc, argv) + 3;
-//            NqBoard board{x};
-//            if (board.myConflicts() != board.conflicts()){
-//                std::cout << "Diff, orig: " << board.conflicts() << ", mine: " << board.myConflicts() << std::endl;
-//                errorsCounter++;
-//            } else
-//                passed++;
-//        }
-//        std::cout << "Total number of errors: " << errorsCounter << std::endl;
-//        std::cout << "Total tests passed: " << passed << std::endl;
-
-//        nQueensMinimalConflictsSolver minimalConflictsSolver{board};
-//        minimalConflictsSolver.solvePuzzle();
-
-            // My OX
-//            std::vector<int> parent1Vec = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-//            std::vector<int> parent2Vec = {5, 7, 4, 9, 1, 3, 6, 2, 8};
-//            std::vector<int> copyOfParent2Vec;
-//            std::copy(parent2Vec.begin(), parent2Vec.end(), back_inserter(copyOfParent2Vec));
-//            std::vector<int> indexesFromParent1 = {2,3,4,5};
-//            std::generate(indexesFromParent1.begin(), indexesFromParent1.end(), [n = random(0, half-1)] () mutable { return n++; });
-//            std::vector<int> oxVec(parent2Vec.size());
-//            std::fill(oxVec.begin(), oxVec.end(), -1);
-//            // First loop initializing first part
-//            for (const auto parentOneIndex : indexesFromParent1){
-//                oxVec.at(parentOneIndex) = parent1Vec.at(parentOneIndex);
-//                copyOfParent2Vec.erase(std::find(copyOfParent2Vec.begin(), copyOfParent2Vec.end(), parent1Vec.at(parentOneIndex)));
-//            }
-//
-//            for (const auto parent2Val : copyOfParent2Vec){
-//                for (int i = 0; i < oxVec.size(); i++) {
-//                    if (oxVec.at(i) == -1) {
-//                        oxVec.at(i) = parent2Val;
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            std::cout << "BLA" << std::endl;
-        int repets = 10;
-        for (int i = 0; i < repets; i++)
+        int boardSize = getBoardSizeAndNumberOfQueens(argc, argv);
+        if (boardSize == 9999)
         {
-            nQueensGeneticSolver geneticSolver{board, SelectionMethod::None, crossoverMethod, mutationOperator};
-            results.push_back(geneticSolver.solvePuzzle());
-            std::cout << "============== " <<  i << "/" << repets << " ===========================================" << std::endl;
+            std::vector<int> staticBoardSizes = {10, 15, 20, 40, 50, 60, 70, 80, 100, 110, 120, 150};
+            std::vector<nQueensSolutionData> pmxInversionresults;
+            std::vector<nQueensSolutionData> pmxExchangeresults;
+            std::vector<nQueensSolutionData> oxInversionresults;
+            std::vector<nQueensSolutionData> oxExchangeresults;
+            std::vector<nQueensSolutionData> minimalConflictsResults;
+            std::cout << "This is performance mode, generating different board size each time and collecting data" << std::endl;
+            int repets = 500;
+            for (int i = 0; i < repets; i++)
+            {
+                for (const int boardSize : staticBoardSizes){
+                    NqBoard board{boardSize};
+                    nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox, MutationOperator::Inversion, true};
+                    oxInversionresults.push_back(oxInversionSolver.solvePuzzle());
+                    nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox, MutationOperator::Exchange, true};
+                    oxExchangeresults.push_back(oxExchangeSolver.solvePuzzle());
+                    nQueensGeneticSolver pmxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Inversion, true};
+                    pmxInversionresults.push_back(pmxInversionSolver.solvePuzzle());
+                    nQueensGeneticSolver pmxExchangeSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Exchange, true};
+                    pmxExchangeresults.push_back(pmxExchangeSolver.solvePuzzle());
+                    nQueensMinimalConflictsSolver minimalConflictsSolver{board, true};
+                    minimalConflictsResults.push_back(minimalConflictsSolver.solvePuzzle());
+                }
+                std::cout << "============== " <<  i << "/" << repets << " ===========================================" << std::endl;
+            }
+            nQueensOutputFileWriter oxExchangeWriter{getOutputPath(argc, argv), "OX_Exchange", MutationOperator::Exchange, CrossoverMethod::Ox};
+            oxExchangeWriter.writeToFile(oxExchangeresults);
+            nQueensOutputFileWriter oxInversionWriter{getOutputPath(argc, argv), "nQueens", MutationOperator::Inversion, CrossoverMethod::Ox};
+            oxExchangeWriter.writeToFile(oxInversionresults);
+            nQueensOutputFileWriter pmxExchangeWriter{getOutputPath(argc, argv), "Pmx_Exchange", MutationOperator::Exchange, CrossoverMethod::Pmx};
+            pmxExchangeWriter.writeToFile(pmxExchangeresults);
+            nQueensOutputFileWriter pmxInversionWriter{getOutputPath(argc, argv), "Pmx_Inversion", MutationOperator::Inversion, CrossoverMethod::Pmx};
+            pmxInversionWriter.writeToFile(pmxInversionresults);
+            nQueensOutputFileWriter minimalConflictsWriter{getOutputPath(argc, argv), "MinimalConflicts", MutationOperator::Inversion, CrossoverMethod::Empty};
+            minimalConflictsWriter.writeToFile(minimalConflictsResults);
+        } else{
+            NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
+            nQueensGeneticSolver geneticSolver{board, SelectionMethod::None, crossoverMethod, mutationOperator, true};
+            geneticSolver.solvePuzzle();
+            nQueensMinimalConflictsSolver minimalConflictsSolver{board};
         }
-
-        int sum = 0;
-        int steps = 0;
-        for (const auto res : results){
-            sum += res.second;
-            steps += res.first;
-        }
-        std::cout << "avg time (millis) is: for ox / exchange on board size " << board.getBoardSize() << " [ num of tries: " << results.size() << "] " << sum / results.size() << std::endl;
-        std::cout << "avg steps counter [ num of tries: " << results.size() << "] " << steps / results.size() << std::endl;
-        std::cout << "Raw data: " << std::endl;
-        for (const auto res : results)
-            std::cout << "Time: " << res.second << ", steps: " << res.first << std::endl;
-        if (steps / results.size() > 21221) // for 120 runs, so make sure if you change this value
-            std::cout << "Something went wron bro" << std::endl;
-        else
-            std::cout << "You didn't break a thing! nice!" << std::endl;
 
     }
     else if (labSelector == "KnapSack") {
@@ -288,11 +261,10 @@ int main(int argc, char *argv[]) {
         int i;
         int failures = 0;
         int passedCounter = 0;
-        int c = 5;
+        int c = 1;
 
         for (i = 0; i < c; i++){
             for (const auto key : initializer.getPuzzlesIDs()) {
-//                int key = 1;
                 KnapSackGeneticSolver solver{key, initializer, selectionMethod, crossoverMethod};
                 const auto result = solver.solve();
                 if (initializer.isOptimalSelectionReached(key, result)) {
@@ -303,7 +275,6 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
-        std::cout << "i is: " << i << std::endl;
         std::cout << "Totally solved: " << passedCounter << "/" << initializer.getPuzzlesIDs().size() * c << " puzzles!" << std::endl;
         std::cout << "failures: "<<failures << std::endl;
     }

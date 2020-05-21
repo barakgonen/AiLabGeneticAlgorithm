@@ -13,12 +13,13 @@ nQueensGenericSolver::nQueensGenericSolver(const NqBoard& board, std::string sol
 }
 
 void nQueensGenericSolver::printPuzzle() {
-//    board.printBoard();
+    board.printBoard();
 }
 
-std::pair<int, int> nQueensGenericSolver::solvePuzzle() {
+nQueensSolutionData nQueensGenericSolver::solvePuzzle() {
+    nQueensSolutionData solutionData;
     std::cout << "~~~~~~~~~~~~~~~~~~~~" << solverType << " SOLVER BEFORE~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-//    printPuzzle();
+    printPuzzle();
     auto startTimeStamp = std::chrono::high_resolution_clock::now();
     int iterationsCounter = runSolver();
     auto endTimeStamp = std::chrono::high_resolution_clock::now();
@@ -26,6 +27,10 @@ std::pair<int, int> nQueensGenericSolver::solvePuzzle() {
     std::cout << "number of steps is: " << iterationsCounter << ", it took just: "
               << calculationTime.count() << " millis" << std::endl;
     std::cout << "~~~~~~~~~~~~~~~~~~~~" << solverType << " SOLVER AFTER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-//    printPuzzle();
-return std::make_pair(iterationsCounter, calculationTime.count());
+    printPuzzle();
+    solutionData.boardSize = board.getBoardSize();
+    solutionData.numberOfSteps = iterationsCounter;
+    solutionData.timeToSolve = calculationTime.count();
+    fillAditionalSolutionData(solutionData);
+    return std::move(solutionData);
 }

@@ -6,8 +6,9 @@
 #include "../include/nQueensMinimalConflictsSolver.h"
 #include "../../string_matching/include/consts.h"
 
-nQueensMinimalConflictsSolver::nQueensMinimalConflictsSolver(const NqBoard &board)
+nQueensMinimalConflictsSolver::nQueensMinimalConflictsSolver(const NqBoard &board, bool isQuietMode)
 : nQueensGenericSolver{board, "MINIMAL CONFLICTS "}
+, isQuietMode{isQuietMode}
 {
 }
 

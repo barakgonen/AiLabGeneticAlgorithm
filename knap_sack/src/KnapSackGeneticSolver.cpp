@@ -14,7 +14,7 @@
 KnapSackGeneticSolver::KnapSackGeneticSolver(const int puzzleKey,
                                              const KnapSackStaticDataSetInitializer& staticDataSetInitializer,
                                              SelectionMethod selectionMethod, CrossoverMethod crossoverMethod)
-: AbstractGeneticSolver<ga_struct>(selectionMethod, crossoverMethod)
+: AbstractGeneticSolver<KnapSackGeneticStruct>(selectionMethod, crossoverMethod)
 , capacity{staticDataSetInitializer.getCapacity(puzzleKey)}
 , profits{staticDataSetInitializer.getProfits(puzzleKey)}
 , weights{staticDataSetInitializer.getWeights(puzzleKey)}
@@ -28,7 +28,7 @@ void KnapSackGeneticSolver::init_population() {
     auto dice = std::bind ( distribution, generator );
 
     for (int i = 0; i < GA_POPSIZE; i++) {
-        ga_struct citizen;
+        KnapSackGeneticStruct citizen;
 
         citizen.sigmaWeight = 0;
         for (int j = 0; j < N; j++){
@@ -63,7 +63,7 @@ void KnapSackGeneticSolver::handle_specific_elitism(const int index) {
 //    buffer.at(index).sigmaWeight = population.at(index).sigmaWeight;
 }
 
-void KnapSackGeneticSolver::mutate(ga_struct &member) {
+void KnapSackGeneticSolver::mutate(KnapSackGeneticStruct &member) {
 //    int i = rand() % N;
 //    int j = i;
 //
@@ -85,16 +85,16 @@ std::vector<int> KnapSackGeneticSolver::solve() {
     srand(unsigned(time(NULL)));
     int max = 0, num = 20;
     init_population();
-    calc_fitness(); // calculate fitness
+    calc_fitness(); // calculate fitnessVal
     sort_population_by_fitnes(); // sort them
 
     for (int i = 0; i < GA_MAXITER; i++) {
         t = clock();
-        calc_fitness(); // calculate fitness
+        calc_fitness(); // calculate fitnessVal
         sort_population_by_fitnes(); // sort them
         print_best(); // print the best one
         avg = get_average_fitness();
-        std::cout << "fitness avg: " << avg;
+        std::cout << "fitnessVal avg: " << avg;
         double standardAviation = get_standard_deviation(avg);
         std::cout << " Standard deviation: " << standardAviation;
 
@@ -118,8 +118,6 @@ std::vector<int> KnapSackGeneticSolver::solve() {
         t = clock() - t;
         std::cout << " CLOCK TICKS Time :" << t << " Elapsed time:" << ((float) t) / CLOCKS_PER_SEC << std::endl;
     }
-    std::cout << "pop back fitness: " << population.back().fitnessVal << std::endl;
-    std::cout << "pop front fitness: " << population.front().fitnessVal << std::endl;
     return population.back().sack;
 }
 
