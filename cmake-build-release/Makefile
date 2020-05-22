@@ -122,6 +122,33 @@ geneticString/fast:
 	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/build
 .PHONY : geneticString/fast
 
+bin_packing/src/binPackingGeneticSolver.obj: bin_packing/src/binPackingGeneticSolver.cpp.obj
+
+.PHONY : bin_packing/src/binPackingGeneticSolver.obj
+
+# target to build an object file
+bin_packing/src/binPackingGeneticSolver.cpp.obj:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/bin_packing/src/binPackingGeneticSolver.cpp.obj
+.PHONY : bin_packing/src/binPackingGeneticSolver.cpp.obj
+
+bin_packing/src/binPackingGeneticSolver.i: bin_packing/src/binPackingGeneticSolver.cpp.i
+
+.PHONY : bin_packing/src/binPackingGeneticSolver.i
+
+# target to preprocess a source file
+bin_packing/src/binPackingGeneticSolver.cpp.i:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/bin_packing/src/binPackingGeneticSolver.cpp.i
+.PHONY : bin_packing/src/binPackingGeneticSolver.cpp.i
+
+bin_packing/src/binPackingGeneticSolver.s: bin_packing/src/binPackingGeneticSolver.cpp.s
+
+.PHONY : bin_packing/src/binPackingGeneticSolver.s
+
+# target to generate assembly for a file
+bin_packing/src/binPackingGeneticSolver.cpp.s:
+	$(MAKE) -f CMakeFiles\geneticString.dir\build.make CMakeFiles/geneticString.dir/bin_packing/src/binPackingGeneticSolver.cpp.s
+.PHONY : bin_packing/src/binPackingGeneticSolver.cpp.s
+
 general_utilities/src/OutputFileWriter.obj: general_utilities/src/OutputFileWriter.cpp.obj
 
 .PHONY : general_utilities/src/OutputFileWriter.obj
@@ -482,6 +509,9 @@ help:
 	@echo ... rebuild_cache
 	@echo ... geneticString
 	@echo ... edit_cache
+	@echo ... bin_packing/src/binPackingGeneticSolver.obj
+	@echo ... bin_packing/src/binPackingGeneticSolver.i
+	@echo ... bin_packing/src/binPackingGeneticSolver.s
 	@echo ... general_utilities/src/OutputFileWriter.obj
 	@echo ... general_utilities/src/OutputFileWriter.i
 	@echo ... general_utilities/src/OutputFileWriter.s

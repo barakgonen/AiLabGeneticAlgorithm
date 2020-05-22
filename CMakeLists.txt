@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 14)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES main/main.cpp)
 
-FILE(GLOB SRCFILES main/main.cpp string_matching/src/*.cpp nQueens/src/*.cpp genetic_solver/src/*.cpp general_utilities/src/*.cpp knap_sack/src/*.cpp)
+FILE(GLOB SRCFILES main/main.cpp string_matching/src/*.cpp nQueens/src/*.cpp genetic_solver/src/*.cpp general_utilities/src/*.cpp knap_sack/src/*.cpp bin_packing/src/*.cpp)
 #add_library(general_utilities general_utilities/src/OutputFileWriter.cpp)
 #add_library(genetic_solver genetic_solver/src/AbstractGeneticSolver.cpp)
 #add_library(nQueens nQueens/src/nQueensBoard.cpp nQueens/src/nQueensGenericSolver.cpp nQueens/src/nQueensGeneticSolver.cpp nQueens/src/nQueensMinimalConflictsSolver.cpp)

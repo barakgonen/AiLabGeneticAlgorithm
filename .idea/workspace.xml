@@ -31,9 +31,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4933d474-12fb-43a8-9a92-2d2ba8c5b85b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/bin_packing/include/BinPackingGeneticSolver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin_packing/include/binPackingGeneticStruct.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin_packing/src/BinPackingGeneticSolver.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/AiLabGeneticAlgorithm.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/AiLabGeneticAlgorithm.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/geneticString.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/geneticString.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/AiLabGeneticAlgorithm.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/AiLabGeneticAlgorithm.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/main/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/main/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/geneticString.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-release/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-release/geneticString.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-release/geneticString.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main/main.cpp" afterDir="false" />
     </list>
@@ -45,7 +71,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -81,20 +107,20 @@
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\knap_sack\static_input_files" />
-      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\scripts" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\bin_packing\src" />
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\nQueens\src" />
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\knap_sack\src" />
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\general_utilities\src" />
       <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\genetic_solver\src" />
-      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\genetic_solver\include" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\knap_sack\static_input_files" />
+      <recent name="C:\Users\barak\Documents\HaifaUniversity\AiLab\AiLabGeneticAlgorithm\scripts" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="geneticString" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="&quot;nQueens&quot; &quot;&quot; &quot;Pmx&quot; &quot;Exchange&quot; &quot;9999&quot; &quot;nQueensResultsQue10&quot;" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AiLabGeneticAlgorithm" TARGET_NAME="geneticString" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="AiLabGeneticAlgorithm" RUN_TARGET_NAME="geneticString">
+    <configuration name="geneticString" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="&quot;BinPacking&quot; &quot;Random&quot; &quot;UniformCrossover&quot;" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="AiLabGeneticAlgorithm" TARGET_NAME="geneticString" CONFIG_NAME="Release" RUN_TARGET_PROJECT_NAME="AiLabGeneticAlgorithm" RUN_TARGET_NAME="geneticString">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -147,6 +173,7 @@
       <workItem from="1590049975521" duration="2547000" />
       <workItem from="1590052578294" duration="1072000" />
       <workItem from="1590053784613" duration="3172000" />
+      <workItem from="1590130716333" duration="482000" />
     </task>
     <servers />
   </component>
@@ -166,14 +193,14 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="869" y="206" width="1446" height="526" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590052593300">
+    <state x="869" y="206" width="1446" height="526" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590131198319">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="-1569" y="104" width="1569" height="676" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675129980" />
     <state x="-1089" y="281" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.1.1920.1040@0.0.1280.680" timestamp="1588328172316" />
     <state x="2295" y="291" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589556404249" />
     <state x="196" y="139" width="723" height="525" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1589884372715" />
-    <state x="869" y="206" width="1446" height="526" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1590052593300" />
+    <state x="869" y="206" width="1446" height="526" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1040@0.0.2560.1040" timestamp="1590131198319" />
     <state x="936" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1589303214698">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
@@ -183,11 +210,11 @@
       <screen x="-1920" y="1" width="1920" height="1040" />
     </state>
     <state x="-1297" y="408" key="#com.intellij.ide.macro.MacrosDialog/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588667458806" />
-    <state x="1020" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1589799860533">
+    <state x="1020" y="226" key="#com.intellij.ide.util.MemberChooser" timestamp="1590130920279">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state x="-1155" y="227" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588751084826" />
-    <state x="1020" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1589799860533" />
+    <state x="1020" y="226" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1590130920279" />
     <state x="920" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589038375586">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
@@ -214,66 +241,66 @@
     </state>
     <state x="-1180" y="276" key="FileChooserDialogImpl/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588230121825" />
     <state x="987" y="275" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1589974299076" />
-    <state width="1816" height="450" key="GridCell.Tab.0.bottom" timestamp="1590056964850">
+    <state width="2136" height="463" key="GridCell.Tab.0.bottom" timestamp="1590131178027">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135917" />
     <state width="1237" height="176" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="1816" height="450" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590056964850" />
-    <state width="1816" height="450" key="GridCell.Tab.0.center" timestamp="1590056964850">
+    <state width="2136" height="463" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590131178027" />
+    <state width="2136" height="463" key="GridCell.Tab.0.center" timestamp="1590131178027">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.center/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.center/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135916" />
     <state width="1237" height="176" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="1816" height="450" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590056964850" />
-    <state width="1816" height="450" key="GridCell.Tab.0.left" timestamp="1590056964850">
+    <state width="2136" height="463" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590131178027" />
+    <state width="2136" height="463" key="GridCell.Tab.0.left" timestamp="1590131178027">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.left/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.left/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135916" />
     <state width="1237" height="176" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="1816" height="450" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590056964850" />
-    <state width="1816" height="450" key="GridCell.Tab.0.right" timestamp="1590056964850">
+    <state width="2136" height="463" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590131178027" />
+    <state width="2136" height="463" key="GridCell.Tab.0.right" timestamp="1590131178027">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1417" height="155" key="GridCell.Tab.0.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588675394469" />
     <state width="1237" height="23" key="GridCell.Tab.0.right/0.0.1280.680/1920.-119.1920.1160@0.0.1280.680" timestamp="1589544972035" />
     <state width="1877" height="509" key="GridCell.Tab.0.right/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558135917" />
     <state width="1237" height="176" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1589946691321" />
-    <state width="1816" height="450" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590056964850" />
-    <state width="2517" height="463" key="GridCell.Tab.1.bottom" timestamp="1590053547031">
+    <state width="2136" height="463" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590131178027" />
+    <state width="2136" height="463" key="GridCell.Tab.1.bottom" timestamp="1590131174512">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1353" height="311" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
     <state width="1877" height="424" key="GridCell.Tab.1.bottom/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
     <state width="1237" height="276" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
-    <state width="2517" height="463" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547031" />
-    <state width="2517" height="463" key="GridCell.Tab.1.center" timestamp="1590053547031">
+    <state width="2136" height="463" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1590131174512" />
+    <state width="2136" height="463" key="GridCell.Tab.1.center" timestamp="1590131174512">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1353" height="311" key="GridCell.Tab.1.center/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
     <state width="1877" height="424" key="GridCell.Tab.1.center/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
     <state width="1237" height="276" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
-    <state width="2517" height="463" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547031" />
-    <state width="2517" height="463" key="GridCell.Tab.1.left" timestamp="1590053547030">
+    <state width="2136" height="463" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1590131174512" />
+    <state width="2136" height="463" key="GridCell.Tab.1.left" timestamp="1590131174512">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1353" height="311" key="GridCell.Tab.1.left/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
     <state width="1877" height="424" key="GridCell.Tab.1.left/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
     <state width="1237" height="276" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
-    <state width="2517" height="463" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547030" />
-    <state width="2517" height="463" key="GridCell.Tab.1.right" timestamp="1590053547031">
+    <state width="2136" height="463" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1590131174512" />
+    <state width="2136" height="463" key="GridCell.Tab.1.right" timestamp="1590131174512">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
     <state width="1353" height="311" key="GridCell.Tab.1.right/0.0.1280.680/-1920.1.1920.1040@-1920.1.1920.1040" timestamp="1588674702530" />
     <state width="1877" height="424" key="GridCell.Tab.1.right/0.0.1280.680/1920.-119.1920.1160@1920.-119.1920.1160" timestamp="1589558034393" />
     <state width="1237" height="276" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1589884431097" />
-    <state width="2517" height="463" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590053547031" />
+    <state width="2136" height="463" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1590131174512" />
     <state x="615" y="165" width="1284" height="710" key="SettingsEditor" timestamp="1589785345586">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
@@ -353,13 +380,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main/main.cpp</url>
-          <line>243</line>
+          <line>244</line>
           <option name="timeStamp" value="306" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/nQueens/src/nQueensOutputFileWriter.cpp</url>
           <line>60</line>
           <option name="timeStamp" value="308" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main/main.cpp</url>
+          <line>286</line>
+          <option name="timeStamp" value="309" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/geneticString.dir/bin_packing/src/binPackingGeneticSolver.cpp.obj"
   "CMakeFiles/geneticString.dir/general_utilities/src/OutputFileWriter.cpp.obj"
   "CMakeFiles/geneticString.dir/genetic_solver/src/AbstractGeneticSolver.cpp.obj"
   "CMakeFiles/geneticString.dir/knap_sack/src/KnapSackGeneticSolver.cpp.obj"

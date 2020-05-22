@@ -17,6 +17,7 @@
 #include "../knap_sack/include/KnapSackGeneticSolver.h"
 #include "../knap_sack/include/KnapSackStaticDataSetInitializer.h"
 #include "../nQueens/include/nQueensOutputFileWriter.h"
+#include "../bin_packing/include/BinPackingGeneticSolver.h"
 
 using namespace std;
 
@@ -277,6 +278,13 @@ int main(int argc, char *argv[]) {
         }
         std::cout << "Totally solved: " << passedCounter << "/" << initializer.getPuzzlesIDs().size() * c << " puzzles!" << std::endl;
         std::cout << "failures: "<<failures << std::endl;
+    }
+    else if (labSelector == "BinPacking"){
+        std::cout << "You requested for bin packing solver, good luck! ;)" << std::endl;
+        string basePath = getRunningPath(argv);
+        SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
+        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
+        BinPackingGeneticSolver binPackingGeneticSolver{selectionMethod, crossoverMethod};
     }
 
     return 0;

@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/bin_packing/src/binPackingGeneticSolver.cpp">
+			<Option target="geneticString"/>
+		</Unit>
 		<Unit filename="C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/src/OutputFileWriter.cpp">
 			<Option target="geneticString"/>
 		</Unit>

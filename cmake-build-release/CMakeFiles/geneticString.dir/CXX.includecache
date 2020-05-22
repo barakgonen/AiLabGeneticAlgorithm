@@ -36,6 +36,20 @@ functional
 
 ../genetic_solver/include/MutationOperators.h
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/bin_packing/include/BinPackingGeneticSolver.h
+binPackingGeneticStruct.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/bin_packing/include/binPackingGeneticStruct.h
+../../genetic_solver/include/AbstractGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/AbstractGeneticSolver.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/bin_packing/include/binPackingGeneticStruct.h
+../../genetic_solver/include/GeneticAlgorithmBaseStruct.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/GeneticAlgorithmBaseStruct.h
+
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/bin_packing/src/binPackingGeneticSolver.cpp
+../include/BinPackingGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/bin_packing/include/BinPackingGeneticSolver.h
+
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/general_utilities/include/OutputFileWriter.h
 string
 -
@@ -104,6 +118,10 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_sol
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/SelectionMethodEnum.h
 
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/consts.h
+stdlib.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/genetic_solver/include/stdlib.h
+
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackGeneticSolver.h
 GeneticAlgorithmBaseStruct.h
 -
@@ -159,6 +177,8 @@ C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/i
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/knap_sack/include/KnapSackStaticDataSetInitializer.h
 ../nQueens/include/nQueensOutputFileWriter.h
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/nQueensOutputFileWriter.h
+../bin_packing/include/BinPackingGeneticSolver.h
+C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/bin_packing/include/BinPackingGeneticSolver.h
 
 C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/nQueens/include/InQueensSolver.h
 nQueensSolutionData.h
