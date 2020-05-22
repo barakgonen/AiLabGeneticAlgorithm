@@ -221,27 +221,27 @@ int main(int argc, char *argv[]) {
             {
                 for (const int boardSize : staticBoardSizes){
                     NqBoard board{boardSize};
-                    nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox, MutationOperator::Inversion, true};
-                    oxInversionresults.push_back(oxInversionSolver.solvePuzzle());
-                    nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox, MutationOperator::Exchange, true};
-                    oxExchangeresults.push_back(oxExchangeSolver.solvePuzzle());
-                    nQueensGeneticSolver pmxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Inversion, true};
-                    pmxInversionresults.push_back(pmxInversionSolver.solvePuzzle());
-                    nQueensGeneticSolver pmxExchangeSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Exchange, true};
-                    pmxExchangeresults.push_back(pmxExchangeSolver.solvePuzzle());
+//                    nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox, MutationOperator::Inversion, true};
+//                    oxInversionresults.push_back(oxInversionSolver.solvePuzzle());
+//                    nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox, MutationOperator::Exchange, true};
+//                    oxExchangeresults.push_back(oxExchangeSolver.solvePuzzle());
+//                    nQueensGeneticSolver pmxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Inversion, true};
+//                    pmxInversionresults.push_back(pmxInversionSolver.solvePuzzle());
+//                    nQueensGeneticSolver pmxExchangeSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Exchange, true};
+//                    pmxExchangeresults.push_back(pmxExchangeSolver.solvePuzzle());
                     nQueensMinimalConflictsSolver minimalConflictsSolver{board, true};
                     minimalConflictsResults.push_back(minimalConflictsSolver.solvePuzzle());
                 }
                 std::cout << "============== " <<  i << "/" << repets << " ===========================================" << std::endl;
             }
-            nQueensOutputFileWriter oxExchangeWriter{getOutputPath(argc, argv), "OX_Exchange", MutationOperator::Exchange, CrossoverMethod::Ox};
-            oxExchangeWriter.writeToFile(oxExchangeresults);
-            nQueensOutputFileWriter oxInversionWriter{getOutputPath(argc, argv), "nQueens", MutationOperator::Inversion, CrossoverMethod::Ox};
-            oxExchangeWriter.writeToFile(oxInversionresults);
-            nQueensOutputFileWriter pmxExchangeWriter{getOutputPath(argc, argv), "Pmx_Exchange", MutationOperator::Exchange, CrossoverMethod::Pmx};
-            pmxExchangeWriter.writeToFile(pmxExchangeresults);
-            nQueensOutputFileWriter pmxInversionWriter{getOutputPath(argc, argv), "Pmx_Inversion", MutationOperator::Inversion, CrossoverMethod::Pmx};
-            pmxInversionWriter.writeToFile(pmxInversionresults);
+//            nQueensOutputFileWriter oxExchangeWriter{getOutputPath(argc, argv), "OX_Exchange", MutationOperator::Exchange, CrossoverMethod::Ox};
+//            oxExchangeWriter.writeToFile(oxExchangeresults);
+//            nQueensOutputFileWriter oxInversionWriter{getOutputPath(argc, argv), "nQueens", MutationOperator::Inversion, CrossoverMethod::Ox};
+//            oxExchangeWriter.writeToFile(oxInversionresults);
+//            nQueensOutputFileWriter pmxExchangeWriter{getOutputPath(argc, argv), "Pmx_Exchange", MutationOperator::Exchange, CrossoverMethod::Pmx};
+//            pmxExchangeWriter.writeToFile(pmxExchangeresults);
+//            nQueensOutputFileWriter pmxInversionWriter{getOutputPath(argc, argv), "Pmx_Inversion", MutationOperator::Inversion, CrossoverMethod::Pmx};
+//            pmxInversionWriter.writeToFile(pmxInversionresults);
             nQueensOutputFileWriter minimalConflictsWriter{getOutputPath(argc, argv), "MinimalConflicts", MutationOperator::Inversion, CrossoverMethod::Empty};
             minimalConflictsWriter.writeToFile(minimalConflictsResults);
         } else{
