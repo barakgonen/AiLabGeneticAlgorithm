@@ -18,6 +18,11 @@
 #include "../knap_sack/include/KnapSackStaticDataSetInitializer.h"
 #include "../nQueens/include/nQueensOutputFileWriter.h"
 #include "../bin_packing/include/BinPackingGeneticSolver.h"
+#include "../bin_packing/include/BinPackingInputReader.h"
+
+
+#include <chrono>
+#include <ratio>
 
 using namespace std;
 
@@ -182,6 +187,102 @@ std::string getOutputPath(int argc, char **argv) {
     return basePath;
 }
 
+std::pair<int, int> firstFit(int weight[], int n, int c)
+{
+    auto startTimeStamp = std::chrono::high_resolution_clock::now();
+
+    // Initialize result (Count of bins)
+    int res = 0;
+
+    // Create an array to store remaining space in bins
+    // there can be at most n bins
+    int bin_rem[n];
+
+    // Place items one by one
+    for (int i = 0; i < n; i++) {
+        // Find the first bin that can accommodate
+        // weight[i]
+        int j;
+        for (j = 0; j < res; j++) {
+            if (bin_rem[j] >= weight[i]) {
+                bin_rem[j] = bin_rem[j] - weight[i];
+                break;
+            }
+        }
+
+        // If no bin could accommodate weight[i]
+        if (j == res) {
+            bin_rem[res] = c - weight[i];
+            res++;
+        }
+    }
+    auto endTimeStemp = std::chrono::high_resolution_clock::now();
+    auto total = std::chrono::duration_cast<std::chrono::microseconds>(endTimeStemp - startTimeStamp);
+
+    return std::make_pair(res, total.count());
+}
+
+void runScenario(std::vector<int> weight, int binCapacity, int expectedNumberOfNodes) {
+    std::pair<int, long> nSquareRes = firstFit(weight.data(), weight.size(), binCapacity);
+//    cout << "Number of bins required in First Fit : " << nSquareRes.first << ", Runtime: "
+//                                                << nSquareRes.second << " microSec" << std::endl;
+    if (nSquareRes.first != expectedNumberOfNodes){
+        std::cout << "=============================================================================" << std::endl;
+        std::cout << "ERROR, expected: " << expectedNumberOfNodes << ", actual: " << nSquareRes.first << std::endl;
+        std::cout << "=============================================================================" << std::endl;
+    }
+//    std::cout << "=============================================================================" << std::endl;
+}
+
+void testBinPackingFitness(const string &basePath, int numOfIterations) {
+    int errorCounter = 0;
+    for (int i = 0; i < numOfIterations; i++) {
+        runScenario({1, 2, 3, 1, 2, 3}, 4, 4);
+        runScenario({1, 4, 2, 3, 3, 4, 4, 5}, 5, 6);
+        runScenario({2, 5, 4, 7, 1, 3, 8}, 10, 4);
+        runScenario({2, 5, 4, 7, 1, 3, 8}, 11, 3);
+        runScenario({2, 5, 4, 7, 1, 3, 8}, 12, 3);
+        runScenario({2, 5, 4, 7, 1, 3, 8}, 18, 2);
+        runScenario({2, 5, 4, 7, 1, 3, 8}, 29, 2);
+        runScenario({2, 5, 4, 7, 1, 3, 8}, 30, 1);
+        runScenario({98, 98, 96, 2, 1, 4, 12, 7, 96}, 150, 4);
+        BinPackingInputReader inputReader20{basePath, 20};
+        runScenario(inputReader20.getItemsWeight(), inputReader20.getBinsCapacity(), 20);
+        BinPackingInputReader inputReader21{basePath, 21};
+        runScenario(inputReader21.getItemsWeight(), inputReader21.getBinsCapacity(), 21);
+        BinPackingInputReader inputReader22{basePath, 22};
+        runScenario(inputReader22.getItemsWeight(), inputReader22.getBinsCapacity(), 21);
+        BinPackingInputReader inputReader23{basePath, 23};
+        runScenario(inputReader23.getItemsWeight(), inputReader23.getBinsCapacity(), 22);
+        BinPackingInputReader inputReader25{basePath, 25};
+        runScenario(inputReader25.getItemsWeight(), inputReader25.getBinsCapacity(), 23);
+        BinPackingInputReader inputReader30{basePath, 30};
+        runScenario(inputReader30.getItemsWeight(), inputReader30.getBinsCapacity(), 25);
+        BinPackingInputReader inputReader31{basePath, 31};
+        runScenario(inputReader31.getItemsWeight(), inputReader31.getBinsCapacity(), 26);
+        BinPackingInputReader inputReader32{basePath, 32};
+        runScenario(inputReader32.getItemsWeight(), inputReader32.getBinsCapacity(), 26);
+        BinPackingInputReader inputReader33{basePath, 33};
+        runScenario(inputReader33.getItemsWeight(), inputReader33.getBinsCapacity(), 26);
+        BinPackingInputReader inputReader34{basePath, 34};
+        runScenario(inputReader34.getItemsWeight(), inputReader34.getBinsCapacity(), 26);
+        BinPackingInputReader inputReader35{basePath, 35};
+        runScenario(inputReader35.getItemsWeight(), inputReader35.getBinsCapacity(), 26);
+        BinPackingInputReader inputReader37{basePath, 37};
+        runScenario(inputReader37.getItemsWeight(), inputReader37.getBinsCapacity(), 27);
+        BinPackingInputReader inputReader40{basePath, 40};
+        runScenario(inputReader40.getItemsWeight(), inputReader40.getBinsCapacity(), 38);
+        BinPackingInputReader inputReader120{basePath, 120};
+        runScenario(inputReader120.getItemsWeight(), inputReader120.getBinsCapacity(), 49);
+        BinPackingInputReader inputReader250{basePath, 250};
+        runScenario(inputReader250.getItemsWeight(), inputReader250.getBinsCapacity(), 100);
+        BinPackingInputReader inputReader500{basePath, 500};
+        runScenario(inputReader500.getItemsWeight(), inputReader500.getBinsCapacity(), 201);
+        BinPackingInputReader inputReader1000{basePath, 1000};
+        runScenario(inputReader1000.getItemsWeight(), inputReader1000.getBinsCapacity(), 403);
+    }
+}
+
 int main(int argc, char *argv[]) {
     string labSelector = getMethodToRun(argc, argv);
 
@@ -222,27 +323,27 @@ int main(int argc, char *argv[]) {
             {
                 for (const int boardSize : staticBoardSizes){
                     NqBoard board{boardSize};
-//                    nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox, MutationOperator::Inversion, true};
-//                    oxInversionresults.push_back(oxInversionSolver.solvePuzzle());
-//                    nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox, MutationOperator::Exchange, true};
-//                    oxExchangeresults.push_back(oxExchangeSolver.solvePuzzle());
-//                    nQueensGeneticSolver pmxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Inversion, true};
-//                    pmxInversionresults.push_back(pmxInversionSolver.solvePuzzle());
-//                    nQueensGeneticSolver pmxExchangeSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Exchange, true};
-//                    pmxExchangeresults.push_back(pmxExchangeSolver.solvePuzzle());
+                    nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox, MutationOperator::Inversion, true};
+                    oxInversionresults.push_back(oxInversionSolver.solvePuzzle());
+                    nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox, MutationOperator::Exchange, true};
+                    oxExchangeresults.push_back(oxExchangeSolver.solvePuzzle());
+                    nQueensGeneticSolver pmxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Inversion, true};
+                    pmxInversionresults.push_back(pmxInversionSolver.solvePuzzle());
+                    nQueensGeneticSolver pmxExchangeSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Exchange, true};
+                    pmxExchangeresults.push_back(pmxExchangeSolver.solvePuzzle());
                     nQueensMinimalConflictsSolver minimalConflictsSolver{board, true};
                     minimalConflictsResults.push_back(minimalConflictsSolver.solvePuzzle());
                 }
                 std::cout << "============== " <<  i << "/" << repets << " ===========================================" << std::endl;
             }
-//            nQueensOutputFileWriter oxExchangeWriter{getOutputPath(argc, argv), "OX_Exchange", MutationOperator::Exchange, CrossoverMethod::Ox};
-//            oxExchangeWriter.writeToFile(oxExchangeresults);
-//            nQueensOutputFileWriter oxInversionWriter{getOutputPath(argc, argv), "nQueens", MutationOperator::Inversion, CrossoverMethod::Ox};
-//            oxExchangeWriter.writeToFile(oxInversionresults);
-//            nQueensOutputFileWriter pmxExchangeWriter{getOutputPath(argc, argv), "Pmx_Exchange", MutationOperator::Exchange, CrossoverMethod::Pmx};
-//            pmxExchangeWriter.writeToFile(pmxExchangeresults);
-//            nQueensOutputFileWriter pmxInversionWriter{getOutputPath(argc, argv), "Pmx_Inversion", MutationOperator::Inversion, CrossoverMethod::Pmx};
-//            pmxInversionWriter.writeToFile(pmxInversionresults);
+            nQueensOutputFileWriter oxExchangeWriter{getOutputPath(argc, argv), "OX_Exchange", MutationOperator::Exchange, CrossoverMethod::Ox};
+            oxExchangeWriter.writeToFile(oxExchangeresults);
+            nQueensOutputFileWriter oxInversionWriter{getOutputPath(argc, argv), "nQueens", MutationOperator::Inversion, CrossoverMethod::Ox};
+            oxExchangeWriter.writeToFile(oxInversionresults);
+            nQueensOutputFileWriter pmxExchangeWriter{getOutputPath(argc, argv), "Pmx_Exchange", MutationOperator::Exchange, CrossoverMethod::Pmx};
+            pmxExchangeWriter.writeToFile(pmxExchangeresults);
+            nQueensOutputFileWriter pmxInversionWriter{getOutputPath(argc, argv), "Pmx_Inversion", MutationOperator::Inversion, CrossoverMethod::Pmx};
+            pmxInversionWriter.writeToFile(pmxInversionresults);
             nQueensOutputFileWriter minimalConflictsWriter{getOutputPath(argc, argv), "MinimalConflicts", MutationOperator::Inversion, CrossoverMethod::Empty};
             minimalConflictsWriter.writeToFile(minimalConflictsResults);
         } else{
@@ -279,13 +380,31 @@ int main(int argc, char *argv[]) {
         std::cout << "Totally solved: " << passedCounter << "/" << initializer.getPuzzlesIDs().size() * c << " puzzles!" << std::endl;
         std::cout << "failures: "<<failures << std::endl;
     }
-    else if (labSelector == "BinPacking"){
+    else if (labSelector == "BinPacking") {
         std::cout << "You requested for bin packing solver, good luck! ;)" << std::endl;
         string basePath = getRunningPath(argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
-        BinPackingGeneticSolver binPackingGeneticSolver{selectionMethod, crossoverMethod};
+        int maxAge = 5;
+        int numberOfItems = 120;
+        BinPackingInputReader inputReader{basePath, numberOfItems};
+        BinPackingGeneticSolver binPackingGeneticSolver{inputReader.getNumberOfItems(),
+                                                        inputReader.getBinsCapacity(),
+                                                        inputReader.getItemsWeight(),
+                                                        selectionMethod,
+                                                        crossoverMethod,
+                                                        maxAge};
+//        binPackingGeneticSolver.start_solve();
     }
+    else if (labSelector == "BinPackingTestFitness") {
+        int numOfIterations=3000;
+        std::cout << "You requested for testing bin packing fitness, running " << numOfIterations
+        << " times from input files located at bin_packing/static_input_files/Falkernauer*.txt" << std::endl;
+        string basePath = getRunningPath(argv);
+        std::cout << "Running" << std::endl;
+        testBinPackingFitness(basePath, numOfIterations);
+        std::cout << "Finished, if the console looks clean, your'e good! XD" << std::endl;
 
-    return 0;
+        return 0;
+    }
 }

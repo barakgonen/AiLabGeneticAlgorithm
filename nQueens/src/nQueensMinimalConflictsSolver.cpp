@@ -3,6 +3,7 @@
 //
 
 #include <cstdlib>
+#include <consts.h>
 #include "../include/nQueensMinimalConflictsSolver.h"
 #include "../../string_matching/include/consts.h"
 

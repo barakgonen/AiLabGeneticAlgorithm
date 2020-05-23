@@ -5,12 +5,19 @@
 #ifndef AILABGENETICALGORITHM_BINPACKINGGENETICSOLVER_H
 #define AILABGENETICALGORITHM_BINPACKINGGENETICSOLVER_H
 
-#include "binPackingGeneticStruct.h"
+#include "BinPackingGeneticStruct.h"
 #include "../../genetic_solver/include/AbstractGeneticSolver.h"
 
-class BinPackingGeneticSolver : public AbstractGeneticSolver<binPackingGeneticStruct>{
+class BinPackingGeneticSolver : public AbstractGeneticSolver<BinPackingGeneticStruct>{
 public:
-    BinPackingGeneticSolver(const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod);
+    BinPackingGeneticSolver(const int numberOfItems,
+                            const int binsCapacity,
+                            const std::vector<int>&& itemWeight,
+                            const SelectionMethod selectionMethod,
+                            const CrossoverMethod crossoverMethod,
+                            const int maxAge,
+                            const int maxSpecis = 30,
+                            const int specis = 0);
     virtual ~BinPackingGeneticSolver() = default;
 
     std::string getBestGene() const override;
@@ -23,13 +30,21 @@ public:
 
     void calc_fitness() override;
 
-    void mutate(binPackingGeneticStruct &member) override;
+    void mutate(BinPackingGeneticStruct &member) override;
 
     int get_input_size() override;
 
 protected:
     void handle_specific_elitism(const int index) override;
-
+    int runFirstFitAlgorithm();
+    const int numberOfBins;
+    const int binsCapacity;
+    std::vector<int> weights;
+    int threshold;
+    const int maxSpecis;
+    const int specis;
+    bool isInLocalOptima;
+    int maxAge;
 };
 
 

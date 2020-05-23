@@ -7,7 +7,6 @@
 
 #include "string"
 
-static const int GA_MAXITER	= 16384;	// maximum iterations
 static const std::string GA_TARGET = std::string("blablabla");
 static std::string defaultHeuristic = "DefaultHeuristic";
 static std::string bullsAndCows = "BullsAndCows";
