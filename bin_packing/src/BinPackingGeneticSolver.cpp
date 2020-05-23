@@ -3,6 +3,7 @@
 //
 
 #include "../include/BinPackingGeneticSolver.h"
+#include <set>
 
 BinPackingGeneticSolver::BinPackingGeneticSolver(const int numberOfItems,
                                                  const int binsCapacity,
@@ -31,86 +32,231 @@ std::string BinPackingGeneticSolver::getBestGene() const {
 int BinPackingGeneticSolver::start_solve() {
     init_population();
     clock_t t;
+    int count = 0;
+    double avg, standart_deviation;
 
-//    double weights[GA_POPSIZE];
-//
-//    // we put in item numbers 0-(n-1) for applying the first fit algorithm
-//    for (int i = 0; i < n; i++)
-//        item[i] = i;
-//    // calculate minimal bins in first fit algorithem
-//    int res = firstFit(weight, item, n, v);
-//    cout << "first fit result: " << res << endl;
-//    cout << endl;
-//    int count = 0;
+    int best = numberOfBins; // We assume best solution would be the number of available bins, of course it's in worse case
+    t = clock();
+    for (int i = 0; i < GA_MAXITER; i++) {
+        count++;
+        calc_fitness();		          // calculate fitness
+        sort_population_by_fitnes(); // sort them
 
+        if (population.front().fitnessVal < best) {
+            best = population.front().fitnessVal;
+            print_best();
+            std::cout << "clock time: " << clock() - t << std::endl;
+            std::cout << "elapsed time " << ((float) (clock() - t)) / CLOCKS_PER_SEC << " seconds" << std::endl;
+            std::cout << "total iterations: " << count << std::endl;
+            std::cout << std::endl;
+            // Checking if the next 10 are identical, if they are, we assume we got best solution
+            bool isBestSolution = true;
+            for (int i = 0; i < 30 && isBestSolution; i++)
+                isBestSolution = isBestSolution && population[i].fitnessVal == population[i + 1].fitnessVal;
+            if (isBestSolution)
+                break;
+        }
+        avg = get_average_fitness();
+        standart_deviation = get_standard_deviation(avg);
 
-//    int best = numberOfBins;
-//    t = clock();
-//    for (int i = 0; i < GA_MAXITER; i++) {
-//        count++;
-//        calc_fitness(*population, weight, n, v);		// calculate fitness
-//        sort_by_fitness(*population);	// sort them
-//
-//        if ((*population)[0].fitness < best) {
-//            best = (*population)[0].fitness;
-//            print_best(*population, weight, n);
-//            cout << "clock time: " << clock() - t << endl;
-//            cout << "elapsed time " << ((float)(clock() - t)) / CLOCKS_PER_SEC << " seconds" << endl;
-//            cout << "total iterations: " << count << endl;
-//            cout << endl;
-//        }
-//
-//        avg = avrg(*population);
-//        standart_deviation = standartDeviation(*population, avg);
-//
-//        if (count > 1 && localOptima(*population, standart_deviation, count, n)) {
-//            isInLocalOptima = true;
-//            threshold = pow(numberOfBins, 2);
-//        }
-//        else
-//            isInLocalOptima = false;
-//
-//        weightsCalu(*population, weights, avg);
-//        specis = mate(*population, *buffer, selection, weight, n, weights, threshold, localOptima, age);		// mate the population together
-//
-//        if (specis > maxSpecis - 2)
-//            threshold += 1;
-//        else if (specis < maxSpecis + 2)
-//            threshold -= 1;
-//        swap(population, buffer);		// swap buffers
+        if (count > 1 && isAtLocalOptima(standart_deviation, count)) {
+            isInLocalOptima = true;
+            threshold = pow(numberOfBins, 2);
+        }
+        else
+            isInLocalOptima = false;
+        auto weightsVector = get_weights_vector(avg);
+        specis = mate();
 
-    return 0;
+        if (specis > maxSpecis - 2)
+            threshold += 1;
+        else if (specis < maxSpecis + 2)
+            threshold -= 1;
+        swap();		// swap buffers
+    }
+
+    return best;
+}
+
+int BinPackingGeneticSolver::mate(){
+    int esize = GA_POPSIZE * GA_ELITRATE;
+    int tsize = numberOfBins, spos, i1, i2;
+    int parent1, parent2;
+    int count, distance, specis = 0;
+    elitism(esize);
+
+    // Mate the rest
+    for (int i = esize; i < GA_POPSIZE; i++) {
+        count = 0;
+        do {
+            count++;
+            if (selectionMethod == SelectionMethod::Random) {
+                // choose random parents
+                parent1 = rand() % (GA_POPSIZE / 2);
+                parent2 = rand() % (GA_POPSIZE / 2);
+            }
+            else if (selectionMethod == SelectionMethod::Rws) {
+                auto weights = get_weights_vector(get_average_fitness());
+                parent1 = rws(weights);
+                parent2 = rws(weights);
+            }
+            distance = kendallTau(population[parent1].items.data(), population[parent2].items.data());
+            if (distance > threshold)
+                specis++;
+        } while (distance > threshold && count < 1000);
+
+        std::set<int> gene;
+        // we take the even items from parent1, and odd items from parent2 and combine it
+        // std::set can not contain the same element twice, so we will get premutation
+        for (int j = 0; j < 2 * numberOfBins; j++) {
+            // if even copy parent 1 item
+            if (j % 2 == 0)
+                gene.insert(population[parent1].items[j / 2]);
+                // if odd copy parent 2 item
+            else
+                gene.insert(population[parent2].items[(j - 1) / 2]);
+        }
+        int j = 0;
+        std::set<int>::iterator it;
+        buffer[i].items.clear();
+        for (const auto val : gene)
+            buffer[i].items.push_back(val);
+
+        if (rand() < GA_MUTATION)
+            mutate(buffer[i]);
+        if (isInLocalOptima)
+            immigration(buffer[i]);
+    }
+    return specis;
+}
+
+bool BinPackingGeneticSolver::isAtLocalOptima(double standartDeviation, int iterationNumber){
+    if (iterationNumber < 5)
+        return 0;
+    if (standartDeviation < 0.1)
+        return true;
+    int count = 0, i1, i2, distance;
+    for (int i = 0; i < GA_POPSIZE / 2; i++) {
+        i1 = rand() % (GA_POPSIZE / 2);
+        i2 = rand() % (GA_POPSIZE / 2);
+        //distance = population[i1].fitness - population[i2].fitness;
+        distance = kendallTau(population[i1].items.data(), population[i2].items.data());
+        if (distance <= 1)
+            count++;
+    }
+    if (count >= GA_POPSIZE / 2)
+        return true;
+    return false;
+}
+
+int BinPackingGeneticSolver::kendallTau(int a[], int  b[]){
+    int count = 0, x = 0;
+    int** ary = new int* [numberOfBins];
+    for (int i = 0; i < numberOfBins; i++)
+        ary[i] = new int[numberOfBins];
+    for (int i = 0; i < numberOfBins; i++) {
+        for (int j = i + 1; j < numberOfBins; j++) {
+            if (a[i] >= numberOfBins || a[j] >= numberOfBins)
+                continue;
+            // if num1 is before num2 in array a, we add 1
+            if (a[i] < a[j]) {
+                ary[a[i]][a[j]] = 1;
+                ary[a[j]][a[i]] = 1;
+            }
+            else {
+                ary[a[i]][a[j]] = -1;
+                ary[a[j]][a[i]] = -1;
+            }
+        }
+    }
+    for (int i = 0; i < numberOfBins; i++) {
+        for (int j = i + 1; j < numberOfBins; j++) {
+            if (b[i] >= numberOfBins || b[j] >= numberOfBins || i == j)
+                continue;
+            if (b[i] < b[j])
+                x = 1;
+            else
+                x = -1;
+            // if zero it means num1 and num2 not apper in the same order in the arrays
+            if (ary[b[i]][b[j]] + x == 0)
+                count++;
+        }
+    }
+    // free memory
+    for (int i = 0; i < numberOfBins; i++)
+        delete[] ary[i];
+    delete[] ary;
+
+    return count;
+}
+
+int BinPackingGeneticSolver::elitism(const int esize){
+    int j = 0, i = 0;
+    while (i < GA_POPSIZE && j < esize) {
+        if (population[i].ageVal < maxAge) {
+//            buffer[j].items = new int[n];
+            for (int m = 0; m < numberOfBins; m++)
+                buffer[j].items[m] = population[i].items[m];
+            buffer[j].fitnessVal = population[i].fitnessVal;
+            buffer[j].ageVal = population[i].ageVal + 1;
+            if (isInLocalOptima && j > 10)
+                immigration(buffer[j]);
+            j++;
+        }
+        i++;
+    }
+    return j;
+}
+
+void BinPackingGeneticSolver::immigration(BinPackingGeneticStruct& citizen) {
+    citizen.fitnessVal = 0;
+    citizen.ageVal = 0;
+    int pos;
+    citizen.items.clear();
+    // initilaize array to -1
+    for (int j = 0; j < numberOfBins; j++) {
+        citizen.items.push_back(-1);
+    }
+    // initilize array to possible position of the items
+    for (int j = 0; j < numberOfBins; j++) {
+        // choose random column for the queen in row j
+        pos = rand() % numberOfBins;
+        while (citizen.items[pos] != -1)
+            pos = rand() % numberOfBins;
+        citizen.items[pos] = j;
+    }
 }
 
 // Calculation of required bins, following First Fit algorithm
-int BinPackingGeneticSolver::runFirstFitAlgorithm() {
-    int numOfRequiredBins = 0;
+int BinPackingGeneticSolver::runFirstFitAlgorithm(const std::vector<int> items) {
+    // Initialize result (Count of bins)
+    int res = 0;
 
     // Create an array to store remaining space in bins
     // there can be at most n bins
-//    int bin_rem[weights.size()];
-//
-//    // Place items one by one
-//    for (int i = 0; i < n; i++) {
-//        // Find the first bin that can accommodate
-//        // weight[i]
-//        int j;
-//        for (j = 0; j < res; j++) {
-//            if (bin_rem[j] >= weight[i]) {
-//                bin_rem[j] = bin_rem[j] - weight[i];
-//                break;
-//            }
-//        }
-//
-//        // If no bin could accommodate weight[i]
-//        if (j == res) {
-//            bin_rem[res] = c - weight[i];
-//            res++;
-//        }
-//    }
+    int bin_rem[numberOfBins];
 
-    return numOfRequiredBins;
+    // Place items one by one
+    for (int i = 0; i < numberOfBins; i++) {
+        // Find the first bin that can accommodate
+        // weight[i]
+        int j;
+        for (j = 0; j < res; j++) {
+            if (bin_rem[j] >= weights[items[i]]) {
+                bin_rem[j] = bin_rem[j] - weights[items[i]];
+                break;
+            }
+        }
+        // If no bin could accommodate weight[i]
+        if (j == res) {
+            bin_rem[res] = binsCapacity - weights[items[i]];
+            res++;
+        }
+    }
+
+    return res;
 }
+
 void BinPackingGeneticSolver::print_results() {
 
 }
@@ -138,12 +284,18 @@ void BinPackingGeneticSolver::init_population() {
 }
 
 void BinPackingGeneticSolver::calc_fitness() {
-
-
+    // the fitness calculate by first fit algorithm
+    for (auto &citizen : population)
+        citizen.fitnessVal = runFirstFitAlgorithm(citizen.items);
 }
 
 void BinPackingGeneticSolver::mutate(BinPackingGeneticStruct &member) {
-
+    int pos1 = rand() % numberOfBins;
+    int pos2 = rand() % numberOfBins;
+    // change positions of two items
+    int temp = member.items[pos1];
+    member.items[pos1] = member.items[pos2];
+    member.items[pos2] = temp;
 }
 
 int BinPackingGeneticSolver::get_input_size() {

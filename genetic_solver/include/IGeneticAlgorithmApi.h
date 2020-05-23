@@ -16,12 +16,12 @@ public:
     virtual void init_population() = 0;
     virtual void calc_fitness() = 0;
     virtual void sort_population_by_fitnes() = 0;
-    virtual void elitism(const int esize) = 0;
+    virtual int elitism(const int esize) = 0;
     virtual void aging(int& i1, int& i2, int esize) = 0;
     virtual void calc_rws(int& i1, int& i2) = 0;
     virtual void random_selection(int& i1, int& i2, int& spos, int tsize) = 0;
     virtual int rws(const std::vector<double>& weights) = 0;
-    virtual void mate() = 0;
+    virtual int mate() = 0;
     virtual int tournament() = 0;
     virtual void print_best() = 0;
     virtual void swap() = 0;

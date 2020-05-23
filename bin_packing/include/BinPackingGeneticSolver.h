@@ -35,14 +35,19 @@ public:
     int get_input_size() override;
 
 protected:
+    bool isAtLocalOptima(const double standartDeviation, const int iterationNumber);
+    int kendallTau(int a[], int  b[]);
+    int elitism(const int esize) override;
+    void immigration(BinPackingGeneticStruct& citizen);
+    int mate() override;
     void handle_specific_elitism(const int index) override;
-    int runFirstFitAlgorithm();
+    int runFirstFitAlgorithm(const std::vector<int> items);
     const int numberOfBins;
     const int binsCapacity;
     std::vector<int> weights;
     int threshold;
     const int maxSpecis;
-    const int specis;
+    int specis;
     bool isInLocalOptima;
     int maxAge;
 };

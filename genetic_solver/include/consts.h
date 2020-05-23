@@ -8,7 +8,7 @@
 #include "stdlib.h"
 static const double GA_ELITRATE = 0.10f;		// elitism rate
 static const double GA_MUTATIONRATE = 0.25f;		// mutation rate
-static const int GA_POPSIZE = 2048;		// ga population size
+static const int GA_POPSIZE = 100;		// ga population size
 static const double GA_MUTATION	= RAND_MAX * GA_MUTATIONRATE;
 static const int K = 4;
 static const int GA_MAXITER	= 16384;	// maximum iterations

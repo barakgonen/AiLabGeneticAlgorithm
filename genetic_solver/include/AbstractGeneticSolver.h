@@ -47,7 +47,7 @@ public:
                   });
     }
 
-    void elitism(const int esize) override {
+    int elitism(const int esize) override {
         for (int i = 0; i < esize; i++) {
             buffer.at(i).fitnessVal = population.at(i).fitnessVal;
             handle_specific_elitism(i);
@@ -97,14 +97,15 @@ public:
         spos = rand() % tsize;
     }
 
-    void mate() override {
+    virtual int mate() override {
         int esize = GA_POPSIZE * GA_ELITRATE;
         int tsize = this->get_input_size(), spos, spos2, i1, i2;
-
+        int specis = 0;
         elitism(esize);
 
         // Mate the rest
         for (int i = esize; i < GA_POPSIZE; i++) {
+//            count = 0;
             switch (selectionMethod) {
                 case SelectionMethod::Aging:
                     aging(i1, i2, esize);
@@ -169,9 +170,8 @@ public:
                 }
             }
         }
+        return specis;
     }
-
-
 
     int tournament() override {
         // choose k genes

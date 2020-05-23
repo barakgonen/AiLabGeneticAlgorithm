@@ -385,16 +385,28 @@ int main(int argc, char *argv[]) {
         string basePath = getRunningPath(argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
-        int maxAge = 5;
-        int numberOfItems = 120;
-        BinPackingInputReader inputReader{basePath, numberOfItems};
-        BinPackingGeneticSolver binPackingGeneticSolver{inputReader.getNumberOfItems(),
-                                                        inputReader.getBinsCapacity(),
-                                                        inputReader.getItemsWeight(),
-                                                        selectionMethod,
-                                                        crossoverMethod,
-                                                        maxAge};
-//        binPackingGeneticSolver.start_solve();
+
+        // This map, holds pairs of integers - key is the number of items, value is the optimal number of bins,
+        // according to tests we preformed with tree & BinPackingTestFitness mode
+        std::map<int, int> expectedResultsKeyVal;
+        expectedResultsKeyVal[120] = 49;
+        expectedResultsKeyVal[250] = 100;
+        expectedResultsKeyVal[500] = 201;
+        expectedResultsKeyVal[1000] = 403;
+        for (const auto expectedKeyVal : expectedResultsKeyVal){
+            int maxAge = 5;
+            BinPackingInputReader inputReader{basePath, expectedKeyVal.first};
+            BinPackingGeneticSolver binPackingGeneticSolver{inputReader.getNumberOfItems(),
+                                                            inputReader.getBinsCapacity(),
+                                                            inputReader.getItemsWeight(),
+                                                            selectionMethod,
+                                                            crossoverMethod,
+                                                            maxAge};
+            int optimalNumberOfBins = binPackingGeneticSolver.start_solve();
+            if (optimalNumberOfBins != expectedKeyVal.second)
+                std::cout << "ERROR, on example number: " << expectedKeyVal.first << std::endl;
+            std::cout << "===========================================================" << std::endl;
+        }
     }
     else if (labSelector == "BinPackingTestFitness") {
         int numOfIterations=3000;
