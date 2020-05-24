@@ -1,3 +1,0 @@
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-release/CMakeFiles/rebuild_cache.dir
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-release/CMakeFiles/geneticString.dir
-C:/Users/barak/Documents/HaifaUniversity/AiLab/AiLabGeneticAlgorithm/cmake-build-release/CMakeFiles/edit_cache.dir

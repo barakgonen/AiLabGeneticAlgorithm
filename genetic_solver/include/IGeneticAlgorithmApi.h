@@ -16,7 +16,7 @@ public:
     virtual void init_population() = 0;
     virtual void calc_fitness() = 0;
     virtual void sort_population_by_fitnes() = 0;
-    virtual int elitism(const int esize) = 0;
+    virtual void elitism(const int esize) = 0;
     virtual void aging(int& i1, int& i2, int esize) = 0;
     virtual void calc_rws(int& i1, int& i2) = 0;
     virtual void random_selection(int& i1, int& i2, int& spos, int tsize) = 0;
@@ -28,11 +28,12 @@ public:
     virtual void mutate(ObjectName& member) = 0;
     virtual double get_average_fitness() = 0;
     virtual double get_standard_deviation(const double averagedFitnessValue) = 0;
-    virtual int get_input_size() = 0;
     virtual std::vector<double> get_weights_vector(double avg) = 0;
     virtual void uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize){};
     virtual void pmx(const int i){};
     virtual void ox(const int i){};
+    virtual int calculateDistanceBetweenTwoCitizens(const ObjectName& citizenOne, const ObjectName& citizenTwo) {return 1;}
+    virtual bool isAtLocalOptima(const double standartDeviation, const int iterationNumber) = 0;
 
 };
 

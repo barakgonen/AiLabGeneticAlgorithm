@@ -10,8 +10,7 @@ StringMatchingGeneticSolver::StringMatchingGeneticSolver(const std::string &inpu
                                                          const HeuristicsEnum heuristicType,
                                                          const SelectionMethod selectionMethod,
                                                          const CrossoverMethod crossoverMethod)
-: AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod}
-, inputString{inputString}
+: AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod, static_cast<int>(inputString.size())}
 , heuristicMethod{heuristicType} {
     // Initializing each cell
     for (auto &res : rawOutputArr)
@@ -117,10 +116,6 @@ void StringMatchingGeneticSolver::mutate(GeneticStringMatchingAlgStruct &member)
 
     member.str[ipos] = ((member.str[ipos] + delta) % 122);
 }
-
-int StringMatchingGeneticSolver::get_input_size() {
-    return inputString.size();
-};
 
 void StringMatchingGeneticSolver::print_results() {
     int totalIterations = 0;

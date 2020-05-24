@@ -28,7 +28,6 @@ public:
     void print_results() override;
     void init_population() override;
     void calc_fitness() override;
-    int get_input_size() override;
     void mutate(KnapSackGeneticStruct &member) override;
     void handle_specific_elitism(const int index) override;
     virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) override ;
@@ -38,7 +37,6 @@ protected:
     const int capacity;
     std::vector<int> profits;
     std::vector<int> weights;
-    const int N;
 };
 
 

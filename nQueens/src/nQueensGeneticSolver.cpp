@@ -15,9 +15,8 @@ nQueensGeneticSolver::nQueensGeneticSolver(const NqBoard &board,
                                            const MutationOperator mutationOperator,
                                            bool quietMode)
 : nQueensGenericSolver{board, "GENETIC"}
-, AbstractGeneticSolver<nQueensGeneticStruct>{selectionMethod, crossoverMethod}
+, AbstractGeneticSolver<nQueensGeneticStruct>{selectionMethod, crossoverMethod, board.getBoardSize()}
 , mutataionOperator{mutationOperator}
-, N{board.getBoardSize()}
 , quietMode{quietMode}
 {}
 
@@ -28,17 +27,17 @@ void nQueensGeneticSolver::init_population() {
         int pos;
         citizen.fitnessVal = 0;
         s.fitnessVal = 0;
-        for (int j = 0; j < N; j++) {
+        for (int j = 0; j < numberOfItems; j++) {
             s.queens.push_back(0);
             citizen.queens.push_back(-1);
         }
         buffer.push_back(s);
         // initilize array to possible position of queens
-        for (int j = 0; j < N; j++) {
+        for (int j = 0; j < numberOfItems; j++) {
             // choose random column for the queen in row j
-            pos = rand() % N;
+            pos = rand() % numberOfItems;
             while (citizen.queens[pos] != -1)
-                pos = rand() % N;
+                pos = rand() % numberOfItems;
             citizen.queens[pos] = j;
         }
         population.push_back(citizen);
@@ -80,20 +79,20 @@ int nQueensGeneticSolver::runSolver() {
 void nQueensGeneticSolver::calc_fitness() {
     for (int i = 0; i < GA_POPSIZE; i++) {
         // array for all the diagonals in board NXN
-        std::vector<int> a((4 * N) - 2);
+        std::vector<int> a((4 * numberOfItems) - 2);
         std::fill(a.begin(), a.end(), 0);
         unsigned int fitness = 0;
-        for (int j = 0; j < N; j++) {
+        for (int j = 0; j < numberOfItems; j++) {
             // diagnol 1
             a[j + population[i].queens[j]]++;
             int p = abs(j - population[i].queens[j]);
             // increase diagnol 2
             if (j > population[i].queens[j])
-                a[p + (2 * N) - 1]++;
+                a[p + (2 * numberOfItems) - 1]++;
             else
-                a[(4 * N) - 2 - p - 1]++;
+                a[(4 * numberOfItems) - 2 - p - 1]++;
         }
-        for (int l = 0; l < (4 * N) - 2; l++) {
+        for (int l = 0; l < (4 * numberOfItems) - 2; l++) {
             // we calculate duplicated collisions as well
             a[l] = a[l] * (a[l] - 1);
             fitness += (a[l]);
@@ -106,18 +105,18 @@ void nQueensGeneticSolver::calc_fitness() {
 
 void nQueensGeneticSolver::mutate(nQueensGeneticStruct &member) {
     if (mutataionOperator == MutationOperator::Exchange) {
-        int pos1 = rand() % N;
-        int pos2 = rand() % N;
+        int pos1 = rand() % numberOfItems;
+        int pos2 = rand() % numberOfItems;
         // change positions of two queens
         int temp = member.queens[pos1];
         member.queens[pos1] = member.queens[pos2];
         member.queens[pos2] = temp;
     } else if (mutataionOperator == MutationOperator::Inversion) {
         // pos1 - pos2 : elements to be reversed
-        int pos1 = rand() % N;
-        int pos2 = rand() % N;
+        int pos1 = rand() % numberOfItems;
+        int pos2 = rand() % numberOfItems;
         // the new position of the reversed elements
-        int pos3 = rand() % N;
+        int pos3 = rand() % numberOfItems;
         // will contain elements to reverse
         std::vector<int> a;
         // pos1 will hold the smaller index
@@ -146,7 +145,7 @@ void nQueensGeneticSolver::mutate(nQueensGeneticStruct &member) {
 }
 
 int nQueensGeneticSolver::contain(nQueensGeneticStruct &member, int num) {
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < numberOfItems; i++)
         if (member.queens[i] == num)
             return 1;
     return 0;
@@ -164,12 +163,8 @@ void nQueensGeneticSolver::print_results() {
     board.printBoard();
 }
 
-int nQueensGeneticSolver::get_input_size() {
-    return board.getBoardSize();
-}
-
 void nQueensGeneticSolver::handle_specific_elitism(const int index) {
-    for (int j = 0; j < N; j++)
+    for (int j = 0; j < numberOfItems; j++)
         buffer[index].queens[j] = population[index].queens[j];
 }
 
@@ -178,11 +173,11 @@ void nQueensGeneticSolver::pmx(const int i) {
     int parent1 = rand() % (GA_POPSIZE / 2);
     int parent2 = rand() % (GA_POPSIZE / 2);
     // select position of elements to swap
-    int pos = rand() % N;
+    int pos = rand() % numberOfItems;
     // two numbers we need to swap
     int num1 = population[parent1].queens[pos];
     int num2 = population[parent2].queens[pos];
-    for (int j = 0; j < N; j++) {
+    for (int j = 0; j < numberOfItems; j++) {
         // if we found num1 we need to swap with num2
         if (population[parent1].queens[j] == num1)
             buffer[i].queens[j] = num2;
@@ -197,23 +192,22 @@ void nQueensGeneticSolver::pmx(const int i) {
 void nQueensGeneticSolver::ox(const int i) {
     int parent1 = rand() % (GA_POPSIZE / 2);
     int parent2 = rand() % (GA_POPSIZE / 2);
-    int N = this->get_input_size();
-    int half = N / 2;
+    int half = numberOfItems / 2;
     int pos;
     // initilaize array
-    for (int j = 0; j < N; j++)
+    for (int j = 0; j < numberOfItems; j++)
         buffer[i].queens[j] = -1;
     // copy parent1 half elements
     for (int j = 0; j < half; j++) {
-        pos = rand() % N;
+        pos = rand() % numberOfItems;
         // while pos already chosen
         while (buffer[i].queens[pos] != -1)
-            pos = rand() % N;
+            pos = rand() % numberOfItems;
         buffer[i].queens[pos] = population[parent1].queens[pos];
     }
     int k = 0;
     // copy parent2 elements
-    for (int j = 0; j < N; j++) {
+    for (int j = 0; j < numberOfItems; j++) {
         if (buffer[i].queens[j] == -1) {
         // while parent2 element is already in the queens array
             while (contain(buffer[i], population[parent2].queens[k])) {

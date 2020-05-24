@@ -31,7 +31,6 @@ public:
     void print_results() override;
     void init_population() override;
     void calc_fitness() override;
-    int get_input_size() override;
     void fillAditionalSolutionData(nQueensSolutionData&) override;
 
 protected:
@@ -44,7 +43,6 @@ protected:
     void mutate(nQueensGeneticStruct& member) override ;
     int contain(nQueensGeneticStruct& member, int num);
     MutationOperator mutataionOperator;
-    const int N;
     bool quietMode;
 };
 

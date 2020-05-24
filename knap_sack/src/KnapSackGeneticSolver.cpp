@@ -3,7 +3,6 @@
 //
 
 #include <consts.h>
-#include <cmath>
 #include <functional>
 #include <random>
 #include "../include/KnapSackGeneticSolver.h"
@@ -14,11 +13,10 @@
 KnapSackGeneticSolver::KnapSackGeneticSolver(const int puzzleKey,
                                              const KnapSackStaticDataSetInitializer& staticDataSetInitializer,
                                              SelectionMethod selectionMethod, CrossoverMethod crossoverMethod)
-: AbstractGeneticSolver<KnapSackGeneticStruct>(selectionMethod, crossoverMethod)
+: AbstractGeneticSolver<KnapSackGeneticStruct>(selectionMethod, crossoverMethod, static_cast<int>(weights.size()))
 , capacity{staticDataSetInitializer.getCapacity(puzzleKey)}
 , profits{staticDataSetInitializer.getProfits(puzzleKey)}
 , weights{staticDataSetInitializer.getWeights(puzzleKey)}
-, N{static_cast<int>(weights.size())}
 {
 }
 
@@ -31,7 +29,7 @@ void KnapSackGeneticSolver::init_population() {
         KnapSackGeneticStruct citizen;
 
         citizen.sigmaWeight = 0;
-        for (int j = 0; j < N; j++){
+        for (int j = 0; j < numberOfItems; j++){
             auto end = citizen.sack.end();
             citizen.sack.insert(end, dice() % 2);
         }
@@ -44,7 +42,7 @@ void KnapSackGeneticSolver::calc_fitness() {
     for (int i = 0; i < GA_POPSIZE; i++) {
         int sigmaFitness = 0;
         int sigmaWeight = 0;
-        for (int j = 0; j < N; j++) {
+        for (int j = 0; j < numberOfItems; j++) {
             sigmaFitness += profits.at(j) * population.at(i).sack.at(j);
             sigmaWeight += weights.at(j) * population.at(i).sack.at(j);
         }
@@ -58,23 +56,12 @@ void KnapSackGeneticSolver::calc_fitness() {
 }
 
 void KnapSackGeneticSolver::handle_specific_elitism(const int index) {
-    for (int j = 0; j < N; j++)
+    for (int j = 0; j < numberOfItems; j++)
         buffer.at(index).sack.at(j) = population.at(index).sack.at(j);
-//    buffer.at(index).sigmaWeight = population.at(index).sigmaWeight;
 }
 
 void KnapSackGeneticSolver::mutate(KnapSackGeneticStruct &member) {
-//    int i = rand() % N;
-//    int j = i;
-//
-//    while ( j == i) {
-//        j = rand() % N;
-//    };
-//
-//    int temp = member.sack.at(i);
-//    member.sack.at(i) = member.sack.at(j);
-//    member.sack.at(j) = temp;
-    int i = rand() % N;
+    int i = rand() % numberOfItems;
     int j = rand() % 2;
     member.sack.at(i) = j;
 }
@@ -123,7 +110,7 @@ std::vector<int> KnapSackGeneticSolver::solve() {
 
 std::string KnapSackGeneticSolver::getBestGene() const {
     std::string bestGene;
-    for (int j = 0; j < N; j++)
+    for (int j = 0; j < numberOfItems; j++)
         bestGene.append(std::to_string(population.back().sack.at(j)));
     return bestGene;
 }
@@ -137,10 +124,6 @@ int KnapSackGeneticSolver::start_solve() {
     return 0;
 }
 
-int KnapSackGeneticSolver::get_input_size() {
-    return N;
-}
-
 void KnapSackGeneticSolver::print_results(){
 
 }
@@ -152,7 +135,7 @@ void KnapSackGeneticSolver::set_data_in_buffer_vec_for_single_point_selection(co
                                                                               int tsize) {
     for (int j = 0; j < spos; j++)
         buffer.at(indexInBuffer).sack.at(j) = population.at(startIndex).sack.at(j);
-    for (int j = spos; j < N; j++)
+    for (int j = spos; j < numberOfItems; j++)
         buffer.at(indexInBuffer).sack.at(j) = population.at(endIndex).sack.at(j);
 }
 
@@ -168,7 +151,7 @@ void KnapSackGeneticSolver::set_data_in_buffer_vec_for_two_points_selection(cons
     for (int j = spos; j < spos2; j++)
         buffer[indexInBuffer].sack[j] = population[startIndex].sack[j];
 
-    for (int j = spos2; j < N; j++)
+    for (int j = spos2; j < numberOfItems; j++)
         buffer[indexInBuffer].sack[j] = population[endIndex].sack[j];
 
 }

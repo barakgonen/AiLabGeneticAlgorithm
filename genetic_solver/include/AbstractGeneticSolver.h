@@ -27,11 +27,21 @@ template<typename PopulationStruct>
 class AbstractGeneticSolver : public IGeneticAlgorithmApi<PopulationStruct> {
 public:
     AbstractGeneticSolver(const SelectionMethod selectionMethod,
-                          const CrossoverMethod crossoverMethod)
+                          const CrossoverMethod crossoverMethod,
+                          const int numberOfItems,  // problem size - string length, number of queens, number of bins, items, etc..
+                          const int maxAge = 5,
+                          const int maxSpecis = 30,
+                          const int specis = 0)
     : selectionMethod{selectionMethod}
     , crossoverMethod{crossoverMethod}
     , population{std::vector<PopulationStruct>()}
-    , buffer{std::vector<PopulationStruct>()} {
+    , buffer{std::vector<PopulationStruct>()}
+    , numberOfItems{numberOfItems}
+    , threshold{static_cast<int>(pow(numberOfItems, 2))}
+    , maxAge{maxAge}
+    , maxSpecis{maxSpecis}
+    , specis{specis}
+    , isInLocalOptima{false}{
 //        std::cout << "Starting GeneticSolver with the following parameters:" << std::endl;
 //        std::cout << "selection: " << selectionMethod << std::endl;
 //        std::cout << "crossover: " << crossoverMethod << std::endl;
@@ -47,7 +57,7 @@ public:
                   });
     }
 
-    int elitism(const int esize) override {
+    void elitism(const int esize) override {
         for (int i = 0; i < esize; i++) {
             buffer.at(i).fitnessVal = population.at(i).fitnessVal;
             handle_specific_elitism(i);
@@ -99,7 +109,7 @@ public:
 
     virtual int mate() override {
         int esize = GA_POPSIZE * GA_ELITRATE;
-        int tsize = this->get_input_size(), spos, spos2, i1, i2;
+        int spos, spos2, i1, i2;
         int specis = 0;
         elitism(esize);
 
@@ -118,8 +128,8 @@ public:
                     i2 = tournament();
                     break;
                 case SelectionMethod::Random:
-                    random_selection(i1, i2, spos, tsize);
-                    set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, tsize);
+                    random_selection(i1, i2, spos, numberOfItems);
+                    set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, numberOfItems);
                     break;
                 case SelectionMethod::None:
                     break;
@@ -127,16 +137,16 @@ public:
             switch (crossoverMethod) {
                 // this is the selection method given in the beginning
                 case CrossoverMethod::SinglePoint:
-                    spos = rand() % tsize;
-                    set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, tsize);
+                    spos = rand() % numberOfItems;
+                    set_data_in_buffer_vec_for_single_point_selection(i, i1, i2, spos, numberOfItems);
 //                    buffer[i].ageVal = 0;
                     if (rand() < GA_MUTATION)
                         this->mutate(buffer.at(i));
                     break;
                 case CrossoverMethod::TwoPoints:
                     // choose two positions
-                    spos = rand() % tsize;
-                    spos2 = rand() % tsize;
+                    spos = rand() % numberOfItems;
+                    spos2 = rand() % numberOfItems;
                     // spos will hold the smaller index
                     if (spos > spos2) {
                         int temp = spos2;
@@ -144,10 +154,10 @@ public:
                         spos = temp;
                     }
                     // two point crossover
-                    set_data_in_buffer_vec_for_two_points_selection(i, i1, i2, spos, spos2, tsize);
+                    set_data_in_buffer_vec_for_two_points_selection(i, i1, i2, spos, spos2, numberOfItems);
                     break;
                 case CrossoverMethod::UniformCrossover:
-                    this->uniform_crossover(i, i1, i2, spos, tsize);
+                    this->uniform_crossover(i, i1, i2, spos, numberOfItems);
                     break;
                 case CrossoverMethod::Ox:
                     this->ox(i);
@@ -235,6 +245,65 @@ public:
         return weights;
     }
 
+    virtual bool isAtLocalOptima(const double standartDeviation, const int iterationNumber){
+        if (iterationNumber < 5)
+            return false;
+        if (standartDeviation < 0.1)
+            return true;
+        int count = 0, i1, i2, distance;
+        for (int i = 0; i < GA_POPSIZE / 2; i++) {
+            i1 = rand() % (GA_POPSIZE / 2);
+            i2 = rand() % (GA_POPSIZE / 2);
+            distance = this->calculateDistanceBetweenTwoCitizens(population[i1], population[i2]);
+            if (distance <= 1)
+                count++;
+        }
+        if (count >= GA_POPSIZE / 2)
+            return true;
+        return false;
+    }
+
+    virtual int kendallTau(const std::vector<int>& a, const std::vector<int>& b){
+        int count = 0, x = 0;
+        int** ary = new int* [numberOfItems];
+        for (int i = 0; i < numberOfItems; i++)
+            ary[i] = new int[numberOfItems];
+        for (int i = 0; i < numberOfItems; i++) {
+            for (int j = i + 1; j < numberOfItems; j++) {
+                if (a[i] >= numberOfItems || a[j] >= numberOfItems)
+                    continue;
+                // if num1 is before num2 in array a, we add 1
+                if (a[i] < a[j]) {
+                    ary[a[i]][a[j]] = 1;
+                    ary[a[j]][a[i]] = 1;
+                }
+                else {
+                    ary[a[i]][a[j]] = -1;
+                    ary[a[j]][a[i]] = -1;
+                }
+            }
+        }
+        for (int i = 0; i < numberOfItems; i++) {
+            for (int j = i + 1; j < numberOfItems; j++) {
+                if (b[i] >= numberOfItems || b[j] >= numberOfItems || i == j)
+                    continue;
+                if (b[i] < b[j])
+                    x = 1;
+                else
+                    x = -1;
+                // if zero it means num1 and num2 not apper in the same order in the arrays
+                if (ary[b[i]][b[j]] + x == 0)
+                    count++;
+            }
+        }
+        // free memory
+        for (int i = 0; i < numberOfItems; i++)
+            delete[] ary[i];
+        delete[] ary;
+
+        return count;
+    }
+
 protected:
     // this function is necessary for specific structs we handle in this algorithm
     virtual void handle_specific_elitism(const int index) = 0;
@@ -246,6 +315,12 @@ protected:
     CrossoverMethod crossoverMethod;
     std::vector<PopulationStruct> population;
     std::vector<PopulationStruct> buffer;
+    const int numberOfItems;
+    int threshold;
+    const int maxAge;
+    const int maxSpecis;
+    int specis;
+    bool isInLocalOptima;
 };
 
 

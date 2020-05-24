@@ -29,7 +29,6 @@ public:
     void calc_fitness() override ;
 
     void mutate(GeneticStringMatchingAlgStruct &member);
-    int get_input_size() override;
     int start_solve() override;
     void print_results() override;
 
