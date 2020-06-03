@@ -11,10 +11,10 @@
 struct GeneticStringMatchingAlgStruct : public GeneticAlgorithmBaseStruct{
     GeneticStringMatchingAlgStruct()
     : GeneticAlgorithmBaseStruct()
-    , str{""}
+//    , items{""}
     {}
     // Default empty ctor
-    std::string str;
+    std::vector<char> items;
 };
 
 #endif //AILABGENETICALGORITHM_GENETICSTRINGMATCHINGALGSTRUCT_H

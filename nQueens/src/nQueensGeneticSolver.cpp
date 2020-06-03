@@ -28,17 +28,17 @@ void nQueensGeneticSolver::init_population() {
         citizen.fitnessVal = 0;
         s.fitnessVal = 0;
         for (int j = 0; j < numberOfItems; j++) {
-            s.queens.push_back(0);
-            citizen.queens.push_back(-1);
+            s.items.push_back(0);
+            citizen.items.push_back(-1);
         }
         buffer.push_back(s);
-        // initilize array to possible position of queens
+        // initilize array to possible position of items
         for (int j = 0; j < numberOfItems; j++) {
             // choose random column for the queen in row j
             pos = rand() % numberOfItems;
-            while (citizen.queens[pos] != -1)
+            while (citizen.items[pos] != -1)
                 pos = rand() % numberOfItems;
-            citizen.queens[pos] = j;
+            citizen.items[pos] = j;
         }
         population.push_back(citizen);
     }
@@ -61,7 +61,7 @@ int nQueensGeneticSolver::runSolver() {
             std::cout << "clock time: " << clock() - t << std::endl;
             std::cout << "elapsed time " << ((float) (clock() - t)) / CLOCKS_PER_SEC << " seconds" << std::endl;
             std::cout << "total iterations: " << numberOfMoves << std::endl;
-            board.setVec(std::move(population.front().queens));
+            board.setVec(std::move(population.front().items));
             break;
         }
 
@@ -84,10 +84,10 @@ void nQueensGeneticSolver::calc_fitness() {
         unsigned int fitness = 0;
         for (int j = 0; j < numberOfItems; j++) {
             // diagnol 1
-            a[j + population[i].queens[j]]++;
-            int p = abs(j - population[i].queens[j]);
+            a[j + population[i].items[j]]++;
+            int p = abs(j - population[i].items[j]);
             // increase diagnol 2
-            if (j > population[i].queens[j])
+            if (j > population[i].items[j])
                 a[p + (2 * numberOfItems) - 1]++;
             else
                 a[(4 * numberOfItems) - 2 - p - 1]++;
@@ -107,10 +107,10 @@ void nQueensGeneticSolver::mutate(nQueensGeneticStruct &member) {
     if (mutataionOperator == MutationOperator::Exchange) {
         int pos1 = rand() % numberOfItems;
         int pos2 = rand() % numberOfItems;
-        // change positions of two queens
-        int temp = member.queens[pos1];
-        member.queens[pos1] = member.queens[pos2];
-        member.queens[pos2] = temp;
+        // change positions of two items
+        int temp = member.items[pos1];
+        member.items[pos1] = member.items[pos2];
+        member.items[pos2] = temp;
     } else if (mutataionOperator == MutationOperator::Inversion) {
         // pos1 - pos2 : elements to be reversed
         int pos1 = rand() % numberOfItems;
@@ -127,18 +127,18 @@ void nQueensGeneticSolver::mutate(nQueensGeneticStruct &member) {
         }
         // copy element for reverse
         for (int i = pos1; i <= pos2; i++) {
-            a.push_back(member.queens[i]);
+            a.push_back(member.items[i]);
         }
         reverse(a.begin(), a.end());
         // remove the element that should be re-position
         for (int i = pos2 + 1; i <= pos3; i++) {
-            member.queens[pos1] = member.queens[i];
+            member.items[pos1] = member.items[i];
             pos1++;
         }
         int j = 0;
         // copy the reversed elements
         for (int i = pos1; i < a.size(); i++) {
-            member.queens[i] = a[j];
+            member.items[i] = a[j];
             j++;
         }
     }
@@ -146,7 +146,7 @@ void nQueensGeneticSolver::mutate(nQueensGeneticStruct &member) {
 
 int nQueensGeneticSolver::contain(nQueensGeneticStruct &member, int num) {
     for (int i = 0; i < numberOfItems; i++)
-        if (member.queens[i] == num)
+        if (member.items[i] == num)
             return 1;
     return 0;
 }
@@ -165,7 +165,7 @@ void nQueensGeneticSolver::print_results() {
 
 void nQueensGeneticSolver::handle_specific_elitism(const int index) {
     for (int j = 0; j < numberOfItems; j++)
-        buffer[index].queens[j] = population[index].queens[j];
+        buffer[index].items[j] = population[index].items[j];
 }
 
 void nQueensGeneticSolver::pmx(const int i) {
@@ -175,17 +175,17 @@ void nQueensGeneticSolver::pmx(const int i) {
     // select position of elements to swap
     int pos = rand() % numberOfItems;
     // two numbers we need to swap
-    int num1 = population[parent1].queens[pos];
-    int num2 = population[parent2].queens[pos];
+    int num1 = population[parent1].items[pos];
+    int num2 = population[parent2].items[pos];
     for (int j = 0; j < numberOfItems; j++) {
         // if we found num1 we need to swap with num2
-        if (population[parent1].queens[j] == num1)
-            buffer[i].queens[j] = num2;
-        else if (population[parent1].queens[j] == num2)
-            buffer[i].queens[j] = num1;
+        if (population[parent1].items[j] == num1)
+            buffer[i].items[j] = num2;
+        else if (population[parent1].items[j] == num2)
+            buffer[i].items[j] = num1;
         // if not num1 or and not num2 we copy from parent1
         else
-            buffer[i].queens[j] = population[parent1].queens[j];
+            buffer[i].items[j] = population[parent1].items[j];
     }
 }
 
@@ -196,24 +196,24 @@ void nQueensGeneticSolver::ox(const int i) {
     int pos;
     // initilaize array
     for (int j = 0; j < numberOfItems; j++)
-        buffer[i].queens[j] = -1;
+        buffer[i].items[j] = -1;
     // copy parent1 half elements
     for (int j = 0; j < half; j++) {
         pos = rand() % numberOfItems;
         // while pos already chosen
-        while (buffer[i].queens[pos] != -1)
+        while (buffer[i].items[pos] != -1)
             pos = rand() % numberOfItems;
-        buffer[i].queens[pos] = population[parent1].queens[pos];
+        buffer[i].items[pos] = population[parent1].items[pos];
     }
     int k = 0;
     // copy parent2 elements
     for (int j = 0; j < numberOfItems; j++) {
-        if (buffer[i].queens[j] == -1) {
-        // while parent2 element is already in the queens array
-            while (contain(buffer[i], population[parent2].queens[k])) {
+        if (buffer[i].items[j] == -1) {
+        // while parent2 element is already in the items array
+            while (contain(buffer[i], population[parent2].items[k])) {
                 k++;
             }
-            buffer[i].queens[j] = population[parent2].queens[k];
+            buffer[i].items[j] = population[parent2].items[k];
         }
     }
 }

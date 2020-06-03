@@ -37,7 +37,7 @@ int nQueensMinimalConflictsSolver::runSolver() {
         // meaning no conflicts
         if (maxConflicts == 0)
             break;
-        // choose among the max conflicts queens randomly
+        // choose among the max conflicts items randomly
         int columnChosen = worstColumns[rand() % worstColumns.size()];
         worstColumns.clear();
         std::vector <int> bestRows;
@@ -47,7 +47,7 @@ int nQueensMinimalConflictsSolver::runSolver() {
             // change row
             board.myMoveQueenToColumn(columnChosen, i);
             conflicts = (board, columnChosen);
-            // meaning we have several queens with the same minimal conflicts number
+            // meaning we have several items with the same minimal conflicts number
             if (conflicts == minConflicts)
                 bestRows.push_back(i);
             else if (conflicts < minConflicts) {

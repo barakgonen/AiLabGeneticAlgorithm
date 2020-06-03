@@ -20,26 +20,18 @@ public:
                             const int specis = 0);
     virtual ~BinPackingGeneticSolver() = default;
 
-    std::string getBestGene() const override;
-
     int start_solve() override;
 
-    void print_results() override;
-
-    void init_population() override;
-
-    void calc_fitness() override;
-
-    void mutate(BinPackingGeneticStruct &member) override;
-
-
 protected:
-    virtual int calculateDistanceBetweenTwoCitizens(const BinPackingGeneticStruct& citizenOne, const BinPackingGeneticStruct& citizenTwo) override;
-    void elitism(const int esize) override;
-    void immigration(BinPackingGeneticStruct& citizen);
-    int mate() override;
+    void print_results() override;
+    std::string getBestGene() const override;
+    void init_population() override;
+    void calc_fitness() override;
+    void mutate(BinPackingGeneticStruct &member) override;
+    virtual int calculateDistanceBetweenTwoCitizens(const BinPackingGeneticStruct& citizenOne,
+                                                    const BinPackingGeneticStruct& citizenTwo) override;
     void handle_specific_elitism(const int index) override;
-    int runFirstFitAlgorithm(const std::vector<int> items);
+    int runFirstFitAlgorithm(const std::vector<int>& items);
     const int binsCapacity;
     std::vector<int> weights;
 };

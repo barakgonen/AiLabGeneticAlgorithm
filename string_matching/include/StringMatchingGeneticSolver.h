@@ -37,7 +37,15 @@ public:
 
     void uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize) override;
 
+    int calculateDistanceBetweenTwoCitizens(const GeneticStringMatchingAlgStruct &citizenOne,
+                                            const GeneticStringMatchingAlgStruct &citizenTwo) override;
+
+    void resetCitizenProps(GeneticStringMatchingAlgStruct &citizen) override;
+
+    void setCitizenProps(GeneticStringMatchingAlgStruct &citizen) override;
+
 protected:
+    char getRandomChar(int index) const;
     void handle_specific_elitism(const int index) override;
 
     void

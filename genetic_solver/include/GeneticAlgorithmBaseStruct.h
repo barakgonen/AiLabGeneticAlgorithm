@@ -11,6 +11,10 @@ struct GeneticAlgorithmBaseStruct {
     , ageVal{0}
     {}
 
+    virtual void resetMembers() {
+        fitnessVal = 0;
+        ageVal = 0;
+    }
     // Default empty ctor
     unsigned int fitnessVal;
     int ageVal;

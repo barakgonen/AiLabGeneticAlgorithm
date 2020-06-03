@@ -11,7 +11,9 @@ StringMatchingGeneticSolver::StringMatchingGeneticSolver(const std::string &inpu
                                                          const SelectionMethod selectionMethod,
                                                          const CrossoverMethod crossoverMethod)
 : AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod, static_cast<int>(inputString.size())}
-, heuristicMethod{heuristicType} {
+, heuristicMethod{heuristicType}
+, inputString{inputString}
+{
     // Initializing each cell
     for (auto &res : rawOutputArr)
         res.id = -1;
@@ -20,20 +22,18 @@ StringMatchingGeneticSolver::StringMatchingGeneticSolver(const std::string &inpu
 }
 
 void StringMatchingGeneticSolver::init_population() {
-    int tsize = inputString.size();
-
     for (int i = 0; i < GA_POPSIZE; i++) {
         GeneticStringMatchingAlgStruct citizen;
+        resetCitizenProps(citizen);
+        setCitizenProps(citizen);
 
-        for (int j = 0; j < tsize; j++)
-            citizen.str += (rand() % 90) + 32;
-
-        population[i] = citizen;
-
-//        population.push_back(citizen);
+        population.push_back(citizen);
+        GeneticStringMatchingAlgStruct citizenn;
+        resetCitizenProps(citizenn);
+        buffer.push_back(citizenn);
     }
 
-    buffer.resize(GA_POPSIZE);
+//    buffer.resize(GA_POPSIZE);
 }
 
 int StringMatchingGeneticSolver::start_solve() {
@@ -60,8 +60,20 @@ int StringMatchingGeneticSolver::start_solve() {
             break;
         }
 
-        this->mate();        // mate the population together
-        this->swap();        // swap buffers
+        if (i > 1 && isAtLocalOptima(standardDeviation, i)) {
+            isInLocalOptima = true;
+            threshold = 12;
+        }
+        else
+            isInLocalOptima = false;
+
+        specis = mate(); // mate the population together
+        if (specis > maxSpecis - 2)
+            threshold += 1;
+        else if (specis < maxSpecis + 2)
+            threshold -= 1;
+
+        swap();        // swap buffers
 
         t = clock();
     }
@@ -72,31 +84,29 @@ int StringMatchingGeneticSolver::start_solve() {
 }
 
 void StringMatchingGeneticSolver::calc_fitness() {
-    std::string target = inputString;
-    int tsize = target.size();
     unsigned int fitness;
 
     switch (heuristicMethod) {
         case DefaultHeuristic:
             for (int i = 0; i < GA_POPSIZE; i++) {
                 fitness = 0;
-                for (int j = 0; j < tsize; j++) {
-                    fitness += abs(int(population[i].str[j] - target[j]));
+                for (int j = 0; j < numberOfItems; j++) {
+                    fitness += abs(int(population[i].items[j] - inputString.at(j)));
                 }
                 population[i].fitnessVal = fitness;
             }
             break;
         case BullsAndCows:
             for (int i = 0; i < GA_POPSIZE; i++) {
-                fitness = tsize * 50;
-                for (int j = 0; j < tsize; j++) {
+                fitness = numberOfItems * 50;
+                for (int j = 0; j < numberOfItems; j++) {
                     // if the letter on the right place we give 50 points
-                    if (population[i].str[j] == target[j])
+                    if (population[i].items[j] == inputString[j])
                         fitness -= 50;
                     else {
                         // if the letter in the string but not in the right place we give 10 points
-                        for (int k = j + 1; k < tsize; k++) {
-                            if (population[i].str[j] == target[k]) {
+                        for (int k = j + 1; k < numberOfItems; k++) {
+                            if (population[i].items[j] == inputString[k]) {
                                 fitness -= 10;
                                 break;
                             }
@@ -110,11 +120,9 @@ void StringMatchingGeneticSolver::calc_fitness() {
 }
 
 void StringMatchingGeneticSolver::mutate(GeneticStringMatchingAlgStruct &member) {
-    int tsize = inputString.size();
-    int ipos = rand() % tsize;
-    int delta = (rand() % 90) + 32;
-
-    member.str[ipos] = ((member.str[ipos] + delta) % 122);
+    int ipos = rand() % numberOfItems;
+    char delta = (rand() % 90) + 32;
+    member.items[ipos] = (char)((member.items[ipos] + delta) % 122);
 }
 
 void StringMatchingGeneticSolver::print_results() {
@@ -138,15 +146,23 @@ std::vector<IterationRawOutput> StringMatchingGeneticSolver::getRawOutput() cons
 }
 
 void StringMatchingGeneticSolver::handle_specific_elitism(const int index){
-    buffer[index].str = population[index].str;
+    buffer[index].items = population[index].items;
 }
 
 void StringMatchingGeneticSolver::set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer,
                                                                                     const int startIndex,
                                                                                     const int endIndex, int spos,
                                                                                     int tsize) {
-    buffer[indexInBuffer].str = population[startIndex].str.substr(0, spos) +
-                    population[endIndex].str.substr(spos, tsize - spos);
+    auto& bufferedItems = buffer.at(indexInBuffer).items;
+    bufferedItems.clear();
+    const auto& populationStartIndexItems = population.at(startIndex).items;
+    const auto& populationEndIndexItems = population.at(endIndex).items;
+    for (int i = 0; i < spos; i++)
+        bufferedItems.push_back(populationStartIndexItems.at(i));
+    for (int i = spos; i < tsize; i++)
+        bufferedItems.push_back(populationEndIndexItems.at(i));
+//    buffer[indexInBuffer].items = population[startIndex].items.substr(0, spos) +
+//                                  population[endIndex].items.substr(spos, tsize - spos);
 
 }
 
@@ -154,9 +170,19 @@ void StringMatchingGeneticSolver::set_data_in_buffer_vec_for_two_points_selectio
                                                                                   const int startIndex,
                                                                                   const int endIndex, int spos,
                                                                                   int spos2, int tsize) {
-    buffer[indexInBuffer].str = population[startIndex].str.substr(0, spos) +
-                    population[endIndex].str.substr(spos, spos2 - spos) +
-                    population[startIndex].str.substr(spos2, tsize - spos2);
+    auto& bufferedItems = buffer.at(indexInBuffer).items;
+    bufferedItems.clear();
+    const auto& populationStartIndexItems = population.at(startIndex).items;
+    const auto& populationEndIndexItems = population.at(endIndex).items;
+    for (int i = 0; i < spos; i++)
+        bufferedItems.push_back(populationStartIndexItems.at(i));
+    for (int i = spos; i < tsize - spos; i++)
+        bufferedItems.push_back(populationEndIndexItems.at(i));
+    for (int i = spos2; i < tsize - spos2; i++)
+        bufferedItems.push_back(populationStartIndexItems.at(i));
+//    buffer[indexInBuffer].items = population[startIndex].items.substr(0, spos) +
+//                                  population[endIndex].items.substr(spos, spos2 - spos) +
+//                                  population[startIndex].items.substr(spos2, tsize - spos2);
 
 }
 
@@ -165,8 +191,30 @@ void StringMatchingGeneticSolver::uniform_crossover(const int indexInBuffer, con
     std::string temp2;
     for (int j = 0; j < tsize; j++) {
         temp = (rand() % 2) ? i1 : i2;
-        temp2 += population[temp].str[j];
+        temp2+= population[temp].items[j];
     }
-    buffer[indexInBuffer].str = temp2;
+    buffer.at(indexInBuffer).items.clear();
+    for (const auto& c : temp2)
+        buffer.at(indexInBuffer).items.push_back(c);
+//    buffer[indexInBuffer].items = temp2;
 }
-std::string StringMatchingGeneticSolver::getBestGene() const { return population[0].str; }
+std::string StringMatchingGeneticSolver::getBestGene() const {
+    return std::string{population[0].items.begin(), population[0].items.end()};
+}
+
+int StringMatchingGeneticSolver::calculateDistanceBetweenTwoCitizens(const GeneticStringMatchingAlgStruct &citizenOne,
+                                                                     const GeneticStringMatchingAlgStruct &citizenTwo) {
+    return levenshtein(citizenOne.items, citizenTwo.items);
+}
+
+void StringMatchingGeneticSolver::resetCitizenProps(GeneticStringMatchingAlgStruct &citizen) {
+    citizen.resetMembers();
+    citizen.items.clear();
+    for (int i = 0; i < numberOfItems; i++)
+        citizen.items.push_back(' ');
+}
+
+void StringMatchingGeneticSolver::setCitizenProps(GeneticStringMatchingAlgStruct &citizen) {
+    for (int j = 0; j < numberOfItems; j++)
+        citizen.items.at(j) = (char)(65 + rand() % 57);
+}

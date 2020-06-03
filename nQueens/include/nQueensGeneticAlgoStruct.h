@@ -7,22 +7,9 @@
 
 #include "../../genetic_solver/include/GeneticAlgorithmBaseStruct.h"
 
-struct nQueensGeneticAlgoStruct : public GeneticAlgorithmBaseStruct {
-    nQueensGeneticAlgoStruct()
-    : GeneticAlgorithmBaseStruct{}
-    , nQueensBoard{}
-    {};
-
-    nQueensGeneticAlgoStruct(const int boardSize)
-    : GeneticAlgorithmBaseStruct{}
-    , nQueensBoard{boardSize}
-    {};
-
-    nQueensGeneticAlgoStruct(const NqBoard& nQueensBoard)
-    : GeneticAlgorithmBaseStruct{}
-    , nQueensBoard{nQueensBoard}
-    {};
-
-    NqBoard nQueensBoard;
+struct nQueensGeneticStruct : public GeneticAlgorithmBaseStruct
+{
+    // in items[i]=j => the queen is in column i, row j
+    std::vector<int> items;
 };
 #endif //AILABGENETICALGORITHM_NQUEENSGENETICALGOSTRUCT_H

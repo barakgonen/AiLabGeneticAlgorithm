@@ -3,7 +3,6 @@
 //
 
 #include "../include/BinPackingGeneticSolver.h"
-#include <set>
 
 BinPackingGeneticSolver::BinPackingGeneticSolver(const int numberOfItems,
                                                  const int binsCapacity,
@@ -78,99 +77,13 @@ int BinPackingGeneticSolver::start_solve() {
     return best;
 }
 
-int BinPackingGeneticSolver::mate(){
-    int esize = GA_POPSIZE * GA_ELITRATE;
-    int tsize = numberOfItems, spos, i1, i2;
-    int parent1, parent2;
-    int count, distance, specis = 0;
-    elitism(esize);
-
-    // Mate the rest
-    for (int i = esize; i < GA_POPSIZE; i++) {
-        count = 0;
-        do {
-            count++;
-            if (selectionMethod == SelectionMethod::Random) {
-                // choose random parents
-                parent1 = rand() % (GA_POPSIZE / 2);
-                parent2 = rand() % (GA_POPSIZE / 2);
-            }
-            else if (selectionMethod == SelectionMethod::Rws) {
-                auto weights = get_weights_vector(get_average_fitness());
-                parent1 = rws(weights);
-                parent2 = rws(weights);
-            }
-            distance = calculateDistanceBetweenTwoCitizens(population[parent1], population[parent2]);
-            if (distance > threshold)
-                specis++;
-        } while (distance > threshold && count < 1000);
-
-        std::set<int> gene;
-        // we take the even items from parent1, and odd items from parent2 and combine it
-        // std::set can not contain the same element twice, so we will get premutation
-        for (int j = 0; j < 2 * numberOfItems; j++) {
-            // if even copy parent 1 item
-            if (j % 2 == 0)
-                gene.insert(population[parent1].items[j / 2]);
-                // if odd copy parent 2 item
-            else
-                gene.insert(population[parent2].items[(j - 1) / 2]);
-        }
-        std::set<int>::iterator it;
-        buffer[i].items.clear();
-        for (const auto val : gene)
-            buffer[i].items.push_back(val);
-
-        if (rand() < GA_MUTATION)
-            mutate(buffer[i]);
-        if (isInLocalOptima)
-            immigration(buffer[i]);
-    }
-    return specis;
-}
-
 int BinPackingGeneticSolver::calculateDistanceBetweenTwoCitizens(const BinPackingGeneticStruct& citizenOne,
                                                                  const BinPackingGeneticStruct& citizenTwo){
     return kendallTau(citizenOne.items, citizenTwo.items);
 }
 
-void BinPackingGeneticSolver::elitism(const int esize){
-    int j = 0, i = 0;
-    while (i < GA_POPSIZE && j < esize) {
-        if (population[i].ageVal < maxAge) {
-            for (int m = 0; m < numberOfItems; m++)
-                buffer[j].items[m] = population[i].items[m];
-            buffer[j].fitnessVal = population[i].fitnessVal;
-            buffer[j].ageVal = population[i].ageVal + 1;
-            if (isInLocalOptima && j > 10)
-                immigration(buffer[j]);
-            j++;
-        }
-        i++;
-    }
-}
-
-void BinPackingGeneticSolver::immigration(BinPackingGeneticStruct& citizen) {
-    citizen.fitnessVal = 0;
-    citizen.ageVal = 0;
-    int pos;
-    citizen.items.clear();
-    // initilaize array to -1
-    for (int j = 0; j < numberOfItems; j++) {
-        citizen.items.push_back(-1);
-    }
-    // initilize array to possible position of the items
-    for (int j = 0; j < numberOfItems; j++) {
-        // choose random column for the queen in row j
-        pos = rand() % numberOfItems;
-        while (citizen.items[pos] != -1)
-            pos = rand() % numberOfItems;
-        citizen.items[pos] = j;
-    }
-}
-
 // Calculation of required bins, following First Fit algorithm
-int BinPackingGeneticSolver::runFirstFitAlgorithm(const std::vector<int> items) {
+int BinPackingGeneticSolver::runFirstFitAlgorithm(const std::vector<int>& items) {
     // Initialize result (Count of bins)
     int res = 0;
 

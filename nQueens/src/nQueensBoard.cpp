@@ -33,7 +33,7 @@ int NqBoard::calculateCollisionsAtColumn(int column){
         // diagnol collisions
         if (abs(i - column) == abs(qN.at(i) - qN.at(column)))
             count++;
-            // if there are queens in the same row
+            // if there are items in the same row
         else if (qN.at(column) == qN.at(i))
             count++;
     }

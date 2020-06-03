@@ -11,12 +11,6 @@
 #include "../../genetic_solver/include/AbstractGeneticSolver.h"
 #include "../../genetic_solver/include/MutationOperators.h"
 
-struct nQueensGeneticStruct : public GeneticAlgorithmBaseStruct
-{
-    // in queens[i]=j => the queen is in column i, row j
-    std::vector<int> queens;
-};
-
 class nQueensGeneticSolver : public nQueensGenericSolver, public AbstractGeneticSolver<nQueensGeneticStruct>{
 public:
     nQueensGeneticSolver(const NqBoard& board,

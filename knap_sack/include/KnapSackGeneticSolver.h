@@ -14,7 +14,7 @@
 struct KnapSackGeneticStruct : public GeneticAlgorithmBaseStruct {
     KnapSackGeneticStruct() = default;
     double sigmaWeight;
-    std::vector<int> sack;
+    std::vector<int> items;
 };
 
 class KnapSackGeneticSolver : public AbstractGeneticSolver<KnapSackGeneticStruct>{
