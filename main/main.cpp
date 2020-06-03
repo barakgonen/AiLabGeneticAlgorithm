@@ -133,8 +133,8 @@ MutationOperator getMutationOperator(int argc, char **argv) {
 HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
     string heuristicType;
     HeuristicsEnum hType;
-    if (argc >= 6) {
-        heuristicType = argv[5];
+    if (argc >= 5) {
+        heuristicType = argv[4];
         if (heuristicType == defaultHeuristic)
             hType = HeuristicsEnum::DefaultHeuristic;
         else if (heuristicType == bullsAndCows)
@@ -161,8 +161,8 @@ HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
 // String matching specifics!
 std::string getStringToWorkWith(int argc, char **argv) {
     std::string stringToWorkWith = GA_TARGET;
-    if (argc >= 7)
-        stringToWorkWith = argv[6];
+    if (argc >= 6)
+        stringToWorkWith = argv[5];
     return stringToWorkWith;
 }
 
@@ -287,10 +287,10 @@ int main(int argc, char *argv[]) {
     string labSelector = getMethodToRun(argc, argv);
 
     if (labSelector == "string_matching") {
-        string workOnString = getStringToWorkWith(argc, argv);
-        HeuristicsEnum heuristicMethod = getHeuristicToWorkWith(argc, argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
+        HeuristicsEnum heuristicMethod = getHeuristicToWorkWith(argc, argv);
+        string workOnString = getStringToWorkWith(argc, argv);
         std::string outputPath = getOutputPath(argc, argv);
         StringMatchingOutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod, outputPath};
         StringMatchingGeneticSolver matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod};

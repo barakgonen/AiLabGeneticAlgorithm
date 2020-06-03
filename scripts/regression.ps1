@@ -147,4 +147,288 @@ ForEach ($inputString In $stringExamples)
     Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
     Write-Host "=================================================================================="
+    $heuristic = "DefaultHeuristic"
+    $selectionMethod = "Tournament"
+    $crossoverMethod = "SinglePoint"
+    $commandToExecute = "string_matching"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    $heuristic = "BullsAndCows"
+    $crossoverMethod = "SinglePoint"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "InputString is:" $inputString
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    $heuristic = "DefaultHeuristic"
+    $selectionMethod = "Rws"
+    $crossoverMethod = "SinglePoint"
+    $commandToExecute = "string_matching"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    $heuristic = "BullsAndCows"
+    $crossoverMethod = "SinglePoint"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "InputString is:" $inputString
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    $heuristic = "DefaultHeuristic"
+    $selectionMethod = "Rws"
+    $crossoverMethod = "SinglePoint"
+    $commandToExecute = "string_matching"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    $heuristic = "BullsAndCows"
+    $crossoverMethod = "SinglePoint"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "InputString is:" $inputString
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    $heuristic = "DefaultHeuristic"
+    $selectionMethod = "Aging"
+    $crossoverMethod = "SinglePoint"
+    $commandToExecute = "string_matching"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    $heuristic = "BullsAndCows"
+    $crossoverMethod = "SinglePoint"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "InputString is:" $inputString
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to 2 points"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "TwoPoints"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
+    Write-Host "Changing crossover method to uniform"
+    Write-Host "=================================================================================="
+    $crossoverMethod = "UniformCrossover"
+    Write-Host "Parameters are:"
+    Write-Host "Command to execute:" $commandToExecute
+    Write-Host "SelectionMethod:" $selectionMethod
+    Write-Host "CrossoverMethod:" $crossoverMethod
+    Write-Host "Heuristic:" $heuristic
+    Write-Host "InputString is:" $inputString
+    Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    &$exe $commandToExecute $selectionMethod $crossoverMethod $heuristic $inputString $outputPath
+    Write-Host "=================================================================================="
 }
