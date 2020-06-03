@@ -32,8 +32,6 @@ void StringMatchingGeneticSolver::init_population() {
         resetCitizenProps(citizenn);
         buffer.push_back(citizenn);
     }
-
-//    buffer.resize(GA_POPSIZE);
 }
 
 int StringMatchingGeneticSolver::start_solve() {
@@ -161,9 +159,6 @@ void StringMatchingGeneticSolver::set_data_in_buffer_vec_for_single_point_select
         bufferedItems.push_back(populationStartIndexItems.at(i));
     for (int i = spos; i < tsize; i++)
         bufferedItems.push_back(populationEndIndexItems.at(i));
-//    buffer[indexInBuffer].items = population[startIndex].items.substr(0, spos) +
-//                                  population[endIndex].items.substr(spos, tsize - spos);
-
 }
 
 void StringMatchingGeneticSolver::set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer,
@@ -174,16 +169,13 @@ void StringMatchingGeneticSolver::set_data_in_buffer_vec_for_two_points_selectio
     bufferedItems.clear();
     const auto& populationStartIndexItems = population.at(startIndex).items;
     const auto& populationEndIndexItems = population.at(endIndex).items;
-    for (int i = 0; i < spos; i++)
+    int index = 0;
+    for (int i = index; i < spos; i++, index++)
         bufferedItems.push_back(populationStartIndexItems.at(i));
-    for (int i = spos; i < tsize - spos; i++)
+    for (int i = index; i < tsize - spos ; i++, index++)
         bufferedItems.push_back(populationEndIndexItems.at(i));
-    for (int i = spos2; i < tsize - spos2; i++)
+    for (int i = index; i < populationStartIndexItems.size(); i++, index++)
         bufferedItems.push_back(populationStartIndexItems.at(i));
-//    buffer[indexInBuffer].items = population[startIndex].items.substr(0, spos) +
-//                                  population[endIndex].items.substr(spos, spos2 - spos) +
-//                                  population[startIndex].items.substr(spos2, tsize - spos2);
-
 }
 
 void StringMatchingGeneticSolver::uniform_crossover(const int indexInBuffer, const int i1, const int i2, const int spos, int tsize) {
@@ -196,7 +188,6 @@ void StringMatchingGeneticSolver::uniform_crossover(const int indexInBuffer, con
     buffer.at(indexInBuffer).items.clear();
     for (const auto& c : temp2)
         buffer.at(indexInBuffer).items.push_back(c);
-//    buffer[indexInBuffer].items = temp2;
 }
 std::string StringMatchingGeneticSolver::getBestGene() const {
     return std::string{population[0].items.begin(), population[0].items.end()};
