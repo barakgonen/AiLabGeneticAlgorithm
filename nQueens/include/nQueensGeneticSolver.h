@@ -39,6 +39,7 @@ protected:
     void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) override;
     void ox(const int i, const int i1, const int i2) override;
     void pmx(const int i, const int i1, const int i2) override;
+    bool isStandardDeviationIndicatesLocalOptima(const double standardDeviation) override;
     void scale_results();
     int runSolver() override;
     void mutate(nQueensGeneticStruct& member) override ;

@@ -15,7 +15,7 @@ nQueensGeneticSolver::nQueensGeneticSolver(const NqBoard &board,
                                            const MutationOperator mutationOperator,
                                            bool quietMode)
 : nQueensGenericSolver{board, "GENETIC"}
-, AbstractGeneticSolver<nQueensGeneticStruct>{selectionMethod, crossoverMethod, board.getBoardSize(), 5, 3}
+, AbstractGeneticSolver<nQueensGeneticStruct>{selectionMethod, crossoverMethod, board.getBoardSize(), 20, 1, 5, 3}
 , mutataionOperator{mutationOperator}
 , quietMode{quietMode}
 {}
@@ -251,4 +251,8 @@ void nQueensGeneticSolver::setCitizenProps(nQueensGeneticStruct &citizen) {
 
 void nQueensGeneticSolver::set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize){
     buffer.at(indexInBuffer) = population.at(startIndex);
+}
+
+bool nQueensGeneticSolver::isStandardDeviationIndicatesLocalOptima(const double standardDeviation){
+    return standardDeviation > minimalStandardDeviationForLocalMinima;
 }

@@ -31,6 +31,8 @@ public:
     AbstractGeneticSolver(const SelectionMethod selectionMethod,
                           const CrossoverMethod crossoverMethod,
                           const int numberOfItems,  // problem size - string length, number of items, number of bins, items, etc..
+                          int minimumIterationsForLocalMinima,
+                          double minimalStandardDeviationForLocalMinima,
                           const int maxAge = 5,
                           const int maxSpecis = 30,
                           const int specis = 0)
@@ -44,7 +46,9 @@ public:
     , maxAge{maxAge}
     , maxSpecis{maxSpecis}
     , specis{specis}
-    , isInLocalOptima{false}{
+    , isInLocalOptima{false}
+    , minimumIterationsForLocalMinima{minimumIterationsForLocalMinima}
+    , minimalStandardDeviationForLocalMinima{minimalStandardDeviationForLocalMinima}{
 //        std::cout << "Starting GeneticSolver with the following parameters:" << std::endl;
 //        std::cout << "selection: " << selectionMethod << std::endl;
 //        std::cout << "crossover: " << crossoverMethod << std::endl;
@@ -288,16 +292,21 @@ public:
         return weights;
     }
 
+    virtual bool isStandardDeviationIndicatesLocalOptima(const double standardDeviation){
+        return standardDeviation < minimalStandardDeviationForLocalMinima;
+    }
+
     virtual bool isAtLocalOptima(const double standartDeviation, const int iterationNumber){
 // worked good for string matching
-//        if (iterationNumber < 5)
-//            return false;
-//        if (standartDeviation < 0.1)
-//            return true;
-        if (iterationNumber < 20)
+        if (iterationNumber < minimumIterationsForLocalMinima)
             return false;
-        if (standartDeviation > 1.3)
+        if (this->isStandardDeviationIndicatesLocalOptima(standartDeviation))
             return true;
+        // for nQueens
+//        if (iterationNumber < 20)
+//            return false;
+//        if (standartDeviation > 1.3)
+//            return true;
         int count = 0, i1, i2, distance;
         for (int i = 0; i < GA_POPSIZE / 2; i++) {
             i1 = rand() % (GA_POPSIZE / 2);
@@ -443,6 +452,8 @@ protected:
     const int maxSpecis;
     int specis;
     bool isInLocalOptima;
+    int minimumIterationsForLocalMinima;
+    double minimalStandardDeviationForLocalMinima;
 };
 
 

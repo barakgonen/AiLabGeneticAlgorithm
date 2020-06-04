@@ -10,7 +10,7 @@ StringMatchingGeneticSolver::StringMatchingGeneticSolver(const std::string &inpu
                                                          const HeuristicsEnum heuristicType,
                                                          const SelectionMethod selectionMethod,
                                                          const CrossoverMethod crossoverMethod)
-: AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod, static_cast<int>(inputString.size())}
+: AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod, static_cast<int>(inputString.size()), 5, 0.1, 10}
 , heuristicMethod{heuristicType}
 , inputString{inputString}
 {
