@@ -39,8 +39,8 @@ public:
     , population{std::vector<PopulationStruct>()}
     , buffer{std::vector<PopulationStruct>()}
     , numberOfItems{numberOfItems}
-//    , threshold{static_cast<int>(pow(numberOfItems, 2))}
-    , threshold{numberOfItems}
+    , threshold{static_cast<int>(pow(numberOfItems, 2))}
+//    , threshold{numberOfItems}
     , maxAge{maxAge}
     , maxSpecis{maxSpecis}
     , specis{specis}
@@ -60,7 +60,8 @@ public:
                   });
     }
 
-    void elitism(const int esize) override {
+    // todo: FIXME IF NEEDED
+    int elitism(const int esize) override {
         int j = 0, i = 0;
         while (i < GA_POPSIZE && j < esize) {
             if (population[i].ageVal < maxAge) {
@@ -79,6 +80,7 @@ public:
             }
             i++;
         }
+        return j;
     }
 
     void aging(int &i1, int &i2, int esize) override {
@@ -117,7 +119,7 @@ public:
         i2 = rws(weights);
     }
 
-    void random_selection(int &i1, int &i2, int tsize) {
+    void random_selection(int &i1, int &i2) {
         // Select 2 random parents from top half
         i1 = rand() % (GA_POPSIZE / 2);
         i2 = rand() % (GA_POPSIZE / 2);
@@ -127,7 +129,7 @@ public:
         int esize = GA_POPSIZE * GA_ELITRATE;
         int spos, i1, i2;
         int count, distance, specis = 0;
-        elitism(esize);
+        esize = elitism(esize);
 
         // Mate the rest
         for (int i = esize; i < GA_POPSIZE; i++)  {
@@ -143,7 +145,7 @@ public:
                         calc_rws(i1, i2);
                         break;
                     case SelectionMethod::Random:
-                        random_selection(i1, i2, numberOfItems);
+                        random_selection(i1, i2);
                         break;
                     case SelectionMethod::Tournament:
                         i1 = tournament();
@@ -185,10 +187,10 @@ public:
                     this->uniform_crossover(i, i1, i2, spos, numberOfItems);
                     break;
                 case CrossoverMethod::Ox:
-                    this->ox(i);
+                    this->ox(i, i1, i2);
                     break;
                 case CrossoverMethod::Pmx:
-                    this->pmx(i);
+                    this->pmx(i, i1, i2);
                     break;
             }
 //            std::set<int> gene;
@@ -287,9 +289,14 @@ public:
     }
 
     virtual bool isAtLocalOptima(const double standartDeviation, const int iterationNumber){
-        if (iterationNumber < 5)
+// worked good for string matching
+//        if (iterationNumber < 5)
+//            return false;
+//        if (standartDeviation < 0.1)
+//            return true;
+        if (iterationNumber < 20)
             return false;
-        if (standartDeviation < 0.1)
+        if (standartDeviation > 1.3)
             return true;
         int count = 0, i1, i2, distance;
         for (int i = 0; i < GA_POPSIZE / 2; i++) {
@@ -305,12 +312,11 @@ public:
     }
 
     virtual int kendallTau(const std::vector<int>& a, const std::vector<int>& b){
-        int count = 0, x = 0;
-        int** ary = new int* [numberOfItems];
-        for (int i = 0; i < numberOfItems; i++)
-            ary[i] = new int[numberOfItems];
-        for (int i = 0; i < numberOfItems; i++) {
-            for (int j = i + 1; j < numberOfItems; j++) {
+        int count = 0;
+        int ary[numberOfItems][numberOfItems];
+        int length = numberOfItems;
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length; j++) {
                 if (a[i] >= numberOfItems || a[j] >= numberOfItems)
                     continue;
                 // if num1 is before num2 in array a, we add 1
@@ -324,10 +330,11 @@ public:
                 }
             }
         }
-        for (int i = 0; i < numberOfItems; i++) {
-            for (int j = i + 1; j < numberOfItems; j++) {
-                if (b[i] >= numberOfItems || b[j] >= numberOfItems || i == j)
+        for (int i = 0; i < length; i++) {
+            for (int j = i + 1; j < length; j++) {
+                if (b[i] >= length || b[j] >= length || i == j)
                     continue;
+                int x;
                 if (b[i] < b[j])
                     x = 1;
                 else
@@ -337,12 +344,45 @@ public:
                     count++;
             }
         }
-        // free memory
-        for (int i = 0; i < numberOfItems; i++)
-            delete[] ary[i];
-        delete[] ary;
-
         return count;
+//        int count = 0, x = 0;
+//        int** ary = new int* [numberOfItems];
+//        for (int i = 0; i < numberOfItems; i++)
+//            ary[i] = new int[numberOfItems];
+//        for (int i = 0; i < numberOfItems; i++) {
+//            for (int j = i + 1; j < numberOfItems; j++) {
+//                if (a[i] >= numberOfItems || a[j] >= numberOfItems)
+//                    continue;
+//                // if num1 is before num2 in array a, we add 1
+//                if (a[i] < a[j]) {
+//                    ary[a[i]][a[j]] = 1;
+//                    ary[a[j]][a[i]] = 1;
+//                }
+//                else {
+//                    ary[a[i]][a[j]] = -1;
+//                    ary[a[j]][a[i]] = -1;
+//                }
+//            }
+//        }
+//        for (int i = 0; i < numberOfItems; i++) {
+//            for (int j = i + 1; j < numberOfItems; j++) {
+//                if (b[i] >= numberOfItems || b[j] >= numberOfItems || i == j)
+//                    continue;
+//                if (b[i] < b[j])
+//                    x = 1;
+//                else
+//                    x = -1;
+//                // if zero it means num1 and num2 not apper in the same order in the arrays
+//                if (ary[b[i]][b[j]] + x == 0)
+//                    count++;
+//            }
+//        }
+//        // free memory
+//        for (int i = 0; i < numberOfItems; i++)
+//            delete[] ary[i];
+//        delete[] ary;
+//
+//        return count;
     }
 
     virtual void resetCitizenProps(PopulationStruct& citizen) = 0;

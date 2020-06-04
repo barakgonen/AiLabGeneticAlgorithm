@@ -16,7 +16,7 @@ struct GeneticAlgorithmBaseStruct {
         ageVal = 0;
     }
     // Default empty ctor
-    unsigned int fitnessVal;
+    double fitnessVal;
     int ageVal;
 };
 #endif //AILABGENETICALGORITHM_GENETICALGORITHMBASESTRUCT_H

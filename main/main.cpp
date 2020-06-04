@@ -348,9 +348,10 @@ int main(int argc, char *argv[]) {
             minimalConflictsWriter.writeToFile(minimalConflictsResults);
         } else{
             NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
-            nQueensGeneticSolver geneticSolver{board, SelectionMethod::None, crossoverMethod, mutationOperator, true};
+            nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator, false};
             geneticSolver.solvePuzzle();
             nQueensMinimalConflictsSolver minimalConflictsSolver{board};
+            minimalConflictsSolver.solvePuzzle();
         }
 
     }
