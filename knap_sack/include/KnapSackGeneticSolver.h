@@ -10,12 +10,7 @@
 #include "KnapSackStaticDataSetInitializer.h"
 #include "memory"
 #include "AbstractGeneticSolver.h"
-
-struct KnapSackGeneticStruct : public GeneticAlgorithmBaseStruct {
-    KnapSackGeneticStruct() = default;
-    double sigmaWeight;
-    std::vector<int> items;
-};
+#include "KnapSackGeneticStruct.h"
 
 class KnapSackGeneticSolver : public AbstractGeneticSolver<KnapSackGeneticStruct>{
 
@@ -33,6 +28,14 @@ public:
     virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) override ;
     virtual void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int spos2, int tsize) override ;
     virtual int getBestGeneIndex() const override;
+
+    int calculateDistanceBetweenTwoCitizens(const KnapSackGeneticStruct &citizenOne,
+                                            const KnapSackGeneticStruct &citizenTwo) override;
+
+    void resetCitizenProps(KnapSackGeneticStruct &citizen) override;
+
+    void setCitizenProps(KnapSackGeneticStruct &citizen) override;
+
 protected:
     const int capacity;
     std::vector<int> profits;

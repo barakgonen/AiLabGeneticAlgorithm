@@ -13,7 +13,7 @@
 KnapSackGeneticSolver::KnapSackGeneticSolver(const int puzzleKey,
                                              const KnapSackStaticDataSetInitializer& staticDataSetInitializer,
                                              SelectionMethod selectionMethod, CrossoverMethod crossoverMethod)
-: AbstractGeneticSolver<KnapSackGeneticStruct>(selectionMethod, crossoverMethod, static_cast<int>(weights.size()))
+: AbstractGeneticSolver<KnapSackGeneticStruct>(selectionMethod, crossoverMethod, static_cast<int>(staticDataSetInitializer.getWeights(puzzleKey).size()), 10, 0.2)
 , capacity{staticDataSetInitializer.getCapacity(puzzleKey)}
 , profits{staticDataSetInitializer.getProfits(puzzleKey)}
 , weights{staticDataSetInitializer.getWeights(puzzleKey)}
@@ -21,18 +21,11 @@ KnapSackGeneticSolver::KnapSackGeneticSolver(const int puzzleKey,
 }
 
 void KnapSackGeneticSolver::init_population() {
-    std::default_random_engine generator;
-    std::uniform_int_distribution<int> distribution(1,1000);
-    auto dice = std::bind ( distribution, generator );
-
     for (int i = 0; i < GA_POPSIZE; i++) {
         KnapSackGeneticStruct citizen;
 
-        citizen.sigmaWeight = 0;
-        for (int j = 0; j < numberOfItems; j++){
-            auto end = citizen.items.end();
-            citizen.items.insert(end, dice() % 2);
-        }
+        setCitizenProps(citizen);
+
         buffer.push_back(citizen);
         population.push_back(citizen);
     }
@@ -100,7 +93,12 @@ std::vector<int> KnapSackGeneticSolver::solve() {
             break;
         }
 
-        mate(); // mate the population together
+        specis = mate(); // mate the population together
+        if (specis > maxSpecis - 2)
+            threshold += 1;
+        else if (specis < maxSpecis + 2)
+            threshold -= 1;
+
         swap(); // swap buffers
         t = clock() - t;
         std::cout << " CLOCK TICKS Time :" << t << " Elapsed time:" << ((float) t) / CLOCKS_PER_SEC << std::endl;
@@ -154,4 +152,28 @@ void KnapSackGeneticSolver::set_data_in_buffer_vec_for_two_points_selection(cons
     for (int j = spos2; j < numberOfItems; j++)
         buffer[indexInBuffer].items[j] = population[endIndex].items[j];
 
+}
+
+int KnapSackGeneticSolver::calculateDistanceBetweenTwoCitizens(const KnapSackGeneticStruct &citizenOne,
+                                                               const KnapSackGeneticStruct &citizenTwo) {
+    return kendallTau(citizenTwo.items, citizenTwo.items);
+}
+
+void KnapSackGeneticSolver::resetCitizenProps(KnapSackGeneticStruct &citizen) {
+    citizen.sigmaWeight = 0;
+    citizen.items.clear();
+    for (int j = 0; j < numberOfItems; j++)
+        citizen.items.push_back(-1);
+    citizen.resetMembers();
+}
+
+void KnapSackGeneticSolver::setCitizenProps(KnapSackGeneticStruct &citizen) {
+    std::default_random_engine generator;
+    std::uniform_int_distribution<int> distribution(1,1000);
+    static auto dice = std::bind ( distribution, generator );
+    citizen.sigmaWeight = 0;
+    for (int j = 0; j < numberOfItems; j++) {
+        auto end = citizen.items.end();
+        citizen.items.insert(end, dice() % 2);
+    }
 }
