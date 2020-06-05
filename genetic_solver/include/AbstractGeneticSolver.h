@@ -35,7 +35,8 @@ public:
                           double minimalStandardDeviationForLocalMinima,
                           const int maxAge = 5,
                           const int maxSpecis = 30,
-                          const int specis = 0)
+                          const int specis = 0,
+                          const int populationSize = GA_POPSIZE)
     : selectionMethod{selectionMethod}
     , crossoverMethod{crossoverMethod}
     , population{std::vector<PopulationStruct>()}
@@ -48,7 +49,8 @@ public:
     , specis{specis}
     , isInLocalOptima{false}
     , minimumIterationsForLocalMinima{minimumIterationsForLocalMinima}
-    , minimalStandardDeviationForLocalMinima{minimalStandardDeviationForLocalMinima}{
+    , minimalStandardDeviationForLocalMinima{minimalStandardDeviationForLocalMinima}
+    , populationSize{populationSize}{
 //        std::cout << "Starting GeneticSolver with the following parameters:" << std::endl;
 //        std::cout << "selection: " << selectionMethod << std::endl;
 //        std::cout << "crossover: " << crossoverMethod << std::endl;
@@ -67,7 +69,7 @@ public:
     // todo: FIXME IF NEEDED
     int elitism(const int esize) override {
         int j = 0, i = 0;
-        while (i < GA_POPSIZE && j < esize) {
+        while (i < populationSize && j < esize) {
             if (population[i].ageVal < maxAge) {
                 buffer[j].items.clear();
                 std::copy(population[i].items.begin(), population[i].items.end(), back_inserter(buffer[j].items));
@@ -89,13 +91,13 @@ public:
 
     void aging(int &i1, int &i2, int esize) override {
         std::vector<int> temp;
-        for (int i = esize; i < GA_POPSIZE / 2; i++) {
+        for (int i = esize; i < populationSize / 2; i++) {
             if (population[i].ageVal < 10) {
                 temp.push_back(i);
             }
         }
         random_shuffle(temp.begin(), temp.end());
-        int elsize = (int) (GA_POPSIZE * GA_ELITRATE);
+        int elsize = (int) (populationSize * GA_ELITRATE);
 
         for (int i = 0; i < elsize; i++) {
             population[i].ageVal = population[i].ageVal + 1;
@@ -106,9 +108,9 @@ public:
 
     int rws(const std::vector<double> &weights) override {
         // get a random value in the range
-        double value = (rand() / (double) (RAND_MAX + 1)) * weights.at(GA_POPSIZE - 1);
+        double value = (rand() / (double) (RAND_MAX + 1)) * weights.at(populationSize - 1);
         // locate the random value based on the weights
-        for (int i = 0; i < GA_POPSIZE; i++) {
+        for (int i = 0; i < populationSize; i++) {
             value -= weights.at(i);
             if (value <= 0) {
                 return i;
@@ -125,18 +127,18 @@ public:
 
     void random_selection(int &i1, int &i2) {
         // Select 2 random parents from top half
-        i1 = rand() % (GA_POPSIZE / 2);
-        i2 = rand() % (GA_POPSIZE / 2);
+        i1 = rand() % (populationSize / 2);
+        i2 = rand() % (populationSize / 2);
     }
 
     virtual int mate() override {
-        int esize = GA_POPSIZE * GA_ELITRATE;
+        int esize = populationSize * GA_ELITRATE;
         int spos, i1, i2;
         int count, distance, specis = 0;
         esize = elitism(esize);
 
         // Mate the rest
-        for (int i = esize; i < GA_POPSIZE; i++)  {
+        for (int i = esize; i < populationSize; i++)  {
             count = 0;
             do {
                 count++;
@@ -154,8 +156,6 @@ public:
                     case SelectionMethod::Tournament:
                         i1 = tournament();
                         i2 = tournament();
-                        break;
-                    case SelectionMethod::None:
                         break;
                 }
                 distance = this->calculateDistanceBetweenTwoCitizens(population[i1], population[i2]);
@@ -196,22 +196,9 @@ public:
                 case CrossoverMethod::Pmx:
                     this->pmx(i, i1, i2);
                     break;
+                default:
+                    break;
             }
-//            std::set<int> gene;
-//            // we take the even items from parent1, and odd items from parent2 and combine it
-//            // std::set can not contain the same element twice, so we will get premutation
-//            for (int j = 0; j < 2 * numberOfItems; j++) {
-//                // if even copy parent 1 item
-//                if (j % 2 == 0)
-//                    gene.insert(buffer[i1].items[j / 2]);
-//                    // if odd copy parent 2 item
-//                else
-//                    gene.insert(buffer[i2].items[(j - 1) / 2]);
-//            }
-//            std::set<int>::iterator it;
-//            buffer[i].items.clear();
-//            for (const auto val : gene)
-//                buffer[i].items.push_back(val);
 
             if (rand() < GA_MUTATION){
                 this->mutate(buffer.at(i));
@@ -220,7 +207,7 @@ public:
                 immigration(buffer[i]);
             if (selectionMethod == SelectionMethod::Rws) {
                 // need to preform scailling
-                for (int i = 0; i < GA_POPSIZE; i++) {
+                for (int i = 0; i < populationSize; i++) {
                     double fitness = population[i].fitnessVal;
                     if (fitness != 0)
                         population[i].fitnessVal = sqrt(population[i].fitnessVal);
@@ -235,7 +222,7 @@ public:
         int best = INT_MAX, secondBest = INT_MAX, i1 = 0, i2 = 0;
         for (int i = 0; i < K; i++) {
             // random gene
-            int temp = rand() % GA_POPSIZE;
+            int temp = rand() % populationSize;
             // if better gene found we save it
             if (population[temp].fitnessVal < best) {
                 i2 = i1;
@@ -270,24 +257,24 @@ public:
         for (const auto& citizen : population)
             avg += citizen.fitnessVal;
 
-        return avg / GA_POPSIZE;
+        return avg / populationSize;
     }
 
     double get_standard_deviation(const double averagedFitnessValue) override {
         double sum = 0;
         for (const auto& citizen : population)
             sum += pow(citizen.fitnessVal - averagedFitnessValue, 2);
-        return sqrt(sum / GA_POPSIZE);
+        return sqrt(sum / populationSize);
     }
 
     virtual std::vector<double> get_weights_vector(double avg) override {
         std::vector<double> weights;
-        for (int j = 0; j < GA_POPSIZE; j++) {
+        for (int j = 0; j < populationSize; j++) {
             if (j != 0)
                 // we add previous weight for later use in rws function
-                weights.push_back(population.at(j).fitnessVal / (avg * GA_POPSIZE) + weights[j - 1]);
+                weights.push_back(population.at(j).fitnessVal / (avg * populationSize) + weights[j - 1]);
             else
-                weights.push_back(population.at(j).fitnessVal / (avg * GA_POPSIZE));
+                weights.push_back(population.at(j).fitnessVal / (avg * populationSize));
         }
         return weights;
     }
@@ -308,14 +295,14 @@ public:
 //        if (standartDeviation > 1.3)
 //            return true;
         int count = 0, i1, i2, distance;
-        for (int i = 0; i < GA_POPSIZE / 2; i++) {
-            i1 = rand() % (GA_POPSIZE / 2);
-            i2 = rand() % (GA_POPSIZE / 2);
+        for (int i = 0; i < populationSize / 2; i++) {
+            i1 = rand() % (populationSize / 2);
+            i2 = rand() % (populationSize / 2);
             distance = this->calculateDistanceBetweenTwoCitizens(population[i1], population[i2]);
             if (distance <= 1)
                 count++;
         }
-        if (count >= GA_POPSIZE / 2)
+        if (count >= populationSize / 2)
             return true;
         return false;
     }
@@ -354,44 +341,6 @@ public:
             }
         }
         return count;
-//        int count = 0, x = 0;
-//        int** ary = new int* [numberOfItems];
-//        for (int i = 0; i < numberOfItems; i++)
-//            ary[i] = new int[numberOfItems];
-//        for (int i = 0; i < numberOfItems; i++) {
-//            for (int j = i + 1; j < numberOfItems; j++) {
-//                if (a[i] >= numberOfItems || a[j] >= numberOfItems)
-//                    continue;
-//                // if num1 is before num2 in array a, we add 1
-//                if (a[i] < a[j]) {
-//                    ary[a[i]][a[j]] = 1;
-//                    ary[a[j]][a[i]] = 1;
-//                }
-//                else {
-//                    ary[a[i]][a[j]] = -1;
-//                    ary[a[j]][a[i]] = -1;
-//                }
-//            }
-//        }
-//        for (int i = 0; i < numberOfItems; i++) {
-//            for (int j = i + 1; j < numberOfItems; j++) {
-//                if (b[i] >= numberOfItems || b[j] >= numberOfItems || i == j)
-//                    continue;
-//                if (b[i] < b[j])
-//                    x = 1;
-//                else
-//                    x = -1;
-//                // if zero it means num1 and num2 not apper in the same order in the arrays
-//                if (ary[b[i]][b[j]] + x == 0)
-//                    count++;
-//            }
-//        }
-//        // free memory
-//        for (int i = 0; i < numberOfItems; i++)
-//            delete[] ary[i];
-//        delete[] ary;
-//
-//        return count;
     }
 
     virtual void resetCitizenProps(PopulationStruct& citizen) = 0;
@@ -454,6 +403,7 @@ protected:
     bool isInLocalOptima;
     int minimumIterationsForLocalMinima;
     double minimalStandardDeviationForLocalMinima;
+    const int populationSize;
 };
 
 

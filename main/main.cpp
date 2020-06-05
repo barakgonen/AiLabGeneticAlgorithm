@@ -80,7 +80,7 @@ CrossoverMethod getCrossoverMethod(int argc, char **argv) {
     if (argc >= 4)
         crossoverMethodStr = argv[3];
     else {
-        cout << "Choose crossover method: SinglePoint / TwoPoints / UniformCrossover / Ox / Pmx " << endl;
+        cout << "Choose crossover method: SinglePoint / TwoPoints / UniformCrossover / Ox / Pmx / None " << endl;
         getline(cin, crossoverMethodStr);
     }
     if (crossoverMethodStr == "SinglePoint")
@@ -93,6 +93,8 @@ CrossoverMethod getCrossoverMethod(int argc, char **argv) {
         crossoverMethod = CrossoverMethod::Ox;
     else if (crossoverMethodStr == "Pmx")
         crossoverMethod = CrossoverMethod::Pmx;
+    else if (crossoverMethodStr == "Empty")
+        crossoverMethod = CrossoverMethod::Empty;
     else {
         cout << "Unrecognized crossover method, setting to SinglePoint" << endl;
         crossoverMethod = CrossoverMethod::SinglePoint;
@@ -402,7 +404,8 @@ int main(int argc, char *argv[]) {
                                                             inputReader.getItemsWeight(),
                                                             selectionMethod,
                                                             crossoverMethod,
-                                                            maxAge};
+                                                            maxAge,
+                                                            expectedKeyVal.second};
             int optimalNumberOfBins = binPackingGeneticSolver.start_solve();
             if (optimalNumberOfBins != expectedKeyVal.second)
                 std::cout << "ERROR, on example number: " << expectedKeyVal.first << std::endl;

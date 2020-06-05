@@ -16,11 +16,20 @@ public:
                             const SelectionMethod selectionMethod,
                             const CrossoverMethod crossoverMethod,
                             const int maxAge,
+                            const int expectedResult,
                             const int maxSpecis = 30,
                             const int specis = 0);
     virtual ~BinPackingGeneticSolver() = default;
 
     int start_solve() override;
+
+    void resetCitizenProps(BinPackingGeneticStruct &citizen) override;
+
+    void setCitizenProps(BinPackingGeneticStruct &citizen) override;
+
+    virtual int mate() override;
+
+    int kendallTau(const std::vector<int> &a, const std::vector<int> &b) override;
 
 protected:
     void print_results() override;
@@ -32,8 +41,10 @@ protected:
                                                     const BinPackingGeneticStruct& citizenTwo) override;
     void handle_specific_elitism(const int index) override;
     int runFirstFitAlgorithm(const std::vector<int>& items);
+
     const int binsCapacity;
     std::vector<int> weights;
+    const int expectedResult;
 };
 
 

@@ -528,3 +528,23 @@ Write-Host "Board Size:" $boardSize
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 &$exe $commandToExecute $selectionMethod $crossoverMethod $MutationOperator $boardSize
 Write-Host "=================================================================================="
+Write-Host "Bin Packing"
+Write-Host "=================================================================================="
+$commandToExecute = "BinPacking"
+$selectionMethod = "Random"
+$crossoverMethod = "Empty"
+Write-Host "Parameters are:"
+Write-Host "Command to execute:" $commandToExecute
+Write-Host "SelectionMethod:" $selectionMethod
+Write-Host "CrossoverMethod:" $crossoverMethod
+Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+&$exe $commandToExecute $selectionMethod $crossoverMethod
+Write-Host "=================================================================================="
+$crossoverMethod = "Rws"
+Write-Host "Parameters are:"
+Write-Host "Command to execute:" $commandToExecute
+Write-Host "SelectionMethod:" $selectionMethod
+Write-Host "CrossoverMethod:" $crossoverMethod
+Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+&$exe $commandToExecute $selectionMethod $crossoverMethod
+Write-Host "=================================================================================="
