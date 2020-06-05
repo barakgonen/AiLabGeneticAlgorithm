@@ -19,13 +19,13 @@ $stringExamples = @("Hello world!"
 
 #                    "SEAvYGWUpJqXBy",
 #                    "mDRTpqaLPwxQh",
-"World!",
-"HowAreYou",
-"Hi",
-"Bi",
-"AIUGFc",
-"dipFbt",
-"barak",
+#"World!",
+#"HowAreYou",
+#"Hi",
+#"Bi",
+#"AIUGFc",
+#"dipFbt",
+#"barak",
 #"fuvsirPdjYDae",
 #"GQHuyIFBAolxagW",
 #"VAZnUHwSMoaBxFl",
@@ -34,9 +34,9 @@ $stringExamples = @("Hello world!"
 #                    "gAewnxKZHXWrQDFhatu",
 #                    "cAXlFgEexsdbyUj",
 
-"pIHJOB",
-"blgpK",
-"BqpvuWiNKJDeE"
+#"pIHJOB",
+#"blgpK",
+#"BqpvuWiNKJDeE"
 
 #                    "DotpqXEghvkrx",  COMMENT
 #                    "ePnlwsIfYGXLAVu",COMMENT
@@ -528,6 +528,26 @@ Write-Host "Board Size:" $boardSize
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 &$exe $commandToExecute $selectionMethod $crossoverMethod $MutationOperator $boardSize
 Write-Host "=================================================================================="
+Write-Host "KnapSack"
+Write-Host "=================================================================================="
+$commandToExecute = "KnapSack"
+$selectionMethod = "Random"
+$crossoverMethod = "TwoPoints"
+Write-Host "Parameters are:"
+Write-Host "Command to execute:" $commandToExecute
+Write-Host "SelectionMethod:" $selectionMethod
+Write-Host "CrossoverMethod:" $crossoverMethod
+Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+&$exe $commandToExecute $selectionMethod $crossoverMethod
+Write-Host "=================================================================================="
+$selectionMethod = "Rws"
+Write-Host "Parameters are:"
+Write-Host "Command to execute:" $commandToExecute
+Write-Host "SelectionMethod:" $selectionMethod
+Write-Host "CrossoverMethod:" $crossoverMethod
+Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+&$exe $commandToExecute $selectionMethod $crossoverMethod
+Write-Host "=================================================================================="
 Write-Host "Bin Packing"
 Write-Host "=================================================================================="
 $commandToExecute = "BinPacking"
@@ -540,7 +560,7 @@ Write-Host "CrossoverMethod:" $crossoverMethod
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 &$exe $commandToExecute $selectionMethod $crossoverMethod
 Write-Host "=================================================================================="
-$crossoverMethod = "Rws"
+$selectionMethod = "Rws"
 Write-Host "Parameters are:"
 Write-Host "Command to execute:" $commandToExecute
 Write-Host "SelectionMethod:" $selectionMethod

@@ -22,7 +22,7 @@ StringMatchingGeneticSolver::StringMatchingGeneticSolver(const std::string &inpu
 }
 
 void StringMatchingGeneticSolver::init_population() {
-    for (int i = 0; i < GA_POPSIZE; i++) {
+    for (int i = 0; i < populationSize; i++) {
         GeneticStringMatchingAlgStruct citizen;
         resetCitizenProps(citizen);
         setCitizenProps(citizen);
@@ -86,7 +86,7 @@ void StringMatchingGeneticSolver::calc_fitness() {
 
     switch (heuristicMethod) {
         case DefaultHeuristic:
-            for (int i = 0; i < GA_POPSIZE; i++) {
+            for (int i = 0; i < populationSize; i++) {
                 fitness = 0;
                 for (int j = 0; j < numberOfItems; j++) {
                     fitness += abs(int(population[i].items[j] - inputString.at(j)));
@@ -95,7 +95,7 @@ void StringMatchingGeneticSolver::calc_fitness() {
             }
             break;
         case BullsAndCows:
-            for (int i = 0; i < GA_POPSIZE; i++) {
+            for (int i = 0; i < populationSize; i++) {
                 fitness = numberOfItems * 50;
                 for (int j = 0; j < numberOfItems; j++) {
                     // if the letter on the right place we give 50 points

@@ -13,7 +13,7 @@
 KnapSackGeneticSolver::KnapSackGeneticSolver(const int puzzleKey,
                                              const KnapSackStaticDataSetInitializer& staticDataSetInitializer,
                                              SelectionMethod selectionMethod, CrossoverMethod crossoverMethod)
-: AbstractGeneticSolver<KnapSackGeneticStruct>(selectionMethod, crossoverMethod, static_cast<int>(staticDataSetInitializer.getWeights(puzzleKey).size()), 10, 0.2)
+: AbstractGeneticSolver<KnapSackGeneticStruct>(selectionMethod, crossoverMethod, static_cast<int>(staticDataSetInitializer.getWeights(puzzleKey).size()), 10, 14.651)
 , capacity{staticDataSetInitializer.getCapacity(puzzleKey)}
 , profits{staticDataSetInitializer.getProfits(puzzleKey)}
 , weights{staticDataSetInitializer.getWeights(puzzleKey)}
@@ -21,7 +21,7 @@ KnapSackGeneticSolver::KnapSackGeneticSolver(const int puzzleKey,
 }
 
 void KnapSackGeneticSolver::init_population() {
-    for (int i = 0; i < GA_POPSIZE; i++) {
+    for (int i = 0; i < populationSize; i++) {
         KnapSackGeneticStruct citizen;
 
         setCitizenProps(citizen);
@@ -32,7 +32,7 @@ void KnapSackGeneticSolver::init_population() {
 }
 
 void KnapSackGeneticSolver::calc_fitness() {
-    for (int i = 0; i < GA_POPSIZE; i++) {
+    for (int i = 0; i < populationSize; i++) {
         int sigmaFitness = 0;
         int sigmaWeight = 0;
         for (int j = 0; j < numberOfItems; j++) {

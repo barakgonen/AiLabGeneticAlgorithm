@@ -21,7 +21,7 @@ nQueensGeneticSolver::nQueensGeneticSolver(const NqBoard &board,
 {}
 
 void nQueensGeneticSolver::init_population() {
-    for (int i = 0; i < GA_POPSIZE; i++) {
+    for (int i = 0; i < populationSize; i++) {
         nQueensGeneticStruct citizen;
         nQueensGeneticStruct s;
 
@@ -88,7 +88,7 @@ void nQueensGeneticSolver::calc_fitness() {
     std::vector<int> a((4 * numberOfItems) - 2);
     std::fill(a.begin(), a.end(), 0);
 
-    for (int i = 0; i < GA_POPSIZE; i++) {
+    for (int i = 0; i < populationSize; i++) {
         unsigned int fitness = 0;
         for (int j = 0; j < numberOfItems; j++) {
             // diagnol 1
