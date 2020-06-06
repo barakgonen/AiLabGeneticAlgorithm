@@ -75,11 +75,6 @@ public:
                 std::copy(population[i].items.begin(), population[i].items.end(), back_inserter(buffer[j].items));
                 buffer[j].fitnessVal = population[i].fitnessVal;
                 buffer[j].ageVal = population[i].ageVal + 1;
-//                handle_specific_elitism(i);
-//                for (int m = 0; m < numberOfItems; m++)
-//                    buffer[j].item
-//                    buffer[j].items[m] = population[i].items[m];
-//
                 if (isInLocalOptima && j > GENES_TO_LEAVE)
                     immigration(buffer[j]);
                 j++;
@@ -284,16 +279,10 @@ public:
     }
 
     virtual bool isAtLocalOptima(const double standartDeviation, const int iterationNumber){
-// worked good for string matching
         if (iterationNumber < minimumIterationsForLocalMinima)
             return false;
         if (this->isStandardDeviationIndicatesLocalOptima(standartDeviation))
             return true;
-        // for nQueens
-//        if (iterationNumber < 20)
-//            return false;
-//        if (standartDeviation > 1.3)
-//            return true;
         int count = 0, i1, i2, distance;
         for (int i = 0; i < populationSize / 2; i++) {
             i1 = rand() % (populationSize / 2);
