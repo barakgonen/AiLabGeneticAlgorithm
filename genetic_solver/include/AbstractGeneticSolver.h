@@ -58,7 +58,7 @@ public:
 
     virtual ~AbstractGeneticSolver() = default;
 
-    void sort_population_by_fitnes() override {
+    virtual void sort_population_by_fitnes() override {
         std::sort(population.begin(),
                   population.end(),
                   [](const PopulationStruct &x, const PopulationStruct &y) {
@@ -67,7 +67,7 @@ public:
     }
 
     // todo: FIXME IF NEEDED
-    int elitism(const int esize) override {
+    virtual int elitism(const int esize) override {
         int j = 0, i = 0;
         while (i < populationSize && j < esize) {
             if (population[i].ageVal < maxAge) {
@@ -135,7 +135,7 @@ public:
         int esize = populationSize * GA_ELITRATE;
         int spos, i1, i2;
         int count, distance, specis = 0;
-        esize = elitism(esize);
+        esize = this->elitism(esize);
 
         // Mate the rest
         for (int i = esize; i < populationSize; i++)  {

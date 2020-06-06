@@ -19,7 +19,9 @@
 #include "../nQueens/include/nQueensOutputFileWriter.h"
 #include "../bin_packing/include/BinPackingGeneticSolver.h"
 #include "../bin_packing/include/BinPackingInputReader.h"
-
+#include "../baldwin_effect/include/baldwin_solver.h"
+#include "../baldwin_effect/include/BaldwinIterationStruct.h"
+#include "../baldwin_effect/include/BaldwinEffectOutputFileWriter.h"
 
 #include <chrono>
 #include <ratio>
@@ -158,6 +160,30 @@ HeuristicsEnum getHeuristicToWorkWith(int argc, char **argv) {
         }
     }
     return hType;
+}
+
+// Baldwin effect specific
+int getNumberOfIterations(int argc, char **argv) {
+    std::string numberOfIterationsAsString = "";
+    if (argc >= 3)
+        numberOfIterationsAsString = argv[2];
+    else {
+        cout << "Insert number of Iterations to run " << endl;
+        getline(cin, numberOfIterationsAsString);
+    }
+    return std::stoi(numberOfIterationsAsString);
+}
+
+// Baldwin effect specific
+int getNumberOfTests(int argc, char **argv) {
+    std::string numberOfIterationsAsString = "";
+    if (argc >= 4)
+        numberOfIterationsAsString = argv[3];
+    else {
+        cout << "Insert number of tests to preform " << endl;
+        getline(cin, numberOfIterationsAsString);
+    }
+    return std::stoi(numberOfIterationsAsString);
 }
 
 // String matching specifics!
@@ -420,7 +446,25 @@ int main(int argc, char *argv[]) {
         std::cout << "Running" << std::endl;
         testBinPackingFitness(basePath, numOfIterations);
         std::cout << "Finished, if the console looks clean, your'e good! XD" << std::endl;
-
-        return 0;
     }
+    else if (labSelector == "BaldwinEffect"){
+        const int numberOfIterations = getNumberOfIterations(argc, argv);
+        Baldwin_Solver solver{numberOfIterations};
+        solver.solve();
+    }
+    else if (labSelector == "BaldwinEffectTester"){
+        std::string outputPath = getOutputPath(argc, argv);
+        BaldwinEffectOutputFileWriter outputFileWriter{outputPath};
+        const int numberOfIterations = getNumberOfIterations(argc, argv);
+        const int numberOfTests = getNumberOfTests(argc, argv);
+        for (int i = 0; i < numberOfTests; i++) {
+            Baldwin_Solver solver{numberOfIterations};
+            const auto results = solver.solve();
+            outputFileWriter.storeResult(results);
+        }
+        outputFileWriter.writeCalculatedResults();
+    }
+
+    return 0;
 }
+
