@@ -22,6 +22,7 @@
 #include "../baldwin_effect/include/baldwin_solver.h"
 #include "../baldwin_effect/include/BaldwinIterationStruct.h"
 #include "../baldwin_effect/include/BaldwinEffectOutputFileWriter.h"
+#include "../nsga2/include/NsgaSolver.h"
 
 #include <chrono>
 #include <ratio>
@@ -463,6 +464,13 @@ int main(int argc, char *argv[]) {
             outputFileWriter.storeResult(results);
         }
         outputFileWriter.writeCalculatedResults();
+    }
+    else if (labSelector == "Nsga"){
+        SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
+        CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
+        const int numberOfCuples = 5;
+        NsgaSolver solver{selectionMethod, crossoverMethod, numberOfCuples};
+        solver.start_solve();
     }
 
     return 0;
