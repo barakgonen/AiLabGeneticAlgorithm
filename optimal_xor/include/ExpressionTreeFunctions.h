@@ -9,7 +9,8 @@
 enum ExpressionTreeFunctions {
     AND,
     OR,
-    NOT
+    NOT,
+    UKNOWN
 };
 
 #endif //AILABGENETICALGORITHM_EXPRESSIONTREEFUNCTIONS_H
