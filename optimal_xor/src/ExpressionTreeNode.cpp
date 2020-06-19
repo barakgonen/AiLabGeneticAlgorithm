@@ -11,7 +11,7 @@ ExpressionTreeNode::ExpressionTreeNode()
 //: maxDepth{maxDepth}
 : numberOfSpacesForPrint{NUMBER_OF_SPACES}
 , terminal{' '}
-, nodeFunc{nodeFunc}
+, nodeFunc{ExpressionTreeFunctions::UKNOWN}
 , rnode{nullptr}
 , lnode{nullptr}
 {
@@ -45,7 +45,7 @@ ExpressionTreeNode::ExpressionTreeNode(const ExpressionTreeFunctions nodeFunc,
 }
 
 ExpressionTreeNode::ExpressionTreeNode(char leftTerminal)
-: ExpressionTreeNode(nodeFunc)
+: ExpressionTreeNode()
 {
     setLeftChild(leftTerminal);
 }

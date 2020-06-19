@@ -10,6 +10,7 @@ enum ExpressionTreeFunctions {
     AND,
     OR,
     NOT,
+    XOR,
     UKNOWN
 };
 
