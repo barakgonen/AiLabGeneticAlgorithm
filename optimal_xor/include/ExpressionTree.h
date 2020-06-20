@@ -1,3 +1,6 @@
+#ifndef AILABGENETICALGORITHM_EXPRESSIONTREE_H
+#define AILABGENETICALGORITHM_EXPRESSIONTREE_H
+
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -13,6 +16,7 @@ public:
 
     std::vector<char> getAllOperands();
     std::vector<ExpressionTreeFunctions> getAllFunctions();
+    std::vector<bool> getEvaluatedResults();
 
     void print();
     void printTruthTable();
@@ -53,3 +57,5 @@ protected:
     char val;
     std::string originalExpression;
 };
+
+#endif //AILABGENETICALGORITHM_EXPRESSIONTREE_H

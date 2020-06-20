@@ -3,31 +3,23 @@
 //
 
 #include <iostream>
-#include <functional>
-#include <set>
 #include "../string_matching/include/consts.h"
 #include "../string_matching/include/StringMatchingGeneticSolver.h"
-#include <unordered_map>
 #include "../nQueens/include/nQueensGeneticSolver.h"
 #include "../string_matching/include/StringMatchingOutputFileWriter.h"
 #include "../nQueens/include/consts.h"
 #include "../nQueens/include/nQueensMinimalConflictsSolver.h"
-#include "../general_utilities/include/random_collection_generator.h"
-#include "../nQueens/include/nQueensMinimalConflictsSolver.h"
 #include "../knap_sack/include/KnapSackGeneticSolver.h"
-#include "../knap_sack/include/KnapSackStaticDataSetInitializer.h"
 #include "../nQueens/include/nQueensOutputFileWriter.h"
 #include "../bin_packing/include/BinPackingGeneticSolver.h"
 #include "../bin_packing/include/BinPackingInputReader.h"
 #include "../baldwin_effect/include/baldwin_solver.h"
-#include "../baldwin_effect/include/BaldwinIterationStruct.h"
 #include "../baldwin_effect/include/BaldwinEffectOutputFileWriter.h"
 #include "../nsga2/include/NsgaSolver.h"
 #include "../optimal_xor/include/ExpressionTree.h"
-#include "../optimal_xor/include/ExpressionTreeNode.h"
+#include "../optimal_xor/include/GeneticXorOptimizer.h"
 
 #include <chrono>
-#include <ratio>
 
 using namespace std;
 
@@ -218,8 +210,7 @@ std::string getOutputPath(int argc, char **argv) {
     return basePath;
 }
 
-std::pair<int, int> firstFit(int weight[], int n, int c)
-{
+std::pair<int, int> firstFit(int weight[], int n, int c) {
     auto startTimeStamp = std::chrono::high_resolution_clock::now();
 
     // Initialize result (Count of bins)
@@ -257,7 +248,7 @@ void runScenario(std::vector<int> weight, int binCapacity, int expectedNumberOfN
     std::pair<int, long> nSquareRes = firstFit(weight.data(), weight.size(), binCapacity);
 //    cout << "Number of bins required in First Fit : " << nSquareRes.first << ", Runtime: "
 //                                                << nSquareRes.second << " microSec" << std::endl;
-    if (nSquareRes.first != expectedNumberOfNodes){
+    if (nSquareRes.first != expectedNumberOfNodes) {
         std::cout << "=============================================================================" << std::endl;
         std::cout << "ERROR, expected: " << expectedNumberOfNodes << ", actual: " << nSquareRes.first << std::endl;
         std::cout << "=============================================================================" << std::endl;
@@ -317,18 +308,68 @@ void testBinPackingFitness(const string &basePath, int numOfIterations) {
 void assertHeightCalculationIsCorrect(const int expectedHeight, const int actualHeight) {
     if (expectedHeight != actualHeight)
         std::cout << "ERROR, expected: " << expectedHeight << ", actual:"
-                                                << actualHeight << std::endl;
+                  << actualHeight << std::endl;
 }
 
-void testTree(const std::string treeAsString, const int expectedHeight){
-    ExpressionTree exprTree{treeAsString};
+void testTree(const std::string treeAsString, const int expectedHeight, bool quietMode = false,
+              const std::vector<bool> &expectedTruthTableRes = {}) {
+    ExpressionTree exprTree{treeAsString, expectedHeight};
     assertHeightCalculationIsCorrect(expectedHeight, exprTree.getTreeHeight());
-    exprTree.print();
+    if (!quietMode)
+        exprTree.print();
 
     // Doing it because printing truth table for a tree without operands is useless
-    if (exprTree.getTreeHeight() > 1)
-        exprTree.printTruthTable();
-    std::cout << "==================" << std::endl;
+    if (exprTree.getTreeHeight() > 1) {
+        if (!quietMode)
+            exprTree.printTruthTable();
+        const auto actualTruthTableRes = exprTree.getEvaluatedResults();
+        if (actualTruthTableRes != expectedTruthTableRes) {
+            std::cout << "ERROR, evaluated results are different.. EXITING APPLICATION" << std::endl;
+            exit(-1);
+        } else {
+            if (!quietMode) {
+                std::cout << "No meaning to look at the table, it's fine!" << std::endl;
+                std::cout << "==================" << std::endl;
+            }
+        }
+    }
+
+}
+
+void runExpressionTreeTests(bool isInQuietMode) {
+    testTree("NOT", 1, isInQuietMode);
+    testTree("!", 1, isInQuietMode);
+    testTree("OR", 1, isInQuietMode);
+    testTree("||", 1, isInQuietMode);
+    testTree("AND", 1, isInQuietMode);
+    testTree("&&", 1, isInQuietMode);
+
+    testTree("A && B", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("A || b", 2, isInQuietMode, {1, 1, 1, 0});
+    testTree("A AND B", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("A OR B", 2, isInQuietMode, {1, 1, 1, 0});
+    testTree("(A) AND (B)", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) AND (b)", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("a AND (b)", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) AND b", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("a AND b", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) && (b)", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("a && (b)", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) && b", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("a && b", 2, isInQuietMode, {1, 0, 0, 0});
+    testTree("a XOR b", 2, isInQuietMode, {0, 1, 1, 0});
+    testTree("A XOR B", 2, isInQuietMode, {0, 1, 1, 0});
+
+    testTree("a && (b && c)", 3, isInQuietMode, {1, 0, 0, 0, 0, 0, 0, 0});
+    testTree("a || (b || c)", 3, isInQuietMode, {1, 1, 1, 1, 1, 1, 1, 0});
+    testTree("(a) && ((b) && ((c) || (d)))", 4, isInQuietMode, {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("(a) && ((A || B) && (!C))", 4, isInQuietMode, {0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("(a) && ((b && c) || ((A || B) && (!C)))", 6, isInQuietMode,
+             {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("a && (b && (c && (d && (e && (!f)))))", 6, isInQuietMode,
+             {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
 }
 
 int main(int argc, char *argv[]) {
@@ -340,7 +381,8 @@ int main(int argc, char *argv[]) {
         HeuristicsEnum heuristicMethod = getHeuristicToWorkWith(argc, argv);
         string workOnString = getStringToWorkWith(argc, argv);
         std::string outputPath = getOutputPath(argc, argv);
-        StringMatchingOutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod, outputPath};
+        StringMatchingOutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod,
+                                                    outputPath};
         StringMatchingGeneticSolver matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
         // Initializing each cell
         int totalRuntime = matcher.start_solve();
@@ -350,51 +392,59 @@ int main(int argc, char *argv[]) {
 
         int a = 4;
 
-    }
-    else if (labSelector == "nQueens") {
+    } else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         MutationOperator mutationOperator = getMutationOperator(argc, argv);
         int boardSize = getBoardSizeAndNumberOfQueens(argc, argv);
-        if (boardSize == 9999)
-        {
+        if (boardSize == 9999) {
             std::vector<int> staticBoardSizes = {10, 15, 20, 40, 50, 60, 70, 80, 100, 110, 120, 150};
             std::vector<nQueensSolutionData> pmxInversionresults;
             std::vector<nQueensSolutionData> pmxExchangeresults;
             std::vector<nQueensSolutionData> oxInversionresults;
             std::vector<nQueensSolutionData> oxExchangeresults;
             std::vector<nQueensSolutionData> minimalConflictsResults;
-            std::cout << "This is performance mode, generating different board maxDepth each time and collecting data" << std::endl;
+            std::cout << "This is performance mode, generating different board maxDepth each time and collecting data"
+                      << std::endl;
             int repets = 500;
-            for (int i = 0; i < repets; i++)
-            {
-                for (const int boardSize : staticBoardSizes){
+            for (int i = 0; i < repets; i++) {
+                for (const int boardSize : staticBoardSizes) {
                     NqBoard board{boardSize};
-                    nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox, MutationOperator::Inversion, true};
+                    nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox,
+                                                           MutationOperator::Inversion, true};
                     oxInversionresults.push_back(oxInversionSolver.solvePuzzle());
-                    nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox, MutationOperator::Exchange, true};
+                    nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox,
+                                                          MutationOperator::Exchange, true};
                     oxExchangeresults.push_back(oxExchangeSolver.solvePuzzle());
-                    nQueensGeneticSolver pmxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Inversion, true};
+                    nQueensGeneticSolver pmxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Pmx,
+                                                            MutationOperator::Inversion, true};
                     pmxInversionresults.push_back(pmxInversionSolver.solvePuzzle());
-                    nQueensGeneticSolver pmxExchangeSolver{board, SelectionMethod::None, CrossoverMethod::Pmx, MutationOperator::Exchange, true};
+                    nQueensGeneticSolver pmxExchangeSolver{board, SelectionMethod::None, CrossoverMethod::Pmx,
+                                                           MutationOperator::Exchange, true};
                     pmxExchangeresults.push_back(pmxExchangeSolver.solvePuzzle());
                     nQueensMinimalConflictsSolver minimalConflictsSolver{board, true};
                     minimalConflictsResults.push_back(minimalConflictsSolver.solvePuzzle());
                 }
-                std::cout << "============== " <<  i << "/" << repets << " ===========================================" << std::endl;
+                std::cout << "============== " << i << "/" << repets << " ==========================================="
+                          << std::endl;
             }
-            nQueensOutputFileWriter oxExchangeWriter{getOutputPath(argc, argv), "OX_Exchange", MutationOperator::Exchange, CrossoverMethod::Ox};
+            nQueensOutputFileWriter oxExchangeWriter{getOutputPath(argc, argv), "OX_Exchange",
+                                                     MutationOperator::Exchange, CrossoverMethod::Ox};
             oxExchangeWriter.writeToFile(oxExchangeresults);
-            nQueensOutputFileWriter oxInversionWriter{getOutputPath(argc, argv), "nQueens", MutationOperator::Inversion, CrossoverMethod::Ox};
+            nQueensOutputFileWriter oxInversionWriter{getOutputPath(argc, argv), "nQueens", MutationOperator::Inversion,
+                                                      CrossoverMethod::Ox};
             oxExchangeWriter.writeToFile(oxInversionresults);
-            nQueensOutputFileWriter pmxExchangeWriter{getOutputPath(argc, argv), "Pmx_Exchange", MutationOperator::Exchange, CrossoverMethod::Pmx};
+            nQueensOutputFileWriter pmxExchangeWriter{getOutputPath(argc, argv), "Pmx_Exchange",
+                                                      MutationOperator::Exchange, CrossoverMethod::Pmx};
             pmxExchangeWriter.writeToFile(pmxExchangeresults);
-            nQueensOutputFileWriter pmxInversionWriter{getOutputPath(argc, argv), "Pmx_Inversion", MutationOperator::Inversion, CrossoverMethod::Pmx};
+            nQueensOutputFileWriter pmxInversionWriter{getOutputPath(argc, argv), "Pmx_Inversion",
+                                                       MutationOperator::Inversion, CrossoverMethod::Pmx};
             pmxInversionWriter.writeToFile(pmxInversionresults);
-            nQueensOutputFileWriter minimalConflictsWriter{getOutputPath(argc, argv), "MinimalConflicts", MutationOperator::Inversion, CrossoverMethod::Empty};
+            nQueensOutputFileWriter minimalConflictsWriter{getOutputPath(argc, argv), "MinimalConflicts",
+                                                           MutationOperator::Inversion, CrossoverMethod::Empty};
             minimalConflictsWriter.writeToFile(minimalConflictsResults);
-        } else{
+        } else {
             NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
             nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator, false};
             geneticSolver.solvePuzzle();
@@ -402,8 +452,7 @@ int main(int argc, char *argv[]) {
             minimalConflictsSolver.solvePuzzle();
         }
 
-    }
-    else if (labSelector == "KnapSack") {
+    } else if (labSelector == "KnapSack") {
         std::cout << "You have chosen KnapSack" << std::endl;
         string basePath = getRunningPath(argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
@@ -414,7 +463,7 @@ int main(int argc, char *argv[]) {
         int passedCounter = 0;
         int c = 1;
 
-        for (i = 0; i < c; i++){
+        for (i = 0; i < c; i++) {
             for (const auto key : initializer.getPuzzlesIDs()) {
                 KnapSackGeneticSolver solver{key, initializer, selectionMethod, crossoverMethod};
                 const auto result = solver.solve();
@@ -426,10 +475,10 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
-        std::cout << "Totally solved: " << passedCounter << "/" << initializer.getPuzzlesIDs().size() * c << " puzzles!" << std::endl;
-        std::cout << "failures: "<<failures << std::endl;
-    }
-    else if (labSelector == "BinPacking") {
+        std::cout << "Totally solved: " << passedCounter << "/" << initializer.getPuzzlesIDs().size() * c << " puzzles!"
+                  << std::endl;
+        std::cout << "failures: " << failures << std::endl;
+    } else if (labSelector == "BinPacking") {
         std::cout << "You requested for bin packing solver, good luck! ;)" << std::endl;
         string basePath = getRunningPath(argv);
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
@@ -442,7 +491,7 @@ int main(int argc, char *argv[]) {
         expectedResultsKeyVal[250] = 100;
         expectedResultsKeyVal[500] = 201;
         expectedResultsKeyVal[1000] = 403;
-        for (const auto expectedKeyVal : expectedResultsKeyVal){
+        for (const auto expectedKeyVal : expectedResultsKeyVal) {
             int maxAge = 5;
             BinPackingInputReader inputReader{basePath, expectedKeyVal.first};
             BinPackingGeneticSolver binPackingGeneticSolver{inputReader.getNumberOfItems(),
@@ -457,22 +506,19 @@ int main(int argc, char *argv[]) {
                 std::cout << "ERROR, on example number: " << expectedKeyVal.first << std::endl;
             std::cout << "===========================================================" << std::endl;
         }
-    }
-    else if (labSelector == "BinPackingTestFitness") {
-        int numOfIterations=3000;
+    } else if (labSelector == "BinPackingTestFitness") {
+        int numOfIterations = 3000;
         std::cout << "You requested for testing bin packing fitness, running " << numOfIterations
-        << " times from input files located at bin_packing/static_input_files/Falkernauer*.txt" << std::endl;
+                  << " times from input files located at bin_packing/static_input_files/Falkernauer*.txt" << std::endl;
         string basePath = getRunningPath(argv);
         std::cout << "Running" << std::endl;
         testBinPackingFitness(basePath, numOfIterations);
         std::cout << "Finished, if the console looks clean, your'e good! XD" << std::endl;
-    }
-    else if (labSelector == "BaldwinEffect"){
+    } else if (labSelector == "BaldwinEffect") {
         const int numberOfIterations = getNumberOfIterations(argc, argv);
         Baldwin_Solver solver{numberOfIterations};
         solver.solve();
-    }
-    else if (labSelector == "BaldwinEffectTester"){
+    } else if (labSelector == "BaldwinEffectTester") {
         std::string outputPath = getOutputPath(argc, argv);
         BaldwinEffectOutputFileWriter outputFileWriter{outputPath};
         const int numberOfIterations = getNumberOfIterations(argc, argv);
@@ -483,61 +529,25 @@ int main(int argc, char *argv[]) {
             outputFileWriter.storeResult(results);
         }
         outputFileWriter.writeCalculatedResults();
-    }
-    else if (labSelector == "Nsga"){
+    } else if (labSelector == "Nsga") {
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         const int numberOfCuples = 5;
         NsgaSolver solver{selectionMethod, crossoverMethod, numberOfCuples};
         solver.start_solve();
-    }
-    else if (labSelector == "TestExpressionTree") {
-        testTree("NOT", 1);
-        testTree("!", 1);
-        testTree("OR", 1);
-        testTree("||", 1);
-        testTree("AND", 1);
-        testTree("&&", 1);
+    } else if (labSelector == "TestExpressionTree") {
+        runExpressionTreeTests(true);
+        // Assuming MAX_PARSE_TREE_DEPTH = 3, trying to build larger tree
+    } else if (labSelector == "OptimalXor") {
+        runExpressionTreeTests(true);
+        // User input for binary expression to optimize
+        std::string userInput = "a XOR b";
+        ExpressionTree exprTree{userInput};
 
-        testTree("A && B", 2);
-        testTree("A || b", 2);
-        testTree("A AND B", 2);
-        testTree("A OR B", 2);
-        testTree("(A) AND (B)", 2);
-        testTree("(a) AND (b)", 2);
-        testTree("a AND (b)", 2);
-        testTree("(a) AND b", 2);
-        testTree("a AND b", 2);
-        testTree("(a) && (b)", 2);
-        testTree("a && (b)", 2);
-        testTree("(a) && b", 2);
-        testTree("a && b", 2);
-        testTree("a XOR b", 2);
-        testTree("A XOR B", 2);
+        // Initialization of GeneticXorOptimizer
+        GeneticXorOptimizer geneticXorOptimizer{exprTree};
+        geneticXorOptimizer.optimizeExpression();
 
-        testTree("a && (b && c)", 3);
-        testTree("a || (b || c)", 3);
-        testTree("(a) && ((b) && ((c) || (d)))", 4);
-        testTree("(a) && ((A || B) && (!C))", 4);
-        testTree("(a) && ((b && c) || ((A || B) && (!C)))", 5);
-        testTree("a && (b && (c && (d && (e && (!f)))))", 6);
-    }
-    else if (labSelector == "OptimalXor") {
-        std::cout << "Example1: " << std::endl;
-//        ExpressionTreeNode root{ExpressionTreeFunctions::AND};
-//        root.printTree();
-//        std::cout << "Example2: " << std::endl;
-//        ExpressionTreeNode root2{'B', ExpressionTreeFunctions::AND};
-//        root2.printTree();
-//        std::cout << "Example3: " << std::endl; // with A
-//        ExpressionTreeNode root3{ExpressionTreeFunctions::AND, 'B'};
-//        root3.printTree();
-//        std::cout << "Example4: " << std::endl;
-//        ExpressionTreeNode root4{ExpressionTreeFunctions::AND, 'B', ExpressionTreeFunctions::OR};
-//        root4.printTree();
-//        std::cout << "Example5: " << std::endl; // with A & B
-//        ExpressionTreeNode root5{ExpressionTreeFunctions::AND, 'B', ExpressionTreeFunctions::OR};
-//        root5.printTree();
     }
 
     return 0;

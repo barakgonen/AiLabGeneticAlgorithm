@@ -27,4 +27,5 @@ static const std::map<std::string, ExpressionTreeFunctions> stringToExpressionTr
         std::make_pair("&&", ExpressionTreeFunctions::AND),
         std::make_pair("!", ExpressionTreeFunctions::NOT),
         std::make_pair("XOR", ExpressionTreeFunctions::XOR)};
+
 #endif //AILABGENETICALGORITHM_CONSTS_H

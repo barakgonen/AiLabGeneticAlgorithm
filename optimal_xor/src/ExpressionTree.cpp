@@ -4,6 +4,7 @@
 #include "../include/ExpressionTree.h"
 
 #include "../include/consts.h"
+#include "../include/TooLargeExpressionTreeException.h"
 
 ExpressionTree::ExpressionTree(std::string initializationExpression, const int maxHeight)
 : numberOfSpaces{static_cast<int>(1 + 2 * initializationExpression.size())}
@@ -20,6 +21,7 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
             // Found NOT
             func = stringToExpressionTreeFunc.at(std::string{originalExpression[notPos]});
             left = new ExpressionTree{originalExpression.at(1)};
+            currentHeight = 1;
         } else {
             try {
                 func = stringToExpressionTreeFunc.at(originalExpression);
@@ -32,17 +34,19 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
         // Extracting sub trees - left and right
         std::string leftSide = extractSubTree(originalExpression.substr(0, rootIndexes.first));
         if (leftSide.size() > 1)
-            left = new ExpressionTree{leftSide};
+            left = new ExpressionTree{leftSide, maxHeight};
         else
             left = new ExpressionTree{leftSide.at(0)};
         std::string rightSide = extractSubTree(originalExpression.substr(rootIndexes.second));
         if (rightSide.size() > 1)
-            right = new ExpressionTree{rightSide};
+            right = new ExpressionTree{rightSide, maxHeight};
         else
             right = new ExpressionTree{rightSide.at(0)};
         func = parseExpressionTreeFunc(originalExpression, rootIndexes.first + 1);
     }
     currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
+    if (currentHeight > maxHeight)
+        throw TooLargeExpressionTreeException{currentHeight, maxHeight};
 }
 
 ExpressionTree::ExpressionTree(char v)
@@ -166,6 +170,7 @@ ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &ope
             return std::make_unique<bool>(*leftSubtree ^ *rightSubtree);
             break;
     }
+    return {};
 }
 
 void ExpressionTree::printTableBorder(const std::vector<std::vector<std::pair<char, bool>>> &operators) {
@@ -372,4 +377,11 @@ std::pair<int, int> ExpressionTree::getRootIndexes(const std::string &initializa
         int lastSpace = initializationExpression.find_last_of(' ');
         return std::make_pair(firstSpace, lastSpace);
     }
+}
+
+std::vector<bool> ExpressionTree::getEvaluatedResults() {
+    std::vector<bool> evaluatedResults;
+    for (const auto& permutate : getAllPermutationsForOperands())
+        evaluatedResults.push_back(evaluateExpression(permutate));
+    return evaluatedResults;
 }
