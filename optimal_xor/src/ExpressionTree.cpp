@@ -118,7 +118,7 @@ void ExpressionTree::printTruthTable() {
     printTableBorder(allOperatorsPermutations);
 }
 
-bool ExpressionTree::evaluateExpression(const std::unordered_map<char, bool> &operands) {
+bool ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &operands) {
     const auto leftSubtree = evaluateExpression(operands, this->left);
     const auto rightSubtree = evaluateExpression(operands, this->right);
     switch (func) {
@@ -140,11 +140,13 @@ bool ExpressionTree::evaluateExpression(const std::unordered_map<char, bool> &op
 }
 
 std::unique_ptr<bool>
-ExpressionTree::evaluateExpression(const std::unordered_map<char, bool> &operands, const ExpressionTree *root) {
+ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &operands, const ExpressionTree *root) {
     if (root == nullptr)
         return {};
     else if (root->right == nullptr && root->left == nullptr && root->func == ExpressionTreeFunctions::UKNOWN) {
-        return std::make_unique<bool>(operands.at(root->val)); // must refactor from string to char
+        for (const auto& operand : operands)
+            if (operand.first == root->val)
+                return std::make_unique<bool>(operand.second); // must refactor from string to char
     }
     const auto leftSubtree = evaluateExpression(operands, root->left);
     const auto rightSubtree = evaluateExpression(operands, root->right);
@@ -166,7 +168,7 @@ ExpressionTree::evaluateExpression(const std::unordered_map<char, bool> &operand
     }
 }
 
-void ExpressionTree::printTableBorder(const std::vector<std::unordered_map<char, bool>> &operators) {
+void ExpressionTree::printTableBorder(const std::vector<std::vector<std::pair<char, bool>>> &operators) {
     // how many '=' needed? 4 * 2 + 1 -> for each operand + 4 * 2 + sizeOfOriginalExpression
     // operators[0].size() => number of pairs -> operators, each one of them needs (4 * 2) by const + 1 because its the size of char, +2 for | begin, | end
     for (int i = 0; i <= (operators[0].size() * ((4 * 2) + 1)) + (1 + (2 * originalExpression.size())) + 3; i++)
@@ -174,7 +176,7 @@ void ExpressionTree::printTableBorder(const std::vector<std::unordered_map<char,
     std::cout << std::endl;
 }
 
-void ExpressionTree::printTruthTableHeaderLine(const std::vector<std::unordered_map<char, bool>> &operators) {
+void ExpressionTree::printTruthTableHeaderLine(const std::vector<std::vector<std::pair<char, bool>>> &operators) {
     std::cout << "|";
     for (const auto permutation : operators[0]) {
         printExpression(permutation.first);
@@ -213,46 +215,44 @@ void ExpressionTree::printExpression(const char expr) {
     printExpression(std::string{expr});
 }
 
-std::vector<std::unordered_map<char, bool>> ExpressionTree::getAllPermutationsForOperands() {
+std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getAllPermutationsForOperands() {
     // Hard coded example
     auto operands = getAllOperands();
     return getPermutation(getAllOperands());
 }
 
-std::vector<std::unordered_map<char, bool>> ExpressionTree::getPermutation(std::vector<char> operators) {
-    std::vector<std::unordered_map<char, bool>> allOperandsPemutate;
+std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(std::vector<char> operators) {
+    std::vector<std::vector<std::pair<char, bool>>> allOperandsPemutate;
     if (operators.size() == 2) {
         const char x = operators.at(0);
         const char y = operators.at(1);
         // in case we have 2 operators, we have 4 lines
-        std::unordered_map<char, bool> lineOne;
-        lineOne[x] = true;
-        lineOne[y] = true;
-        lineOne.insert(std::make_pair(x, true));
-        lineOne.insert(std::make_pair(y, true));
+        std::vector<std::pair<char, bool>> lineOne;
+        lineOne.push_back(std::make_pair(x, true));
+        lineOne.push_back(std::make_pair(y, true));
         allOperandsPemutate.push_back(lineOne);
         // A = true B = false
-        std::unordered_map<char, bool> lineTwo;
-        lineTwo.insert(std::make_pair(x, true));
-        lineTwo.insert(std::make_pair(y, false));
+        std::vector<std::pair<char, bool>> lineTwo;
+        lineTwo.push_back(std::make_pair(x, true));
+        lineTwo.push_back(std::make_pair(y, false));
         allOperandsPemutate.push_back(lineTwo);
         // A = false B = true
-        std::unordered_map<char, bool> lineThree;
-        lineThree.insert(std::make_pair(x, false));
-        lineThree.insert(std::make_pair(y, true));
+        std::vector<std::pair<char, bool>> lineThree;
+        lineThree.push_back(std::make_pair(x, false));
+        lineThree.push_back(std::make_pair(y, true));
         allOperandsPemutate.push_back(lineThree);
         // A = false B = false
-        std::unordered_map<char, bool> lineFour;
-        lineFour.insert(std::make_pair(x, false));
-        lineFour.insert(std::make_pair(y, false));
+        std::vector<std::pair<char, bool>> lineFour;
+        lineFour.push_back(std::make_pair(x, false));
+        lineFour.push_back(std::make_pair(y, false));
         allOperandsPemutate.push_back(lineFour);
     } else {
         for (auto &per : getPermutation({operators.begin() + 1, operators.end()})) {
-            per.insert(std::make_pair(operators[0], true));
+            per.insert(per.begin(), std::make_pair(operators[0], true));
             allOperandsPemutate.push_back(per);
         }
         for (auto &per : getPermutation({operators.begin() + 1, operators.end()})) {
-            per.insert(std::make_pair(operators[0], false));
+            per.insert(per.begin(), std::make_pair(operators[0], false));
             allOperandsPemutate.push_back(per);
         }
     }

@@ -500,27 +500,27 @@ int main(int argc, char *argv[]) {
         testTree("&&", 1);
 
         testTree("A && B", 2);
-//        testTree("A || b", 2);
-//        testTree("A AND B", 2);
-//        testTree("A OR B", 2);
-//        testTree("(A) AND (B)", 2);
-//        testTree("(a) AND (b)", 2);
-//        testTree("a AND (b)", 2);
-//        testTree("(a) AND b", 2);
-//        testTree("a AND b", 2);
-//        testTree("(a) && (b)", 2);
-//        testTree("a && (b)", 2);
-//        testTree("(a) && b", 2);
-//        testTree("a && b", 2);
-//        testTree("a XOR b", 2);
-//        testTree("A XOR B", 2);
-//
-//        testTree("a && (b && c)", 3);
-//        testTree("a || (b || c)", 3);
-//        testTree("(a) && ((b) && ((c) || (d)))", 4);
-//        testTree("(a) && ((A || B) && (!C))", 4);
-//        testTree("(a) && ((b && c) || ((A || B) && (!C)))", 5);
-//        testTree("a && (b && (c && (d && (e && (!f)))))", 6);
+        testTree("A || b", 2);
+        testTree("A AND B", 2);
+        testTree("A OR B", 2);
+        testTree("(A) AND (B)", 2);
+        testTree("(a) AND (b)", 2);
+        testTree("a AND (b)", 2);
+        testTree("(a) AND b", 2);
+        testTree("a AND b", 2);
+        testTree("(a) && (b)", 2);
+        testTree("a && (b)", 2);
+        testTree("(a) && b", 2);
+        testTree("a && b", 2);
+        testTree("a XOR b", 2);
+        testTree("A XOR B", 2);
+
+        testTree("a && (b && c)", 3);
+        testTree("a || (b || c)", 3);
+        testTree("(a) && ((b) && ((c) || (d)))", 4);
+        testTree("(a) && ((A || B) && (!C))", 4);
+        testTree("(a) && ((b && c) || ((A || B) && (!C)))", 5);
+        testTree("a && (b && (c && (d && (e && (!f)))))", 6);
     }
     else if (labSelector == "OptimalXor") {
         std::cout << "Example1: " << std::endl;

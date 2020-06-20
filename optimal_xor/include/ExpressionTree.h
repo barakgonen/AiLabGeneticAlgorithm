@@ -26,17 +26,17 @@ protected:
     void printExpression(const std::string expr);
 
     bool isComplexTree(const std::string& initializationExpression);
-    bool evaluateExpression(const std::unordered_map<char, bool>& operands);
-    void printTableBorder(const std::vector<std::unordered_map<char, bool>>& operators);
+    bool evaluateExpression(const std::vector<std::pair<char, bool>>& operands);
+    void printTableBorder(const std::vector<std::vector<std::pair<char, bool>>>& operators);
 
-    void printTruthTableHeaderLine(const std::vector<std::unordered_map<char, bool>>& operators);
+    void printTruthTableHeaderLine(const std::vector<std::vector<std::pair<char, bool>>>& operators);
 
     std::vector<char> getAllOperands(ExpressionTree* root);
     std::vector<ExpressionTreeFunctions> getAllFunctions(ExpressionTree* root);
-    std::vector<std::unordered_map<char, bool>> getAllPermutationsForOperands();
-    std::vector<std::unordered_map<char, bool>> getPermutation(std::vector<char> operators);
+    std::vector<std::vector<std::pair<char, bool>>> getAllPermutationsForOperands();
+    std::vector<std::vector<std::pair<char, bool>>> getPermutation(std::vector<char> operators);
 
-    std::unique_ptr<bool> evaluateExpression(const std::unordered_map<char, bool>& operands, const ExpressionTree* root);
+    std::unique_ptr<bool> evaluateExpression(const std::vector<std::pair<char, bool>>& operands, const ExpressionTree* root);
 
     ExpressionTreeFunctions parseExpressionTreeFunc(const std::string& rawSubTree, const int rootStartIndex);
 
