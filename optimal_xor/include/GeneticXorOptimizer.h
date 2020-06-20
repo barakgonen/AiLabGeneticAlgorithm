@@ -5,7 +5,6 @@
 #ifndef AILABGENETICALGORITHM_GENETICXOROPTIMIZER_H
 #define AILABGENETICALGORITHM_GENETICXOROPTIMIZER_H
 
-
 #include "ExpressionTree.h"
 
 class GeneticXorOptimizer {
@@ -15,7 +14,14 @@ public:
 
     void optimizeExpression();
 protected:
+    void growMethod();
+    void fullMethod();
+    void init_population();
     const ExpressionTree& inputExpression;
+    const int maxDepth;
+    const int populationSize;
+    const int numberOfCitizensInPopulationGroup;
+    std::vector<std::vector<int>> populationGroups;
 };
 
 

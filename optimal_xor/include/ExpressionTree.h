@@ -10,11 +10,17 @@
 
 class ExpressionTree{
 public:
-    ExpressionTree(std::string initializationExpression, const int maxHeight = MAX_PARSE_TREE_DEPTH);
-    virtual ~ExpressionTree() = default;
-    int getTreeHeight();
+    ExpressionTree(std::string initializationExpression, const int maxDepth = MAX_PARSE_TREE_DEPTH);
 
-    std::vector<char> getAllOperands();
+    // Construction of fully generated tree, gets as parameter the depth to go down and flag indicates if node is function or terminal
+    ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth = MAX_PARSE_TREE_DEPTH);
+    virtual ~ExpressionTree() = default;
+
+    int getTreeHeight() const;
+    int getMaxDepth() const;
+    int getNumberOfOperands() const;
+
+    std::vector<char> getAllOperands() const;
     std::vector<ExpressionTreeFunctions> getAllFunctions();
     std::vector<bool> getEvaluatedResults();
 
@@ -22,7 +28,9 @@ public:
     void printTruthTable();
 
 protected:
-    ExpressionTree(char v);
+    ExpressionTree(char v, const int maxDepth);
+
+    ExpressionTreeFunctions getRandomFunc() const;
 
     int getHeight(ExpressionTree* root);
 
@@ -35,7 +43,7 @@ protected:
 
     void printTruthTableHeaderLine(const std::vector<std::vector<std::pair<char, bool>>>& operators);
 
-    std::vector<char> getAllOperands(ExpressionTree* root);
+    std::vector<char> getAllOperands(const ExpressionTree* root) const;
     std::vector<ExpressionTreeFunctions> getAllFunctions(ExpressionTree* root);
     std::vector<std::vector<std::pair<char, bool>>> getAllPermutationsForOperands();
     std::vector<std::vector<std::pair<char, bool>>> getPermutation(std::vector<char> operators);
@@ -56,6 +64,8 @@ protected:
     ExpressionTreeFunctions func;
     char val;
     std::string originalExpression;
+    const int maxDepth;
+    std::vector<char> operands;
 };
 
 #endif //AILABGENETICALGORITHM_EXPRESSIONTREE_H

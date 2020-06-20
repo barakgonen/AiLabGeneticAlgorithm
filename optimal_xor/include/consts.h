@@ -28,4 +28,12 @@ static const std::map<std::string, ExpressionTreeFunctions> stringToExpressionTr
         std::make_pair("!", ExpressionTreeFunctions::NOT),
         std::make_pair("XOR", ExpressionTreeFunctions::XOR)};
 
+static const std::map<int, ExpressionTreeFunctions> keyToExpressionFunc{
+        std::make_pair(ExpressionTreeFunctions::OR, ExpressionTreeFunctions::OR),
+        std::make_pair(ExpressionTreeFunctions::AND, ExpressionTreeFunctions::AND),
+        std::make_pair(ExpressionTreeFunctions::NOT, ExpressionTreeFunctions::NOT),
+        std::make_pair(ExpressionTreeFunctions::XOR, ExpressionTreeFunctions::XOR)};
+
+static const char EMPTY_VALUE = ' ';
+
 #endif //AILABGENETICALGORITHM_CONSTS_H

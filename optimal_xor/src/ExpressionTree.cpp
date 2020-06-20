@@ -6,13 +6,14 @@
 #include "../include/consts.h"
 #include "../include/TooLargeExpressionTreeException.h"
 
-ExpressionTree::ExpressionTree(std::string initializationExpression, const int maxHeight)
+ExpressionTree::ExpressionTree(std::string initializationExpression, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * initializationExpression.size())}
 , left{nullptr}
 , right{nullptr}
 , currentHeight{0}
 , func{ExpressionTreeFunctions::UKNOWN}
 , originalExpression{initializationExpression}
+, maxDepth{maxDepth}
 {
     auto rootIndexes = getRootIndexes(originalExpression);
     if (rootIndexes.first == -1 && rootIndexes.second == -1) {
@@ -20,11 +21,15 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
         if (notPos != std::string::npos && originalExpression.size() > 1) {
             // Found NOT
             func = stringToExpressionTreeFunc.at(std::string{originalExpression[notPos]});
-            left = new ExpressionTree{originalExpression.at(1)};
+            left = new ExpressionTree{originalExpression.at(1), maxDepth};
             currentHeight = 1;
+        } else if (initializationExpression.size() == 1 && initializationExpression != "!") {
+            currentHeight = 1;
+            val = initializationExpression.at(0);
         } else {
             try {
                 func = stringToExpressionTreeFunc.at(originalExpression);
+                val = EMPTY_VALUE;
             }
             catch (std::out_of_range &exc) {
 
@@ -34,44 +39,102 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
         // Extracting sub trees - left and right
         std::string leftSide = extractSubTree(originalExpression.substr(0, rootIndexes.first));
         if (leftSide.size() > 1)
-            left = new ExpressionTree{leftSide, maxHeight};
+            left = new ExpressionTree{leftSide, maxDepth};
         else
-            left = new ExpressionTree{leftSide.at(0)};
+            left = new ExpressionTree{leftSide.at(0), maxDepth};
         std::string rightSide = extractSubTree(originalExpression.substr(rootIndexes.second));
         if (rightSide.size() > 1)
-            right = new ExpressionTree{rightSide, maxHeight};
+            right = new ExpressionTree{rightSide, maxDepth};
         else
-            right = new ExpressionTree{rightSide.at(0)};
+            right = new ExpressionTree{rightSide.at(0), maxDepth};
         func = parseExpressionTreeFunc(originalExpression, rootIndexes.first + 1);
     }
     currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
-    if (currentHeight > maxHeight)
-        throw TooLargeExpressionTreeException{currentHeight, maxHeight};
+    if (currentHeight > maxDepth)
+        throw TooLargeExpressionTreeException{currentHeight, maxDepth};
+    operands = getAllOperands();
 }
 
-ExpressionTree::ExpressionTree(char v)
+ExpressionTree::ExpressionTree(char v, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * 1)}
 , left{nullptr}
 , right{nullptr}
 , currentHeight{0}
 , func{ExpressionTreeFunctions::UKNOWN}
 , originalExpression{v}
+, maxDepth{maxDepth}
 {
     val = v;
 }
 
-int ExpressionTree::getTreeHeight() {
+ExpressionTree::ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth)
+: numberOfSpaces{4}
+, left{nullptr}
+, right{nullptr}
+, currentHeight{0}
+, maxDepth{maxDepth}
+{
+    if (maxDepth == 1)
+    {
+        if (functionOrTerminal) {
+            // this is function generation
+            // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
+            func = keyToExpressionFunc.at(rand() % ExpressionTreeFunctions::UKNOWN);
+            val = EMPTY_VALUE;
+            if (func == ExpressionTreeFunctions::UKNOWN)
+                std::cout << "PROBLEM BRO" << std::endl;
+            originalExpression = std::string{expressionTreeFuncToString.at(func)};
+        } else {
+            val = operands.at(rand() % (operands.size() - 1)); // get random operand
+            func = ExpressionTreeFunctions::UKNOWN;
+            originalExpression = std::string{val};
+        }
+
+    } else {
+        func = keyToExpressionFunc.at(rand() % ExpressionTreeFunctions::UKNOWN);
+        val = EMPTY_VALUE;
+        if (func == ExpressionTreeFunctions::UKNOWN)
+            std::cout << "PROBLEM BRO" << std::endl;
+        left = new ExpressionTree(!functionOrTerminal, operands, maxDepth - 1);
+        right = new ExpressionTree(!functionOrTerminal, operands, maxDepth - 1);
+        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
+        originalExpression = std::string{"(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func) + " (" + right->originalExpression + ")"};
+    }
+}
+
+ExpressionTreeFunctions ExpressionTree::getRandomFunc() const {
+
+}
+int ExpressionTree::getTreeHeight() const {
     return currentHeight;
 }
 
-std::vector<char> ExpressionTree::getAllOperands() {
+int ExpressionTree::getMaxDepth() const{
+    return maxDepth;
+}
+
+int ExpressionTree::getNumberOfOperands() const{
+    return operands.size();
+}
+
+std::vector<char> ExpressionTree::getAllOperands() const {
+    return getAllOperands(this);
+}
+
+std::vector<char> ExpressionTree::getAllOperands(const ExpressionTree *root) const {
     std::vector<char> operands;
-    auto leftSide = getAllOperands(left);
-    auto rightSide = getAllOperands(right);
-    for (const auto operand : leftSide)
-        operands.push_back(operand);
-    for (const auto operand : rightSide)
-        operands.push_back(operand);
+    if (root != nullptr) {
+        if (root->left == nullptr && root->right == nullptr && root->val != EMPTY_VALUE)
+            operands.push_back(root->val);
+        else {
+            const auto lef = getAllOperands(root->left);
+            const auto right = getAllOperands(root->right);
+            for (const auto o : lef)
+                operands.push_back(o);
+            for (const auto o : right)
+                operands.push_back(o);
+        }
+    }
     return operands;
 }
 
@@ -79,9 +142,9 @@ std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions() {
     std::vector<ExpressionTreeFunctions> funcs;
     auto leftSide = getAllFunctions(left);
     auto rightSide = getAllFunctions(right);
-    funcs.push_back(func);
     for (const auto funC : leftSide)
         funcs.push_back(funC);
+    funcs.push_back(func);
     for (const auto funC : rightSide)
         funcs.push_back(funC);
     return funcs;
@@ -94,7 +157,8 @@ void ExpressionTree::print() {
     std::cout << std::endl;
     std::cout << "Used funcs are:" << std::endl;
     for (const auto v : getAllFunctions())
-        std::cout << expressionTreeFuncToString.at(v) << ", ";
+        if (v != ExpressionTreeFunctions::UKNOWN)
+            std::cout << v << ", ";
     std::cout << std::endl;
     std::cout << "Height is: " << currentHeight << std::endl;
 }
@@ -139,6 +203,11 @@ bool ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>>
             break;
         case (XOR):
             return *leftSubtree ^ *rightSubtree;
+        case (UKNOWN):
+            if (!leftSubtree.get() && !rightSubtree.get())
+                for (const auto& operand : operands)
+                    if (operand.first == this->val)
+                        return operand.second;
             break;
     }
 }
@@ -150,7 +219,7 @@ ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &ope
     else if (root->right == nullptr && root->left == nullptr && root->func == ExpressionTreeFunctions::UKNOWN) {
         for (const auto& operand : operands)
             if (operand.first == root->val)
-                return std::make_unique<bool>(operand.second); // must refactor from string to char
+                return std::make_unique<bool>(operand.second);
     }
     const auto leftSubtree = evaluateExpression(operands, root->left);
     const auto rightSubtree = evaluateExpression(operands, root->right);
@@ -175,7 +244,7 @@ ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &ope
 
 void ExpressionTree::printTableBorder(const std::vector<std::vector<std::pair<char, bool>>> &operators) {
     // how many '=' needed? 4 * 2 + 1 -> for each operand + 4 * 2 + sizeOfOriginalExpression
-    // operators[0].size() => number of pairs -> operators, each one of them needs (4 * 2) by const + 1 because its the size of char, +2 for | begin, | end
+    // operands[0].size() => number of pairs -> operands, each one of them needs (4 * 2) by const + 1 because its the size of char, +2 for | begin, | end
     for (int i = 0; i <= (operators[0].size() * ((4 * 2) + 1)) + (1 + (2 * originalExpression.size())) + 3; i++)
         std::cout << '=';
     std::cout << std::endl;
@@ -228,10 +297,21 @@ std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getAllPermutatio
 
 std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(std::vector<char> operators) {
     std::vector<std::vector<std::pair<char, bool>>> allOperandsPemutate;
-    if (operators.size() == 2) {
+    if (operators.size() == 1){
+        const char x = operators.at(0);
+        // in case we have 1 operands, we have 2 lines
+        // A = true
+        std::vector<std::pair<char, bool>> lineOne;
+        lineOne.push_back(std::make_pair(x, true));
+        allOperandsPemutate.push_back(lineOne);
+        // A = false
+        std::vector<std::pair<char, bool>> lineTwo;
+        lineTwo.push_back(std::make_pair(x, false));
+        allOperandsPemutate.push_back(lineTwo);
+    } else if (operators.size() == 2) {
         const char x = operators.at(0);
         const char y = operators.at(1);
-        // in case we have 2 operators, we have 4 lines
+        // in case we have 2 operands, we have 4 lines
         std::vector<std::pair<char, bool>> lineOne;
         lineOne.push_back(std::make_pair(x, true));
         lineOne.push_back(std::make_pair(y, true));
@@ -270,23 +350,6 @@ int ExpressionTree::getHeight(ExpressionTree *root) {
     else if (root->right == nullptr && root->left == nullptr)
         return 1;
     return getHeight(root->right) + getHeight(root->left);
-}
-
-std::vector<char> ExpressionTree::getAllOperands(ExpressionTree *root) {
-    std::vector<char> operands;
-    if (root != nullptr) {
-        if (root->left == nullptr && root->right == nullptr)
-            operands.push_back(root->val);
-        else {
-            const auto lef = getAllOperands(root->left);
-            const auto right = getAllOperands(root->right);
-            for (const auto o : lef)
-                operands.push_back(o);
-            for (const auto o : right)
-                operands.push_back(o);
-        }
-    }
-    return operands;
 }
 
 std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions(ExpressionTree *root) {
