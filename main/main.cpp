@@ -319,7 +319,7 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
         exprTree.print();
 
     // Doing it because printing truth table for a tree without operands is useless
-    if (exprTree.getTreeHeight() > 1) {
+    if (exprTree.getNumberOfOperands() > 0) {
         if (!quietMode)
             exprTree.printTruthTable();
         const auto actualTruthTableRes = exprTree.getEvaluatedResults();
@@ -336,7 +336,7 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
 
 }
 
-void runExpressionTreeTests(bool isInQuietMode) {
+void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("NOT", 1, isInQuietMode);
     testTree("!", 1, isInQuietMode);
     testTree("OR", 1, isInQuietMode);
@@ -344,6 +344,9 @@ void runExpressionTreeTests(bool isInQuietMode) {
     testTree("AND", 1, isInQuietMode);
     testTree("&&", 1, isInQuietMode);
 
+    testTree("A", 1, isInQuietMode, {1, 0});
+    testTree("B NOT", 2, isInQuietMode, {0, 1});
+    testTree("(B) NOT", 2, isInQuietMode, {0, 1});
     testTree("A && B", 2, isInQuietMode, {1, 0, 0, 0});
     testTree("A || b", 2, isInQuietMode, {1, 1, 1, 0});
     testTree("A AND B", 2, isInQuietMode, {1, 0, 0, 0});
@@ -362,15 +365,18 @@ void runExpressionTreeTests(bool isInQuietMode) {
 
     testTree("a && (b && c)", 3, isInQuietMode, {1, 0, 0, 0, 0, 0, 0, 0});
     testTree("a || (b || c)", 3, isInQuietMode, {1, 1, 1, 1, 1, 1, 1, 0});
+    testTree("((b) NOT) OR ((a) AND (b))", 3, isInQuietMode, {1,1,0,1});
     testTree("(a) && ((b) && ((c) || (d)))", 4, isInQuietMode, {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
     testTree("(a) && ((A || B) && (!C))", 4, isInQuietMode, {0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    testTree("(a) && ((b && c) || ((A || B) && (!C)))", 6, isInQuietMode,
-             {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
-              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    testTree("a && (b && (c && (d && (e && (!f)))))", 6, isInQuietMode,
-             {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+//    testTree("(a) && ((b && c) || ((A || B) && (!C)))", 6, isInQuietMode,
+//             {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+//              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+//    testTree("a && (b && (c && (d && (e && (!f)))))", 6, isInQuietMode,
+//             {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+//              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
 }
+////((b) NOT) OR ((b) OR (b))
+
 
 int main(int argc, char *argv[]) {
     string labSelector = getMethodToRun(argc, argv);
@@ -536,10 +542,9 @@ int main(int argc, char *argv[]) {
         NsgaSolver solver{selectionMethod, crossoverMethod, numberOfCuples};
         solver.start_solve();
     } else if (labSelector == "TestExpressionTree") {
-        runExpressionTreeTests(true);
-        // Assuming MAX_PARSE_TREE_DEPTH = 3, trying to build larger tree
+        runExpressionTreeTests();
     } else if (labSelector == "OptimalXor") {
-        runExpressionTreeTests(true);
+        runExpressionTreeTests(false);
         // User input for binary expression to optimize
         std::string userInput = "a XOR b";
         ExpressionTree exprTree{userInput};

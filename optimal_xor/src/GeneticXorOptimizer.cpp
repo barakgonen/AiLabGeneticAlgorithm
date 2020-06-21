@@ -5,16 +5,23 @@
 #include <iostream>
 #include "../include/GeneticXorOptimizer.h"
 
-GeneticXorOptimizer::GeneticXorOptimizer(const ExpressionTree &inputExpression)
+GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
 : inputExpression{inputExpression}
 , maxDepth{inputExpression.getMaxDepth()}
 , populationSize{maxDepth * 5}
 , numberOfCitizensInPopulationGroup{populationSize / 2}
+, target{inputExpression.getEvaluatedResults()}
+, operands{inputExpression.getAllOperands()}
 {
 }
 
 void GeneticXorOptimizer::optimizeExpression() {
     init_population();
+
+    for (int i = 0; i < 2000; i++){
+        //
+    }
+    std::cout << "V" << std::endl;
 }
 
 void GeneticXorOptimizer::init_population(){
@@ -37,15 +44,9 @@ void GeneticXorOptimizer::init_population(){
 void GeneticXorOptimizer::growMethod(){
     bool functionOrTerminal = rand() & 1;
     std::cout << "GROW " << std::boolalpha << functionOrTerminal << std::endl;
-    if (functionOrTerminal)
-    {
-        // Generating a tree with function in root
-        ExpressionTree tree{functionOrTerminal, inputExpression.getAllOperands(), maxDepth};
-        tree.printTruthTable();
-    } else{
-        // Generating a tree with operand in root{tree such as that must have just a NODE it won't be a TREE
-    }
-
+    ExpressionTree tree{functionOrTerminal, operands, maxDepth};
+    tree.printTruthTable();
+    pop.push_back(std::move(tree));
 }
 
 void GeneticXorOptimizer::fullMethod(){

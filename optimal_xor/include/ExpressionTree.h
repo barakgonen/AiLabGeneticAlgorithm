@@ -13,14 +13,14 @@ public:
     ExpressionTree(std::string initializationExpression, const int maxDepth = MAX_PARSE_TREE_DEPTH);
 
     // Construction of fully generated tree, gets as parameter the depth to go down and flag indicates if node is function or terminal
-    ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth = MAX_PARSE_TREE_DEPTH);
+    ExpressionTree(bool functionOrTerminal, const std::set<char>& operands, const int maxDepth = MAX_PARSE_TREE_DEPTH);
     virtual ~ExpressionTree() = default;
 
     int getTreeHeight() const;
     int getMaxDepth() const;
     int getNumberOfOperands() const;
 
-    std::vector<char> getAllOperands() const;
+    std::set<char> getAllOperands() const;
     std::vector<ExpressionTreeFunctions> getAllFunctions();
     std::vector<bool> getEvaluatedResults();
 
@@ -43,12 +43,12 @@ protected:
 
     void printTruthTableHeaderLine(const std::vector<std::vector<std::pair<char, bool>>>& operators);
 
-    std::vector<char> getAllOperands(const ExpressionTree* root) const;
+    std::set<char> getAllOperands(const ExpressionTree* root) const;
     std::vector<ExpressionTreeFunctions> getAllFunctions(ExpressionTree* root);
     std::vector<std::vector<std::pair<char, bool>>> getAllPermutationsForOperands();
-    std::vector<std::vector<std::pair<char, bool>>> getPermutation(std::vector<char> operators);
+    std::vector<std::vector<std::pair<char, bool>>> getPermutation(std::set<char> operators);
 
-    std::unique_ptr<bool> evaluateExpression(const std::vector<std::pair<char, bool>>& operands, const ExpressionTree* root);
+    std::unique_ptr<bool> evaluateExpression(const std::vector<std::pair<char, bool>>& operands, const ExpressionTree* root, int startIndex);
 
     ExpressionTreeFunctions parseExpressionTreeFunc(const std::string& rawSubTree, const int rootStartIndex);
 
@@ -57,7 +57,7 @@ protected:
 
     std::pair<int, int> getRootIndexes(const std::string& initializationExpression);
 
-    const int numberOfSpaces;
+    int numberOfSpaces;
     ExpressionTree* left;
     ExpressionTree* right;
     int currentHeight;
@@ -65,7 +65,7 @@ protected:
     char val;
     std::string originalExpression;
     const int maxDepth;
-    std::vector<char> operands;
+    std::set<char> operands;
 };
 
 #endif //AILABGENETICALGORITHM_EXPRESSIONTREE_H
