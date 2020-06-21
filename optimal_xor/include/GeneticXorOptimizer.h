@@ -24,7 +24,7 @@ protected:
     const int populationSize;
     const int numberOfCitizensInPopulationGroup;
     const std::vector<bool> target;
-    const std::set<char> operands;
+    const std::vector<char> operands;
     std::vector<std::vector<int>> populationGroups;
     std::vector<CalculatedExpression> pop;
 };

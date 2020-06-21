@@ -5,6 +5,7 @@
 #include "../include/ExpressionTree.h"
 
 #include "../include/consts.h"
+#include <algorithm>
 #include "../include/TooLargeExpressionTreeException.h"
 
 ExpressionTree::ExpressionTree(std::string initializationExpression, const int maxDepth)
@@ -60,7 +61,7 @@ ExpressionTree::ExpressionTree(char v, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * 1)}
 , left{nullptr}
 , right{nullptr}
-, currentHeight{0}
+, currentHeight{1}
 , func{ExpressionTreeFunctions::UKNOWN}
 , originalExpression{v}
 , maxDepth{maxDepth}
@@ -68,11 +69,12 @@ ExpressionTree::ExpressionTree(char v, const int maxDepth)
     val = v;
 }
 
-ExpressionTree::ExpressionTree(bool functionOrTerminal, const std::set<char>& operands, const int maxDepth)
+ExpressionTree::ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth)
 : left{nullptr}
 , right{nullptr}
 , currentHeight{0}
 , maxDepth{maxDepth}
+, operands{operands}
 {
     if (maxDepth <= 1)
     {
@@ -112,7 +114,7 @@ ExpressionTree::ExpressionTree(bool functionOrTerminal, const std::set<char>& op
 }
 
 ExpressionTreeFunctions ExpressionTree::getRandomFunc() const {
-
+    return ExpressionTreeFunctions::UKNOWN;
 }
 int ExpressionTree::getTreeHeight() const {
     return currentHeight;
@@ -126,25 +128,28 @@ int ExpressionTree::getNumberOfOperands() const{
     return operands.size();
 }
 
-std::set<char> ExpressionTree::getAllOperands() const {
+std::vector<char> ExpressionTree::getAllOperands() const {
     return getAllOperands(this);
 }
 
-std::set<char> ExpressionTree::getAllOperands(const ExpressionTree *root) const {
-    std::set<char> operands;
+std::vector<char> ExpressionTree::getAllOperands(const ExpressionTree *root) const {
+    std::vector<char> oper;
     if (root != nullptr) {
         if (root->left == nullptr && root->right == nullptr && root->val != EMPTY_VALUE)
-            operands.insert(root->val);
+            oper.push_back(root->val);
         else {
             const auto lef = getAllOperands(root->left);
-            const auto right = getAllOperands(root->right);
-            for (const auto o : lef)
-                operands.insert(o);
-            for (const auto o : right)
-                operands.insert(o);
+            const auto rght = getAllOperands(root->right);
+            for (const auto o : lef){
+                if (std::find(oper.begin(), oper.end(), o) == oper.end())
+                    oper.insert(oper.end(), o);
+            }
+            for (const auto o : rght)
+                if (std::find(oper.begin(), oper.end(), o) == oper.end())
+                    oper.insert(oper.end(), o);
         }
     }
-    return operands;
+    return oper;
 }
 
 std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions() {
@@ -161,11 +166,11 @@ std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions() {
 
 void ExpressionTree::print() {
     std::cout << "Used Operands are:" << std::endl;
-    for (const auto v : getAllOperands())
+    for (const auto& v : getAllOperands())
         std::cout << v << ", ";
     std::cout << std::endl;
     std::cout << "Used funcs are:" << std::endl;
-    for (const auto v : getAllFunctions())
+    for (const auto& v : getAllFunctions())
         if (v != ExpressionTreeFunctions::UKNOWN)
             std::cout << expressionTreeFuncToString.at(v) << ", ";
     std::cout << std::endl;
@@ -173,9 +178,9 @@ void ExpressionTree::print() {
 }
 
 void ExpressionTree::printTruthTable() {
-    auto allOperatorsPermutations = getAllPermutationsForOperands();
-    printTableBorder(allOperatorsPermutations);
-    printTruthTableHeaderLine(allOperatorsPermutations);
+    auto allOperatorsPermutations = getPermutation(operands);
+    printTableBorder();
+    printTruthTableHeaderLine();
     for (int line = 0; line < allOperatorsPermutations.size(); line++) {
         std::cout << "|";
         for (const auto operand : allOperatorsPermutations.at(line))
@@ -193,7 +198,7 @@ void ExpressionTree::printTruthTable() {
         }
     }
     std::cout << std::endl;
-    printTableBorder(allOperatorsPermutations);
+    printTableBorder();
 }
 
 bool ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &operands) {
@@ -259,20 +264,20 @@ ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &ope
     return {};
 }
 
-void ExpressionTree::printTableBorder(const std::vector<std::vector<std::pair<char, bool>>> &operators) {
+void ExpressionTree::printTableBorder() {
     // how many '=' needed? 4 * 2 + 1 -> for each operand + 4 * 2 + sizeOfOriginalExpression
     // operands[0].size() => number of pairs -> operands, each one of them needs (4 * 2) by const + 1 because its the size of char, +2 for | begin, | end
 //    for (int i = 0; i <= (operators[0].size() * ((4 * 2) + 1)) + (1 + (2 * originalExpression.size())) + 3; i++)
-    int numberOfCharactersToPrint = (operators[0].size() * ((4 * 2) + 1)) + (1 + (2 * originalExpression.size()));
+    int numberOfCharactersToPrint = (operands.size() * ((4 * 2) + 1)) + (1 + (2 * originalExpression.size()));
     for (int i = 0; i < numberOfCharactersToPrint; i++)
         std::cout << '=';
     std::cout << std::endl;
 }
 
-void ExpressionTree::printTruthTableHeaderLine(const std::vector<std::vector<std::pair<char, bool>>> &operators) {
+void ExpressionTree::printTruthTableHeaderLine() {
     std::cout << "|";
-    for (const auto permutation : operators[0]) {
-        printExpression(permutation.first);
+    for (const auto permutation : operands) {
+        printExpression(permutation);
     }
     printExpression(originalExpression);
 
@@ -307,13 +312,8 @@ void ExpressionTree::printExpression(const char expr) {
     printExpression(std::string{expr});
 }
 
-std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getAllPermutationsForOperands() {
-    // Hard coded example
-    auto operands = getAllOperands();
-    return getPermutation(operands);
-}
-
-std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(std::set<char> operators) {
+// TODO: refactor to std::vector<char> since the vector is initialized the same of set and takes care of duplications
+std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(const std::vector<char>& operators) {
     std::vector<std::vector<std::pair<char, bool>>> allOperandsPemutate;
     if (operators.size() == 1){
         const char x = operators.begin().operator*();
@@ -352,13 +352,16 @@ std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(s
         lineFour.push_back(std::make_pair(y, false));
         allOperandsPemutate.push_back(lineFour);
     } else {
-        std::set<char> tmp;
-        auto beg = operators.begin();
-        beg++;
-        while (beg != operators.end()){
-            tmp.insert(*beg);
-            beg++;
-        }
+        std::vector<char> tmp;
+//        tmp.insert(operators.begin(), operators.end());
+        std::copy(++operators.begin(), operators.end(), std::inserter(tmp, tmp.end()) );
+//        std::copy(operators.begin(), operators.end(), tmp.begin());
+//        auto beg = operators.begin();
+//        beg++;
+//        while (beg != operators.end()){
+//            tmp.insert(*beg);
+//            beg++;
+//        }
         for (auto &per : getPermutation(tmp)) {
             per.insert(per.begin(), std::make_pair(operators.begin().operator*(), true));
             allOperandsPemutate.push_back(per);
@@ -376,7 +379,7 @@ int ExpressionTree::getHeight(ExpressionTree *root) {
         return 0;
     else if (root->right == nullptr && root->left == nullptr)
         return 1;
-    return getHeight(root->right) + getHeight(root->left);
+    return std::max(getHeight(root->right), getHeight(root->left)) + 1;
 }
 
 std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions(ExpressionTree *root) {
@@ -473,7 +476,7 @@ std::pair<int, int> ExpressionTree::getRootIndexes(const std::string &initializa
 
 std::vector<bool> ExpressionTree::getEvaluatedResults() {
     std::vector<bool> evaluatedResults;
-    for (const auto& permutate : getAllPermutationsForOperands())
+    for (const auto& permutate : getPermutation(operands))
         evaluatedResults.push_back(evaluateExpression(permutate));
     return evaluatedResults;
 }

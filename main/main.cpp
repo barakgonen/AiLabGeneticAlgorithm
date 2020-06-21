@@ -305,16 +305,19 @@ void testBinPackingFitness(const string &basePath, int numOfIterations) {
     }
 }
 
-void assertHeightCalculationIsCorrect(const int expectedHeight, const int actualHeight) {
-    if (expectedHeight != actualHeight)
+void assertHeightCalculationIsCorrect(const int expectedHeight, const int actualHeight, bool& isFine) {
+    if (expectedHeight != actualHeight){
         std::cout << "ERROR, expected: " << expectedHeight << ", actual:"
-                  << actualHeight << std::endl;
+                << actualHeight << std::endl;
+        isFine = false;
+    }
 }
 
 void testTree(const std::string treeAsString, const int expectedHeight, bool quietMode = false,
               const std::vector<bool> &expectedTruthTableRes = {}) {
+    bool isFine = true;
     ExpressionTree exprTree{treeAsString, expectedHeight};
-    assertHeightCalculationIsCorrect(expectedHeight, exprTree.getTreeHeight());
+    assertHeightCalculationIsCorrect(expectedHeight, exprTree.getTreeHeight(), isFine);
     if (!quietMode)
         exprTree.print();
 
@@ -325,13 +328,18 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
         const auto actualTruthTableRes = exprTree.getEvaluatedResults();
         if (actualTruthTableRes != expectedTruthTableRes) {
             std::cout << "ERROR, evaluated results are different.. EXITING APPLICATION" << std::endl;
-            exit(-1);
+            isFine = false;
         } else {
             if (!quietMode) {
                 std::cout << "No meaning to look at the table, it's fine!" << std::endl;
                 std::cout << "==================" << std::endl;
             }
         }
+    }
+
+    if (!isFine){
+        std::cout << "failed parsing the following string tree: " << treeAsString << std::endl;
+        exit(-1);
     }
 
 }
@@ -343,10 +351,11 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("||", 1, isInQuietMode);
     testTree("AND", 1, isInQuietMode);
     testTree("&&", 1, isInQuietMode);
-
     testTree("A", 1, isInQuietMode, {1, 0});
+
     testTree("B NOT", 2, isInQuietMode, {0, 1});
     testTree("(B) NOT", 2, isInQuietMode, {0, 1});
+    testTree("(a) NOT", 2, isInQuietMode, {0, 1});
     testTree("A && B", 2, isInQuietMode, {1, 0, 0, 0});
     testTree("A || b", 2, isInQuietMode, {1, 1, 1, 0});
     testTree("A AND B", 2, isInQuietMode, {1, 0, 0, 0});
@@ -362,20 +371,32 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("a && b", 2, isInQuietMode, {1, 0, 0, 0});
     testTree("a XOR b", 2, isInQuietMode, {0, 1, 1, 0});
     testTree("A XOR B", 2, isInQuietMode, {0, 1, 1, 0});
+    testTree("(b) OR (b)", 2, isInQuietMode, {1, 0});
 
     testTree("a && (b && c)", 3, isInQuietMode, {1, 0, 0, 0, 0, 0, 0, 0});
     testTree("a || (b || c)", 3, isInQuietMode, {1, 1, 1, 1, 1, 1, 1, 0});
-    testTree("((b) NOT) OR ((a) AND (b))", 3, isInQuietMode, {1,1,0,1});
+    testTree("((b) NOT) OR ((a) AND (b))", 3, isInQuietMode, {1,0,1,1});
+    testTree("((b) NOT) OR ((b) OR (b))", 3, isInQuietMode, {1, 1});
+
     testTree("(a) && ((b) && ((c) || (d)))", 4, isInQuietMode, {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
     testTree("(a) && ((A || B) && (!C))", 4, isInQuietMode, {0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-//    testTree("(a) && ((b && c) || ((A || B) && (!C)))", 6, isInQuietMode,
-//             {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
-//              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-//    testTree("a && (b && (c && (d && (e && (!f)))))", 6, isInQuietMode,
-//             {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("(a) && ((b && c) || ((A || B) && (!C)))", 5, isInQuietMode,
+             {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("a && (b && (c && (d && (e && (!f)))))", 7, isInQuietMode,
+             {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+    // Simple XOR equivalent
+    testTree("(A && (!B)) OR ((!A) AND (B))", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A && (!B)) OR ((!A) AND B)", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("((A) && (!B)) OR ((!A) && B)", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("((A) AND (!B)) || ((!A) && B)", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A OR B) AND ((!A) OR (!B))", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A || B) && ((!A) OR (!B))", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A OR B) AND ((A AND B) NOT)", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A OR B) AND ((A AND B) !)", 4, isInQuietMode, {0, 1, 1, 0});
 }
-////((b) NOT) OR ((b) OR (b))
 
 
 int main(int argc, char *argv[]) {
@@ -544,10 +565,10 @@ int main(int argc, char *argv[]) {
     } else if (labSelector == "TestExpressionTree") {
         runExpressionTreeTests();
     } else if (labSelector == "OptimalXor") {
-        runExpressionTreeTests(false);
+        runExpressionTreeTests(true);
         // User input for binary expression to optimize
         std::string userInput = "a XOR b";
-        ExpressionTree exprTree{userInput};
+        ExpressionTree exprTree{userInput, 5};
 
         // Initialization of GeneticXorOptimizer
         GeneticXorOptimizer geneticXorOptimizer{exprTree};

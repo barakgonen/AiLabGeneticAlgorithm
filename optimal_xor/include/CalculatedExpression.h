@@ -17,6 +17,10 @@ public:
     , calculatedResult{calculatedTree.getEvaluatedResults()}
     {}
 
+    std::vector<bool> getCalculatedResult() const{
+        return calculatedResult;
+    }
+
 protected:
     std::vector<bool> calculatedResult;
 };

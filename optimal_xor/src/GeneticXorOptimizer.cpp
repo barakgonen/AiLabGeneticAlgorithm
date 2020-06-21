@@ -18,10 +18,18 @@ GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
 void GeneticXorOptimizer::optimizeExpression() {
     init_population();
 
-    for (int i = 0; i < 2000; i++){
-        //
+    int numberOfChecks = 0;
+    for (int i = 0; i < pop.size(); i++){
+        const auto& citizen = pop.at(i);
+        if (citizen.getCalculatedResult() == target)
+        {
+            std::cout << "FOUND IT!" << std::endl;
+            break;
+        }
+        else
+            numberOfChecks++;
     }
-    std::cout << "V" << std::endl;
+    std::cout << "number of checks is: " << numberOfChecks << ", pop size: " << pop.size() << std::endl;
 }
 
 void GeneticXorOptimizer::init_population(){
@@ -43,13 +51,13 @@ void GeneticXorOptimizer::init_population(){
 
 void GeneticXorOptimizer::growMethod(){
     bool functionOrTerminal = rand() & 1;
-    std::cout << "GROW " << std::boolalpha << functionOrTerminal << std::endl;
+//    std::cout << "GROW " << std::boolalpha << functionOrTerminal << std::endl;
     ExpressionTree tree{functionOrTerminal, operands, maxDepth};
-    tree.printTruthTable();
+//    tree.printTruthTable();
     pop.push_back(std::move(tree));
 }
 
 void GeneticXorOptimizer::fullMethod(){
-    std::cout << "FuLL" << std::endl;
+//    std::cout << "FuLL" << std::endl;
 
 }
