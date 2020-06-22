@@ -14,14 +14,22 @@ class CalculatedExpression : public GeneticAlgorithmBaseStruct{
 public:
     CalculatedExpression(ExpressionTree&& calculatedTree)
     : GeneticAlgorithmBaseStruct{}
-    , calculatedResult{calculatedTree.getEvaluatedResults()}
+    , expressionTree{calculatedTree}
     {}
 
-    std::vector<bool> getCalculatedResult() const{
-        return calculatedResult;
+    std::vector<bool> getCalculatedResult() const {
+        return expressionTree.getEvaluatedResults();
+    }
+
+    void printTruthTable() const {
+        expressionTree.printTruthTable();
+    }
+
+    int getNumberOfLogicalGates() const {
+        return expressionTree.getAllFunctions().size();
     }
 
 protected:
-    std::vector<bool> calculatedResult;
+    const ExpressionTree expressionTree;
 };
 #endif //AILABGENETICALGORITHM_CALCULATEDEXPRESSION_H

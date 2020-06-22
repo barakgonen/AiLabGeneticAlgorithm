@@ -383,9 +383,11 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("(a) && ((b && c) || ((A || B) && (!C)))", 5, isInQuietMode,
              {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("(((((b) AND (b)) NOT) OR (((a) NOT) OR ((b) OR (a)))) NOT) OR (((((b) OR (b)) AND ((b) AND (b))) NOT) NOT)", 6, isInQuietMode, {1, 1, 0, 0});
     testTree("a && (b && (c && (d && (e && (!f)))))", 7, isInQuietMode,
              {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+
 
     // Simple XOR equivalent
     testTree("(A && (!B)) OR ((!A) AND (B))", 4, isInQuietMode, {0, 1, 1, 0});
@@ -396,6 +398,9 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("(A || B) && ((!A) OR (!B))", 4, isInQuietMode, {0, 1, 1, 0});
     testTree("(A OR B) AND ((A AND B) NOT)", 4, isInQuietMode, {0, 1, 1, 0});
     testTree("(A OR B) AND ((A AND B) !)", 4, isInQuietMode, {0, 1, 1, 0});
+
+    testTree("(((((b) OR (a)) NOT) OR (((a) AND (a)) AND ((b) AND (b)))) OR ((((b) OR (a)) AND ((a) OR (b))) AND (((a) AND (b)) AND ((a) NOT)))) NOT", 6, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((((b) NOT) AND ((b) OR (b))) OR (((a) OR (b)) NOT)) NOT) AND (((((b) AND (a)) NOT) AND (((b) OR (a)) OR ((b) NOT))) OR ((((a) OR (a)) NOT) AND (((b) NOT) OR ((a) AND (a)))))", 6, isInQuietMode, {0, 1, 1, 0});
 }
 
 

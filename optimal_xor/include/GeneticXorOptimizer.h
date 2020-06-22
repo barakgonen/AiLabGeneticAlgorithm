@@ -19,6 +19,11 @@ protected:
     void growMethod();
     void fullMethod();
     void init_population();
+
+    // Those methods should override infra's
+    void calculate_fitness();
+    void sort_pop();
+
     const ExpressionTree& inputExpression;
     const int maxDepth;
     const int populationSize;
@@ -27,6 +32,8 @@ protected:
     const std::vector<char> operands;
     std::vector<std::vector<int>> populationGroups;
     std::vector<CalculatedExpression> pop;
+    const int numberOfTrues;
+    const int numberOfFalses;
 };
 
 

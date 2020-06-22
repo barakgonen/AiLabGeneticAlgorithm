@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 #include "../include/GeneticXorOptimizer.h"
 
 GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
@@ -12,24 +13,40 @@ GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
 , numberOfCitizensInPopulationGroup{populationSize / 2}
 , target{inputExpression.getEvaluatedResults()}
 , operands{inputExpression.getAllOperands()}
+, numberOfTrues{std::count(target.begin(), target.end(), true)}
+, numberOfFalses{std::count(target.begin(), target.end(), false)}
 {
 }
 
 void GeneticXorOptimizer::optimizeExpression() {
     init_population();
+    int indexInPopulateion;
+    std::pair<int, int> indexAndLogicalGates = std::make_pair(0, 13);
 
     int numberOfChecks = 0;
-    for (int i = 0; i < pop.size(); i++){
-        const auto& citizen = pop.at(i);
+    for (indexInPopulateion = 0; indexInPopulateion < pop.size(); indexInPopulateion++){
+        calculate_fitness();
+        sort_pop();
+        const auto citizen = pop.at(indexInPopulateion);
         if (citizen.getCalculatedResult() == target)
         {
-            std::cout << "FOUND IT!" << std::endl;
-            break;
+            std::cout << "FOUND Potential!" << std::endl;
+            if (indexAndLogicalGates.second > citizen.getNumberOfLogicalGates()){
+                indexAndLogicalGates.second = citizen.getNumberOfLogicalGates();
+                indexAndLogicalGates.first = indexInPopulateion;
+            }
+            citizen.printTruthTable();
+//            break;
         }
         else
             numberOfChecks++;
+        // mate
+        // mutate
     }
     std::cout << "number of checks is: " << numberOfChecks << ", pop size: " << pop.size() << std::endl;
+    const auto& representation = pop.at(indexAndLogicalGates.first);
+    representation.printTruthTable();
+    std::cout << "Number of logical gates: " << representation.getNumberOfLogicalGates() << std::endl;
 }
 
 void GeneticXorOptimizer::init_population(){
@@ -50,14 +67,46 @@ void GeneticXorOptimizer::init_population(){
 }
 
 void GeneticXorOptimizer::growMethod(){
+    int treesMaxDepth = rand() % maxDepth + 1;
     bool functionOrTerminal = rand() & 1;
-//    std::cout << "GROW " << std::boolalpha << functionOrTerminal << std::endl;
     ExpressionTree tree{functionOrTerminal, operands, maxDepth};
 //    tree.printTruthTable();
     pop.push_back(std::move(tree));
 }
 
 void GeneticXorOptimizer::fullMethod(){
-//    std::cout << "FuLL" << std::endl;
+    bool functionOrTerminal = rand() & 1;
+//    std::cout << "FULL " /*<< std::boolalpha << functionOrTerminal*/ << std::endl;
+    ExpressionTree tree{functionOrTerminal, operands, maxDepth};
+//    tree.printTruthTable();
+    pop.push_back(std::move(tree));
 
+}
+
+void GeneticXorOptimizer::calculate_fitness() {
+    // Iterating for each citizen
+    for (auto& citizen : pop) {
+        double fitnessVal = 0;
+        const auto& citizenCalculatedResult = citizen.getCalculatedResult();
+        for (int index = 0; index < citizenCalculatedResult.size(); index++){
+            if (citizenCalculatedResult.at(index) == target.at(index))
+                fitnessVal += 2;
+            else
+                fitnessVal -= 1;
+        }
+        if (fitnessVal > 0){
+            // Trying - there are more correct than incorrect add another dimension - number of true & false
+            int currNumberOfTrue = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), true);
+            int currNumberOfFalse = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), false);
+            if (currNumberOfFalse == numberOfFalses && currNumberOfTrue == numberOfTrues)
+                fitnessVal += 3;
+        }
+
+    }
+}
+
+void GeneticXorOptimizer::sort_pop() {
+//    std::sort(pop.begin(),
+//            pop.end(),
+//            [](const CalculatedExpression& x, const CalculatedExpression& y){ return x.fitnessVal < y.fitnessVal;});
 }

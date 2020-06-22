@@ -17,44 +17,38 @@ public:
     ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth = MAX_PARSE_TREE_DEPTH);
     virtual ~ExpressionTree() = default;
 
-    int getTreeHeight() const;
     int getMaxDepth() const;
+    int getTreeHeight() const;
     int getNumberOfOperands() const;
-
     std::vector<char> getAllOperands() const;
-    std::vector<ExpressionTreeFunctions> getAllFunctions();
-    std::vector<bool> getEvaluatedResults();
+    std::vector<bool> getEvaluatedResults() const;
+    std::vector<ExpressionTreeFunctions> getAllFunctions() const;
 
-    void print();
-    void printTruthTable();
+    void print() const;
+    void printTruthTable() const;
 
 protected:
     ExpressionTree(char v, const int maxDepth);
-
     ExpressionTreeFunctions getRandomFunc() const;
 
-    int getHeight(ExpressionTree* root);
+    void printTableBorder() const;
+    void printTruthTableHeaderLine() const;
+    void printExpression(const char expr) const;
+    void printExpression(const std::string& expr) const;
+    std::string extractSubTree(const std::string& rawSubTree) const;
+    bool isComplexTree(const std::string& initializationExpression) const;
 
-    void printExpression(const char expr);
-    void printExpression(const std::string expr);
-
-    bool isComplexTree(const std::string& initializationExpression);
-    bool evaluateExpression(const std::vector<std::pair<char, bool>>& operands);
-    void printTableBorder();
-
-    void printTruthTableHeaderLine();
-
+    bool evaluateExpression(const std::vector<std::pair<char, bool>>& operands) const ;
+    int getHeight(ExpressionTree* root) const;
     std::vector<char> getAllOperands(const ExpressionTree* root) const;
-    std::vector<ExpressionTreeFunctions> getAllFunctions(ExpressionTree* root);
-    std::vector<std::vector<std::pair<char, bool>>> getPermutation(const std::vector<char>& operators);
+    std::vector<ExpressionTreeFunctions> getAllFunctions(ExpressionTree* root) const;
+    std::pair<int, int> getRootIndexes(const std::string& initializationExpression) const;
 
-    std::unique_ptr<bool> evaluateExpression(const std::vector<std::pair<char, bool>>& operands, const ExpressionTree* root, int startIndex);
+    std::vector<std::vector<std::pair<char, bool>>> getPermutation(const std::vector<char>& operators) const;
+
+    std::unique_ptr<bool> evaluateExpression(const std::vector<std::pair<char, bool>>& operands, const ExpressionTree* root, int startIndex) const;
 
     ExpressionTreeFunctions parseExpressionTreeFunc(const std::string& rawSubTree, const int rootStartIndex);
-
-    std::string extractSubTree(std::string rawSubTree);
-
-    std::pair<int, int> getRootIndexes(const std::string& initializationExpression);
 
     int numberOfSpaces;
     ExpressionTree* left;
