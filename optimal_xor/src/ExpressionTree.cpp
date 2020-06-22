@@ -37,6 +37,19 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
 
             }
         }
+        currentDepth = getDepth(this);
+    }
+    else if (isSingleOperandExpression(originalExpression)) {
+        int spaceIndex = originalExpression.find(' ');
+        func = stringToExpressionTreeFunc.at(originalExpression.substr(spaceIndex + 1));
+        // if operator is between () need to simplify it
+        if (originalExpression.at(0) == '(' && originalExpression.at(2) == ')' && 3 == spaceIndex)
+            // almost sure index 1 is the variable
+            left = new ExpressionTree{originalExpression.at(1), maxDepth};
+        else
+            left = new ExpressionTree{originalExpression.at(0), maxDepth};
+        currentDepth = 1;
+        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
     } else {
         // Extracting sub trees - left and right
         std::string leftSide = extractSubTree(originalExpression.substr(0, rootIndexes.first));
@@ -51,7 +64,11 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
             right = new ExpressionTree{rightSide.at(0), maxDepth};
         func = parseExpressionTreeFunc(originalExpression, rootIndexes.first + 1);
     }
-    currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
+    // Setting the height manually, because in cases such the root is a function, it's height is still 0
+    if (left == nullptr && right == nullptr)
+        currentHeight = 0;
+    else
+        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
     if (currentHeight > maxDepth)
         throw TooLargeExpressionTreeException{currentHeight, maxDepth};
     operands = getAllOperands();
@@ -61,7 +78,7 @@ ExpressionTree::ExpressionTree(char v, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * 1)}
 , left{nullptr}
 , right{nullptr}
-, currentHeight{1}
+, currentHeight{0}
 , func{ExpressionTreeFunctions::UKNOWN}
 , originalExpression{v}
 , maxDepth{maxDepth}
@@ -110,6 +127,48 @@ ExpressionTree::ExpressionTree(bool functionOrTerminal, const std::vector<char>&
         originalExpression = std::string{"(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func)
                                          + ((right != nullptr ? " (" + right->originalExpression + ")" : ""))};
         numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
+        if (currentHeight > maxDepth)
+            throw TooLargeExpressionTreeException{currentHeight, maxDepth};
+    }
+}
+
+ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxDepth)
+: ExpressionTree{operands, maxDepth, 0}
+{
+}
+
+// Ctor for full method
+ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxDepth, const int currentDepth)
+: left{nullptr}
+, right{nullptr}
+, currentHeight{0}
+, maxDepth{maxDepth}
+, operands{operands}
+, currentDepth{currentDepth}
+{
+    if (currentDepth == maxDepth){
+        // Should set the kids values as leafs TERMINAL
+        val = *(select_randomly(operands.begin(), operands.end()));
+        func = ExpressionTreeFunctions::UKNOWN;
+        originalExpression = std::string{val};
+    } else{
+        // Should set as function
+        // this is function generation
+        // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
+        func = select_randomly(keyToExpressionFunc.begin(), keyToExpressionFunc.end())->second;
+        if (func == ExpressionTreeFunctions::UKNOWN)
+            std::cout << "PROBLEM BRO" << std::endl;
+
+        val = EMPTY_VALUE;
+        left = new ExpressionTree(operands, maxDepth, currentDepth + 1);
+        if (func != ExpressionTreeFunctions::NOT)
+            right = new ExpressionTree(operands, maxDepth, currentDepth  + 1);
+        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
+        originalExpression = std::string{"(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func)
+                                         + ((right != nullptr ? " (" + right->originalExpression + ")" : ""))};
+        numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
+        if (currentHeight > maxDepth)
+            throw TooLargeExpressionTreeException{currentHeight, maxDepth};
     }
 }
 
@@ -175,6 +234,7 @@ void ExpressionTree::print() const {
             std::cout << expressionTreeFuncToString.at(v) << ", ";
     std::cout << std::endl;
     std::cout << "Height is: " << currentHeight << std::endl;
+    std::cout << "Tree depth is: " << currentDepth << std::endl;
 }
 
 void ExpressionTree::printTruthTable() const {
@@ -366,10 +426,8 @@ std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(c
 }
 
 int ExpressionTree::getHeight(ExpressionTree *root) const {
-    if (root == nullptr)
+    if (root == nullptr || (root->right == nullptr && root->left == nullptr))
         return 0;
-    else if (root->right == nullptr && root->left == nullptr)
-        return 1;
     return std::max(getHeight(root->right), getHeight(root->left)) + 1;
 }
 
@@ -470,4 +528,26 @@ std::vector<bool> ExpressionTree::getEvaluatedResults() const {
     for (const auto& permutate : getPermutation(operands))
         evaluatedResults.push_back(evaluateExpression(permutate));
     return evaluatedResults;
+}
+
+int ExpressionTree::getCurrentDepth() const {
+    return currentDepth;
+}
+
+int ExpressionTree::getDepth(ExpressionTree* root) const
+{
+    if (root == nullptr || root->left == nullptr && root->right == nullptr)
+        return 0;
+    else
+        return std::max(getDepth(root->right), getDepth(root->left)) + 1;
+}
+
+bool ExpressionTree::isSingleOperandExpression(const std::string &initializationExpression) const {
+    bool spacesValidation = std::count(initializationExpression.begin(), initializationExpression.end(), ' ') == 1;
+    // Just not can be relevant
+    std::string function = initializationExpression.substr(initializationExpression.find(' ') + 1);
+    // Checking like that becase if the function is NOT just space validation is relevant
+    if (function == "NOT")
+        return spacesValidation;
+    return false;
 }

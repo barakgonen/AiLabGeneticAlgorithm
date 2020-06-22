@@ -9,7 +9,7 @@
 GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
 : inputExpression{inputExpression}
 , maxDepth{inputExpression.getMaxDepth()}
-, populationSize{maxDepth * 5}
+, populationSize{30000} // assume it full binary tree with DEPTH = n, calculate number of leafs + number of inner nodes!
 , numberOfCitizensInPopulationGroup{populationSize / 2}
 , target{inputExpression.getEvaluatedResults()}
 , operands{inputExpression.getAllOperands()}
@@ -24,18 +24,20 @@ void GeneticXorOptimizer::optimizeExpression() {
     std::pair<int, int> indexAndLogicalGates = std::make_pair(0, 13);
 
     int numberOfChecks = 0;
-    for (indexInPopulateion = 0; indexInPopulateion < pop.size(); indexInPopulateion++){
+    for (indexInPopulateion = 0; indexInPopulateion < pop.size(); indexInPopulateion++) {
         calculate_fitness();
         sort_pop();
         const auto citizen = pop.at(indexInPopulateion);
         if (citizen.getCalculatedResult() == target)
         {
-            std::cout << "FOUND Potential!" << std::endl;
             if (indexAndLogicalGates.second > citizen.getNumberOfLogicalGates()){
                 indexAndLogicalGates.second = citizen.getNumberOfLogicalGates();
                 indexAndLogicalGates.first = indexInPopulateion;
+                std::cout << "BEST IS: " << std::endl;
+                int num = citizen.getNumberOfLogicalGates();
+                citizen.printTruthTable();
+                std::cout << "num of logical gates: " << num << std::endl;
             }
-            citizen.printTruthTable();
 //            break;
         }
         else
@@ -49,7 +51,7 @@ void GeneticXorOptimizer::optimizeExpression() {
     std::cout << "Number of logical gates: " << representation.getNumberOfLogicalGates() << std::endl;
 }
 
-void GeneticXorOptimizer::init_population(){
+void GeneticXorOptimizer::init_population() {
     std::cout << "need to initialize population in size of: " << populationSize << std::endl;
     std::cout << "According to the algorithm, we need to devide the population to parts: a total of maxDepth - 1 parts: " << maxDepth -1 << "parts in our case" << std::endl;
     for (int groupId = 0; groupId < maxDepth - 1; groupId++)
@@ -66,7 +68,7 @@ void GeneticXorOptimizer::init_population(){
     }
 }
 
-void GeneticXorOptimizer::growMethod(){
+void GeneticXorOptimizer::growMethod() {
     int treesMaxDepth = rand() % maxDepth + 1;
     bool functionOrTerminal = rand() & 1;
     ExpressionTree tree{functionOrTerminal, operands, maxDepth};
@@ -74,10 +76,9 @@ void GeneticXorOptimizer::growMethod(){
     pop.push_back(std::move(tree));
 }
 
-void GeneticXorOptimizer::fullMethod(){
-    bool functionOrTerminal = rand() & 1;
+void GeneticXorOptimizer::fullMethod() {
 //    std::cout << "FULL " /*<< std::boolalpha << functionOrTerminal*/ << std::endl;
-    ExpressionTree tree{functionOrTerminal, operands, maxDepth};
+    ExpressionTree tree{operands, maxDepth};
 //    tree.printTruthTable();
     pop.push_back(std::move(tree));
 

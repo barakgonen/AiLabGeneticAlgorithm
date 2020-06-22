@@ -15,9 +15,11 @@ public:
 
     // Construction of fully generated tree, gets as parameter the depth to go down and flag indicates if node is function or terminal
     ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth = MAX_PARSE_TREE_DEPTH);
+    ExpressionTree(const std::vector<char>& operands, const int maxDepth);
     virtual ~ExpressionTree() = default;
 
     int getMaxDepth() const;
+    int getCurrentDepth() const;
     int getTreeHeight() const;
     int getNumberOfOperands() const;
     std::vector<char> getAllOperands() const;
@@ -28,8 +30,10 @@ public:
     void printTruthTable() const;
 
 protected:
+    bool isSingleOperandExpression(const std::string& initializationExpression) const;
     ExpressionTree(char v, const int maxDepth);
     ExpressionTreeFunctions getRandomFunc() const;
+    ExpressionTree(const std::vector<char>& operands, const int maxDepth, const int currentDepth);
 
     void printTableBorder() const;
     void printTruthTableHeaderLine() const;
@@ -40,6 +44,7 @@ protected:
 
     bool evaluateExpression(const std::vector<std::pair<char, bool>>& operands) const ;
     int getHeight(ExpressionTree* root) const;
+    int getDepth(ExpressionTree* root) const;
     std::vector<char> getAllOperands(const ExpressionTree* root) const;
     std::vector<ExpressionTreeFunctions> getAllFunctions(ExpressionTree* root) const;
     std::pair<int, int> getRootIndexes(const std::string& initializationExpression) const;
@@ -54,6 +59,7 @@ protected:
     ExpressionTree* left;
     ExpressionTree* right;
     int currentHeight;
+    int currentDepth;
     ExpressionTreeFunctions func;
     char val;
     std::string originalExpression;

@@ -305,10 +305,9 @@ void testBinPackingFitness(const string &basePath, int numOfIterations) {
     }
 }
 
-void assertHeightCalculationIsCorrect(const int expectedHeight, const int actualHeight, bool& isFine) {
-    if (expectedHeight != actualHeight){
-        std::cout << "ERROR, expected: " << expectedHeight << ", actual:"
-                << actualHeight << std::endl;
+void assertPropertyCalculatedCorrectly(const int expected, const int actual, bool& isFine) {
+    if (expected != actual){
+        std::cout << "ERROR, expected: " << expected << ", actual:" << actual << std::endl;
         isFine = false;
     }
 }
@@ -317,7 +316,8 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
               const std::vector<bool> &expectedTruthTableRes = {}) {
     bool isFine = true;
     ExpressionTree exprTree{treeAsString, expectedHeight};
-    assertHeightCalculationIsCorrect(expectedHeight, exprTree.getTreeHeight(), isFine);
+    assertPropertyCalculatedCorrectly(expectedHeight, exprTree.getTreeHeight(), isFine);
+//    assertPropertyCalculatedCorrectly(0, exprTree.getCurrentDepth(), isFine);
     if (!quietMode)
         exprTree.print();
 
@@ -341,66 +341,96 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
         std::cout << "failed parsing the following string tree: " << treeAsString << std::endl;
         exit(-1);
     }
-
 }
 
 void runExpressionTreeTests(bool isInQuietMode = false) {
-    testTree("NOT", 1, isInQuietMode);
-    testTree("!", 1, isInQuietMode);
-    testTree("OR", 1, isInQuietMode);
-    testTree("||", 1, isInQuietMode);
-    testTree("AND", 1, isInQuietMode);
-    testTree("&&", 1, isInQuietMode);
-    testTree("A", 1, isInQuietMode, {1, 0});
+    testTree("NOT", 0, isInQuietMode);
+    testTree("!", 0, isInQuietMode);
+    testTree("OR", 0, isInQuietMode);
+    testTree("||", 0, isInQuietMode);
+    testTree("AND", 0, isInQuietMode);
+    testTree("&&", 0, isInQuietMode);
 
-    testTree("B NOT", 2, isInQuietMode, {0, 1});
-    testTree("(B) NOT", 2, isInQuietMode, {0, 1});
-    testTree("(a) NOT", 2, isInQuietMode, {0, 1});
-    testTree("A && B", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("A || b", 2, isInQuietMode, {1, 1, 1, 0});
-    testTree("A AND B", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("A OR B", 2, isInQuietMode, {1, 1, 1, 0});
-    testTree("(A) AND (B)", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("(a) AND (b)", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("a AND (b)", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("(a) AND b", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("a AND b", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("(a) && (b)", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("a && (b)", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("(a) && b", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("a && b", 2, isInQuietMode, {1, 0, 0, 0});
-    testTree("a XOR b", 2, isInQuietMode, {0, 1, 1, 0});
-    testTree("A XOR B", 2, isInQuietMode, {0, 1, 1, 0});
-    testTree("(b) OR (b)", 2, isInQuietMode, {1, 0});
+    testTree("A", 0, isInQuietMode, {1, 0});
 
-    testTree("a && (b && c)", 3, isInQuietMode, {1, 0, 0, 0, 0, 0, 0, 0});
-    testTree("a || (b || c)", 3, isInQuietMode, {1, 1, 1, 1, 1, 1, 1, 0});
-    testTree("((b) NOT) OR ((a) AND (b))", 3, isInQuietMode, {1,0,1,1});
-    testTree("((b) NOT) OR ((b) OR (b))", 3, isInQuietMode, {1, 1});
+    testTree("B NOT", 1, isInQuietMode, {0, 1});
+    testTree("(B) NOT", 1, isInQuietMode, {0, 1});
+    testTree("(a) NOT", 1, isInQuietMode, {0, 1});
+    testTree("A && B", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("A || b", 1, isInQuietMode, {1, 1, 1, 0});
+    testTree("A AND B", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("A OR B", 1, isInQuietMode, {1, 1, 1, 0});
+    testTree("(A) AND (B)", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) AND (b)", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("a AND (b)", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) AND b", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("a AND b", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) && (b)", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("a && (b)", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("(a) && b", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("a && b", 1, isInQuietMode, {1, 0, 0, 0});
+    testTree("a XOR b", 1, isInQuietMode, {0, 1, 1, 0});
+    testTree("A XOR B", 1, isInQuietMode, {0, 1, 1, 0});
+    testTree("(b) OR (b)", 1, isInQuietMode, {1, 0});
 
-    testTree("(a) && ((b) && ((c) || (d)))", 4, isInQuietMode, {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    testTree("(a) && ((A || B) && (!C))", 4, isInQuietMode, {0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    testTree("(a) && ((b && c) || ((A || B) && (!C)))", 5, isInQuietMode,
+    testTree("(A AND B) AND (A NOT)", 2, isInQuietMode, {0, 0, 0, 0});
+    testTree("a && (b && c)", 2, isInQuietMode, {1, 0, 0, 0, 0, 0, 0, 0});
+    testTree("a || (b || c)", 2, isInQuietMode, {1, 1, 1, 1, 1, 1, 1, 0});
+    testTree("((b) NOT) OR ((a) AND (b))", 2, isInQuietMode, {1,0,1,1});
+    testTree("((b) NOT) OR ((b) OR (b))", 2, isInQuietMode, {1, 1});
+    testTree("((a) OR (b)) NOT", 2, isInQuietMode, {0, 0, 0, 1});
+
+    testTree("(a) && ((b) && ((c) || (d)))", 3, isInQuietMode, {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("(a) && ((A || B) && (!C))", 3, isInQuietMode, {0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+    testTree("(a) && ((b && c) || ((A || B) && (!C)))", 4, isInQuietMode,
              {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    testTree("(((((b) AND (b)) NOT) OR (((a) NOT) OR ((b) OR (a)))) NOT) OR (((((b) OR (b)) AND ((b) AND (b))) NOT) NOT)", 6, isInQuietMode, {1, 1, 0, 0});
-    testTree("a && (b && (c && (d && (e && (!f)))))", 7, isInQuietMode,
+    testTree("(((((b) AND (b)) NOT) OR (((a) NOT) OR ((b) OR (a)))) NOT) OR (((((b) OR (b)) AND ((b) AND (b))) NOT) NOT)", 5, isInQuietMode, {1, 1, 0, 0});
+    testTree("a && (b && (c && (d && (e && (!f)))))", 6, isInQuietMode,
              {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
 
 
     // Simple XOR equivalent
-    testTree("(A && (!B)) OR ((!A) AND (B))", 4, isInQuietMode, {0, 1, 1, 0});
-    testTree("(A && (!B)) OR ((!A) AND B)", 4, isInQuietMode, {0, 1, 1, 0});
-    testTree("((A) && (!B)) OR ((!A) && B)", 4, isInQuietMode, {0, 1, 1, 0});
-    testTree("((A) AND (!B)) || ((!A) && B)", 4, isInQuietMode, {0, 1, 1, 0});
-    testTree("(A OR B) AND ((!A) OR (!B))", 4, isInQuietMode, {0, 1, 1, 0});
-    testTree("(A || B) && ((!A) OR (!B))", 4, isInQuietMode, {0, 1, 1, 0});
-    testTree("(A OR B) AND ((A AND B) NOT)", 4, isInQuietMode, {0, 1, 1, 0});
-    testTree("(A OR B) AND ((A AND B) !)", 4, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A && (!B)) OR ((!A) AND (B))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A && (!B)) OR ((!A) AND B)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("((A) && (!B)) OR ((!A) && B)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("((A) AND (!B)) || ((!A) && B)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A OR B) AND ((!A) OR (!B))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A || B) && ((!A) OR (!B))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A OR B) AND ((A AND B) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(A OR B) AND ((A AND B) !)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) AND (b)) NOT) AND (((a) OR (b)) OR ((a) AND (b)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) AND (b)) NOT) AND (((b) AND (b)) OR ((a) AND (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) AND (a)) NOT) AND (((a) OR (b)) OR ((a) AND (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) AND (a)) NOT) AND (((a) AND (b)) OR ((a) OR (b)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) OR (b)) OR ((a) AND (b))) AND (((a) AND (b)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) OR (b)) OR ((b) AND (b))) AND (((a) AND (b)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) AND (b)) NOT) AND (((b) OR (a)) OR ((b) AND (b)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) OR (a)) OR ((a) OR (a))) AND (((a) AND (b)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) AND (a)) NOT) AND (((b) OR (a)) OR ((a) AND (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) NOT) AND ((a) OR (b))) OR (((a) OR (b)) AND ((b) NOT))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) AND (b)) NOT) AND (((a) AND (b)) OR ((a) OR (b)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) AND (a)) NOT) AND (((b) AND (b)) OR ((a) AND (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) AND (a)) OR ((b) OR (a))) AND (((a) AND (b)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) AND (b)) NOT) AND (((b) AND (b)) OR ((a) OR (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) OR (b)) AND ((a) NOT)) OR (((b) NOT) AND ((a) OR (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) AND (b)) NOT) AND (((b) OR (a)) OR ((b) AND (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) NOT) OR ((b) NOT)) AND (((b) OR (a)) OR ((b) AND (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) NOT) AND ((b) OR (a))) OR (((a) OR (a)) AND ((b) NOT))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) NOT) OR ((b) NOT)) AND (((a) OR (a)) OR ((b) OR (b)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) NOT) OR ((a) NOT)) AND (((a) AND (a)) OR ((b) OR (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) OR (a)) AND ((a) NOT)) OR (((b) NOT) AND ((a) AND (a)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) OR (a)) OR ((b) AND (a))) AND (((b) AND (a)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) OR (a)) OR ((b) AND (b))) AND (((b) AND (a)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) AND (a)) NOT) AND (((a) OR (b)) OR ((a) AND (b)))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) OR (a)) AND ((b) OR (a))) AND (((b) AND (a)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((a) NOT) AND ((b) OR (b))) OR (((b) OR (a)) AND ((b) NOT))", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) AND (b)) OR ((b) OR (a))) AND (((a) AND (b)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((b) NOT) AND ((b) OR (a))) OR (((a) NOT) AND ((b) AND (b)))", 3, isInQuietMode, {0, 1, 1, 0});
 
-    testTree("(((((b) OR (a)) NOT) OR (((a) AND (a)) AND ((b) AND (b)))) OR ((((b) OR (a)) AND ((a) OR (b))) AND (((a) AND (b)) AND ((a) NOT)))) NOT", 6, isInQuietMode, {0, 1, 1, 0});
-    testTree("(((((b) NOT) AND ((b) OR (b))) OR (((a) OR (b)) NOT)) NOT) AND (((((b) AND (a)) NOT) AND (((b) OR (a)) OR ((b) NOT))) OR ((((a) OR (a)) NOT) AND (((b) NOT) OR ((a) AND (a)))))", 6, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((((b) OR (a)) NOT) OR (((a) AND (a)) AND ((b) AND (b)))) OR ((((b) OR (a)) AND ((a) OR (b))) AND (((a) AND (b)) AND ((a) NOT)))) NOT", 5, isInQuietMode, {0, 1, 1, 0});
+    testTree("(((((b) NOT) AND ((b) OR (b))) OR (((a) OR (b)) NOT)) NOT) AND (((((b) AND (a)) NOT) AND (((b) OR (a)) OR ((b) NOT))) OR ((((a) OR (a)) NOT) AND (((b) NOT) OR ((a) AND (a)))))", 5, isInQuietMode, {0, 1, 1, 0});
 }
 
 
@@ -573,7 +603,7 @@ int main(int argc, char *argv[]) {
         runExpressionTreeTests(true);
         // User input for binary expression to optimize
         std::string userInput = "a XOR b";
-        ExpressionTree exprTree{userInput, 5};
+        ExpressionTree exprTree{userInput, 3};
 
         // Initialization of GeneticXorOptimizer
         GeneticXorOptimizer geneticXorOptimizer{exprTree};
