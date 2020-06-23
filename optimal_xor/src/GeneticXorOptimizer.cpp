@@ -6,49 +6,72 @@
 #include <algorithm>
 #include "../include/GeneticXorOptimizer.h"
 
+#include <limits.h>
+
 GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
-: inputExpression{inputExpression}
+: AbstractGeneticSolver<CalculatedExpression>(SelectionMethod::Tournament, CrossoverMethod::Pmx, 5000, 5, 0.1, 10)
+, inputExpression{inputExpression}
 , maxDepth{inputExpression.getMaxDepth()}
-, populationSize{30000} // assume it full binary tree with DEPTH = n, calculate number of leafs + number of inner nodes!
 , numberOfCitizensInPopulationGroup{populationSize / 2}
 , target{inputExpression.getEvaluatedResults()}
 , operands{inputExpression.getAllOperands()}
 , numberOfTrues{std::count(target.begin(), target.end(), true)}
 , numberOfFalses{std::count(target.begin(), target.end(), false)}
 {
+    std::cout << "Original expression is: " << std::endl;
+    inputExpression.printTruthTable();
 }
 
 void GeneticXorOptimizer::optimizeExpression() {
+    clock_t t, totalTicks = 0;
+    srand(unsigned(time(NULL)));
+    auto startTimeStamp = std::chrono::high_resolution_clock::now();
     init_population();
     int indexInPopulateion;
-    std::pair<int, int> indexAndLogicalGates = std::make_pair(0, 13);
-
+    int minimalLogicalGates = INT_MAX;
     int numberOfChecks = 0;
-    for (indexInPopulateion = 0; indexInPopulateion < pop.size(); indexInPopulateion++) {
+    int bestCounter = 0;
+
+    t = clock();
+
+    for (indexInPopulateion = 0; indexInPopulateion < population.size(); indexInPopulateion++) {
         calculate_fitness();
-        sort_pop();
-        const auto citizen = pop.at(indexInPopulateion);
-        if (citizen.getCalculatedResult() == target)
+        sort_population_by_fitnes();
+        print_best();                       // print the best one
+        double averageFitnessValue = get_average_fitness();
+        double standardDeviation = get_standard_deviation(averageFitnessValue);
+
+        if (population.front().getCalculatedResult() == target)
         {
-            if (indexAndLogicalGates.second > citizen.getNumberOfLogicalGates()){
-                indexAndLogicalGates.second = citizen.getNumberOfLogicalGates();
-                indexAndLogicalGates.first = indexInPopulateion;
-                std::cout << "BEST IS: " << std::endl;
-                int num = citizen.getNumberOfLogicalGates();
-                citizen.printTruthTable();
-                std::cout << "num of logical gates: " << num << std::endl;
+            const auto& citizen = population.front();
+            const auto numberOfLogicalGates = citizen.getNumberOfLogicalGates();
+            if (minimalLogicalGates > numberOfLogicalGates){
+                minimalLogicalGates = numberOfLogicalGates;
+                bestCounter = 0;
             }
-//            break;
-        }
-        else
+            else{
+                bestCounter++;
+            }
+        } else{
             numberOfChecks++;
-        // mate
-        // mutate
+        }
+        if (population.front().fitnessVal == 0 || bestCounter == 5) {
+            break;
+        }
+
+        specis = mate(); // mate the population together
+        swap();        // swap buffers
+        t = clock();
     }
-    std::cout << "number of checks is: " << numberOfChecks << ", pop size: " << pop.size() << std::endl;
-    const auto& representation = pop.at(indexAndLogicalGates.first);
+    auto endTimeStamp = std::chrono::high_resolution_clock::now();
+    auto numberOfMillis =  std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp).count();
+    std::cout << "End of execution:" << std::endl;
+    std::cout << "number of checks is: " << numberOfChecks << ", pop size: " << population.size() << std::endl;
+    std::cout << "BEST IS: " << std::endl;
+    const auto& representation = population.front();
     representation.printTruthTable();
     std::cout << "Number of logical gates: " << representation.getNumberOfLogicalGates() << std::endl;
+    std::cout << "Total time is: " << numberOfMillis << " millis" << std::endl;
 }
 
 void GeneticXorOptimizer::init_population() {
@@ -69,45 +92,88 @@ void GeneticXorOptimizer::init_population() {
 }
 
 void GeneticXorOptimizer::growMethod() {
-    int treesMaxDepth = rand() % maxDepth + 1;
-    bool functionOrTerminal = rand() & 1;
-    ExpressionTree tree{functionOrTerminal, operands, maxDepth};
-//    tree.printTruthTable();
-    pop.push_back(std::move(tree));
+    ExpressionTree tree{operands, InitializationMethod::Grow, 0, maxDepth};
+//    population.push_back(std::make_unique<CalculatedExpression>(tree));
+    population.push_back(tree);
+    buffer.push_back(tree);
 }
 
 void GeneticXorOptimizer::fullMethod() {
-//    std::cout << "FULL " /*<< std::boolalpha << functionOrTerminal*/ << std::endl;
     ExpressionTree tree{operands, maxDepth};
-//    tree.printTruthTable();
-    pop.push_back(std::move(tree));
-
+//    population.push_back(std::make_unique<CalculatedExpression>(tree));
+    population.push_back(tree);
+    buffer.push_back(tree);
 }
 
 void GeneticXorOptimizer::calculate_fitness() {
-    // Iterating for each citizen
-    for (auto& citizen : pop) {
+    // our target is to be with value of 0!
+    // for each case we for in-matching we have fees!
+    // starting of very greedy look, number of variables, if it's not the same, moving on
+    for (auto& citizen : population) {
+//        citizen.printTruthTable();
         double fitnessVal = 0;
-        const auto& citizenCalculatedResult = citizen.getCalculatedResult();
-        for (int index = 0; index < citizenCalculatedResult.size(); index++){
-            if (citizenCalculatedResult.at(index) == target.at(index))
-                fitnessVal += 2;
-            else
-                fitnessVal -= 1;
-        }
-        if (fitnessVal > 0){
-            // Trying - there are more correct than incorrect add another dimension - number of true & false
-            int currNumberOfTrue = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), true);
-            int currNumberOfFalse = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), false);
-            if (currNumberOfFalse == numberOfFalses && currNumberOfTrue == numberOfTrues)
-                fitnessVal += 3;
+        if (citizen.getNumberOfOperands() != inputExpression.getNumberOfOperands())
+            fitnessVal = INT_MAX;
+        else {
+//            // for each mistake, reducing 5 points
+            const auto citizenCalculatedResult = citizen.getCalculatedResult();
+            for (int index = 0; index < citizenCalculatedResult.size(); index++){
+                if (citizenCalculatedResult.at(index) != target.at(index))
+                    fitnessVal += 5;
+            }
+//            // means all answers correct!
+            if (fitnessVal == 0){
+                // Trying - there are more correct than incorrect add another dimension - number of true & false
+                int currNumberOfTrue = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), true);
+                int currNumberOfFalse = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), false);
+                if (currNumberOfFalse == numberOfFalses && currNumberOfTrue == numberOfTrues){
+                    fitnessVal = 1;
+                    fitnessVal *= citizen.getNumberOfLogicalGates();
+                }
+                else{
+                    // penalty, if we missed it.. it should not get here
+                    fitnessVal += 10;
+                }
+            }
         }
 
+        citizen.fitnessVal = fitnessVal;
     }
 }
 
-void GeneticXorOptimizer::sort_pop() {
-//    std::sort(pop.begin(),
-//            pop.end(),
-//            [](const CalculatedExpression& x, const CalculatedExpression& y){ return x.fitnessVal < y.fitnessVal;});
+std::string GeneticXorOptimizer::getBestGene() const {
+    return std::string();
+}
+
+void GeneticXorOptimizer::resetCitizenProps(CalculatedExpression &citizen) {
+
+}
+
+void GeneticXorOptimizer::setCitizenProps(CalculatedExpression &citizen) {
+
+}
+
+int GeneticXorOptimizer::start_solve() {
+    return 0;
+}
+
+void GeneticXorOptimizer::print_results() {
+
+}
+
+void GeneticXorOptimizer::calc_fitness() {
+
+}
+
+void GeneticXorOptimizer::mutate(CalculatedExpression &member) {
+
+}
+
+int GeneticXorOptimizer::calculateDistanceBetweenTwoCitizens(const CalculatedExpression &citizenOne,
+                                                             const CalculatedExpression &citizenTwo) {
+    return 0;
+}
+
+void GeneticXorOptimizer::handle_specific_elitism(const int index) {
+
 }

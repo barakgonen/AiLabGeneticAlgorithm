@@ -6,15 +6,17 @@
 #include <unordered_map>
 #include <memory>
 #include <unordered_set>
+#include <experimental/random>
 #include "ExpressionTreeFunctions.h"
 #include "consts.h"
+#include "InitializationMethod.h"
 
 class ExpressionTree{
 public:
     ExpressionTree(std::string initializationExpression, const int maxDepth = MAX_PARSE_TREE_DEPTH);
 
     // Construction of fully generated tree, gets as parameter the depth to go down and flag indicates if node is function or terminal
-    ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth = MAX_PARSE_TREE_DEPTH);
+    ExpressionTree(const std::vector<char>& operands, const InitializationMethod initializationMethod, const int currentDepth = 0, const int maxDepth = MAX_PARSE_TREE_DEPTH);
     ExpressionTree(const std::vector<char>& operands, const int maxDepth);
     virtual ~ExpressionTree() = default;
 
@@ -25,9 +27,31 @@ public:
     std::vector<char> getAllOperands() const;
     std::vector<bool> getEvaluatedResults() const;
     std::vector<ExpressionTreeFunctions> getAllFunctions() const;
-
+    std::string getOriginalExpr()const{return originalExpression;};
     void print() const;
     void printTruthTable() const;
+
+    void treeCrossover(ExpressionTree& other, int depth){
+        if (currentDepth == depth && other.currentDepth == depth){
+            // Were in the correct depth
+            if (currentDepth == 0 && other.currentDepth == 0){
+                // need to preform root change
+                if (func != ExpressionTreeFunctions::UKNOWN && other.func != ExpressionTreeFunctions::UKNOWN){
+                    // swappings terminals
+                    std::swap(this->func, other.func);
+                }
+                else if (this->val== EMPTY_VALUE && other.val == EMPTY_VALUE) {
+                    std::swap(this->val, other.val);
+                }
+            }
+        }
+        else{
+            std::cout << "TO BE CONTINUED" << std::endl;
+
+        }
+
+        operands = getAllOperands();
+    }
 
 protected:
     bool isSingleOperandExpression(const std::string& initializationExpression) const;
@@ -63,8 +87,11 @@ protected:
     ExpressionTreeFunctions func;
     char val;
     std::string originalExpression;
-    const int maxDepth;
+    int maxDepth;
     std::vector<char> operands;
+
+    void growInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod,
+                   const int maxDepth);
 };
 
 #endif //AILABGENETICALGORITHM_EXPRESSIONTREE_H

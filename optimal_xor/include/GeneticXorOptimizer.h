@@ -8,13 +8,37 @@
 #include <set>
 #include "ExpressionTree.h"
 #include "CalculatedExpression.h"
+#include <AbstractGeneticSolver.h>
 
-class GeneticXorOptimizer {
+using Expr = std::unique_ptr<CalculatedExpression>;
+
+class GeneticXorOptimizer : public AbstractGeneticSolver<CalculatedExpression>{
 public:
     GeneticXorOptimizer(ExpressionTree& inputExpression);
     virtual ~GeneticXorOptimizer() = default;
 
     void optimizeExpression();
+
+    std::string getBestGene() const override;
+
+    void resetCitizenProps(CalculatedExpression &citizen) override;
+
+    void setCitizenProps(CalculatedExpression &citizen) override;
+
+    int start_solve() override;
+
+    void print_results() override;
+
+    void calc_fitness() override;
+
+    void mutate(CalculatedExpression &member) override;
+
+    int calculateDistanceBetweenTwoCitizens(const CalculatedExpression &citizenOne,
+                                            const CalculatedExpression &citizenTwo) override;
+
+protected:
+    void handle_specific_elitism(const int index) override;
+
 protected:
     void growMethod();
     void fullMethod();
@@ -22,16 +46,13 @@ protected:
 
     // Those methods should override infra's
     void calculate_fitness();
-    void sort_pop();
 
     const ExpressionTree& inputExpression;
     const int maxDepth;
-    const int populationSize;
     const int numberOfCitizensInPopulationGroup;
     const std::vector<bool> target;
     const std::vector<char> operands;
     std::vector<std::vector<int>> populationGroups;
-    std::vector<CalculatedExpression> pop;
     const int numberOfTrues;
     const int numberOfFalses;
 };

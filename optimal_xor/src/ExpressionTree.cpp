@@ -7,6 +7,8 @@
 #include "../include/consts.h"
 #include <algorithm>
 #include "../include/TooLargeExpressionTreeException.h"
+#include <experimental/random>
+
 
 ExpressionTree::ExpressionTree(std::string initializationExpression, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * initializationExpression.size())}
@@ -72,6 +74,7 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
     if (currentHeight > maxDepth)
         throw TooLargeExpressionTreeException{currentHeight, maxDepth};
     operands = getAllOperands();
+    currentDepth = currentHeight - maxDepth;
 }
 
 ExpressionTree::ExpressionTree(char v, const int maxDepth)
@@ -86,49 +89,60 @@ ExpressionTree::ExpressionTree(char v, const int maxDepth)
     val = v;
 }
 
-ExpressionTree::ExpressionTree(bool functionOrTerminal, const std::vector<char>& operands, const int maxDepth)
+ExpressionTree::ExpressionTree(const std::vector<char>& operands, const InitializationMethod initializationMethod, const int currentDepth, const int maxDepth)
 : left{nullptr}
 , right{nullptr}
-, currentHeight{0}
+, currentDepth{currentDepth}
 , maxDepth{maxDepth}
-, operands{operands}
-{
-    if (maxDepth <= 1)
-    {
-        if (functionOrTerminal) {
+, operands{operands} {
+    if (initializationMethod == InitializationMethod::Grow) {
+        growInitMethod(operands, initializationMethod, maxDepth);
+    }
+    // Setting the height manually, because in cases such the root is a function, it's height is still 0
+    if (left == nullptr && right == nullptr)
+        currentHeight = 0;
+    else
+        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
+}
+
+void ExpressionTree::growInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod, const int maxDepth) {
+    // According to lesson - each branch might have different depth, while it's less that maxDepth
+    if (currentDepth < maxDepth){
+        int branchDepth = std::experimental::randint(0, maxDepth);
+        bool terminalOrFunction = std::experimental::randint(0, 1);
+        if (terminalOrFunction) {
+            // terminal
+            val = *(select_randomly(operands.begin(), operands.end()));
+            func = UKNOWN;
+            originalExpression = std::string{val};
+            ExpressionTree::operands.clear();
+            ExpressionTree::operands.push_back(val);
+            numberOfSpaces = 4 * 2 + 1;
+        } else {
+            //function
             // this is function generation
             // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
             func = select_randomly(keyToExpressionFunc.begin(), keyToExpressionFunc.end())->second;
-            if (func == ExpressionTreeFunctions::UKNOWN)
+            if (func == UKNOWN)
                 std::cout << "PROBLEM BRO" << std::endl;
 
             val = EMPTY_VALUE;
-            left = new ExpressionTree(!functionOrTerminal, operands, maxDepth - 1);
-            if (func != ExpressionTreeFunctions::NOT)
-                right = new ExpressionTree(!functionOrTerminal, operands, maxDepth - 1);
+            left = new ExpressionTree(operands, initializationMethod, currentDepth + 1, maxDepth);
+            if (func != NOT)
+                right = new ExpressionTree(operands, initializationMethod, currentDepth + 1, maxDepth);
             currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
-            originalExpression = std::string{"(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func)
-                                             + ((right != nullptr ? " (" + right->originalExpression + ")" : ""))};
+            originalExpression = std::string{
+                    "(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func)
+                    + ((right != nullptr ? " (" + right->originalExpression + ")" : ""))};
             numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
-        } else {
-            val = *(select_randomly(operands.begin(), operands.end()));
-            func = ExpressionTreeFunctions::UKNOWN;
-            originalExpression = std::string{val};
         }
-    } else {
-        func = select_randomly(keyToExpressionFunc.begin(), keyToExpressionFunc.end())->second;
-        if (func == ExpressionTreeFunctions::UKNOWN)
-            std::cout << "PROBLEM BRO" << std::endl;
-        val = EMPTY_VALUE;
-        left = new ExpressionTree(!functionOrTerminal, operands, maxDepth - 1);
-        if (func != ExpressionTreeFunctions::NOT)
-            right = new ExpressionTree(!functionOrTerminal, operands, maxDepth - 1);
-        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
-        originalExpression = std::string{"(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func)
-                                         + ((right != nullptr ? " (" + right->originalExpression + ")" : ""))};
-        numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
-        if (currentHeight > maxDepth)
-            throw TooLargeExpressionTreeException{currentHeight, maxDepth};
+    } else if (currentDepth == maxDepth){ // need to set terminals}
+        val = *(select_randomly(operands.begin(), operands.end()));
+        func = UKNOWN;
+        originalExpression = std::string{val};
+        ExpressionTree::operands.clear();
+        ExpressionTree::operands.push_back(val);
+        numberOfSpaces = 4 * 2 + 1;
     }
 }
 

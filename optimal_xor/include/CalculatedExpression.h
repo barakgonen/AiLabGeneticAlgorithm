@@ -12,7 +12,7 @@
 // This class represents expression in "cheaper" way, a few bits only
 class CalculatedExpression : public GeneticAlgorithmBaseStruct{
 public:
-    CalculatedExpression(ExpressionTree&& calculatedTree)
+    CalculatedExpression(const ExpressionTree& calculatedTree)
     : GeneticAlgorithmBaseStruct{}
     , expressionTree{calculatedTree}
     {}
@@ -26,10 +26,26 @@ public:
     }
 
     int getNumberOfLogicalGates() const {
-        return expressionTree.getAllFunctions().size();
+        auto funcs = expressionTree.getAllFunctions();
+
+        return funcs.size();
     }
 
+    int getNumberOfOperands() const {
+        return expressionTree.getNumberOfOperands();
+    }
+
+    std::string getOriginalExpr() const {
+        return expressionTree.getOriginalExpr();
+    }
+
+    ExpressionTree getExpressionTree() const{
+        return expressionTree;
+    }
+
+
+    std::vector<int> items;
 protected:
-    const ExpressionTree expressionTree;
+    ExpressionTree expressionTree;
 };
 #endif //AILABGENETICALGORITHM_CALCULATEDEXPRESSION_H

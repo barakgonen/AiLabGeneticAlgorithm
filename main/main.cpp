@@ -343,6 +343,41 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
     }
 }
 
+void testSwappingTrees(const std::string& treeOne, const int treeOneMaxDepth, std::vector<bool> treeOneExpectedResult,
+                       const std::string& treeTwo, const int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedResult,
+                       const int swapDepth){
+
+    std::cout << "BEFORE: " << std::endl;
+    ExpressionTree a{treeOne, treeOneMaxDepth};
+    ExpressionTree b{treeTwo, treeTwoMaxDepth};
+    std::cout << "Tree A: " << std::endl;
+    a.printTruthTable();
+    std::cout << "Tree B: " << std::endl;
+    b.printTruthTable();
+    a.treeCrossover(b, swapDepth);
+    std::cout << "AFTER: " << std::endl;
+    std::cout << "Tree A: " << std::endl;
+    a.printTruthTable();
+    std::cout << "Tree B: " << std::endl;
+    b.printTruthTable();
+    const auto actualTreeAcalculatedResults = a.getEvaluatedResults();
+    const auto actualTreeBcalculatedResults = b.getEvaluatedResults();
+    bool isOK = true;
+    if (actualTreeAcalculatedResults != treeOneExpectedResult){
+        std::cout << "results comparison for tree one has failed :(" << std::endl;
+        isOK = false;
+    }
+    if (actualTreeBcalculatedResults != treeTwoExpectedResult){
+        std::cout << "results comparison for tree one has failed :(" << std::endl;
+        isOK = false;
+    }
+    if (!isOK)
+    {
+        std::cout << "Tree swap failed.. " << std::endl;
+        exit(-1);
+    }
+}
+
 void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("NOT", 0, isInQuietMode);
     testTree("!", 0, isInQuietMode);
@@ -431,6 +466,9 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
 
     testTree("(((((b) OR (a)) NOT) OR (((a) AND (a)) AND ((b) AND (b)))) OR ((((b) OR (a)) AND ((a) OR (b))) AND (((a) AND (b)) AND ((a) NOT)))) NOT", 5, isInQuietMode, {0, 1, 1, 0});
     testTree("(((((b) NOT) AND ((b) OR (b))) OR (((a) OR (b)) NOT)) NOT) AND (((((b) AND (a)) NOT) AND (((b) OR (a)) OR ((b) NOT))) OR ((((a) OR (a)) NOT) AND (((b) NOT) OR ((a) AND (a)))))", 5, isInQuietMode, {0, 1, 1, 0});
+
+    testTree("((((C) NOT) OR ((B) AND (C))) NOT) OR ((((B) OR (A)) NOT) OR (((C) NOT) NOT))", 4, isInQuietMode, {1, 1, 1, 1, 0, 0, 0, 1});
+    testTree("((((B) OR (C)) AND ((B) NOT)) OR (((B) AND (A)) NOT)) AND ((((C) AND (A)) OR ((C) OR (B))) AND (((B) AND (A)) OR ((A) AND (C))))", 4, isInQuietMode, {0, 0, 0, 0, 1, 0, 0, 0});
 }
 
 
@@ -599,6 +637,18 @@ int main(int argc, char *argv[]) {
         solver.start_solve();
     } else if (labSelector == "TestExpressionTree") {
         runExpressionTreeTests();
+
+        testSwappingTrees("((A) && (!B)) OR ((!A) && B)", 3, {0,0,0,0},
+                          "((A) || (!B)) AND ((!A) && A)", 3, {1,1,0,1},
+                          0);
+
+
+        std::string tree1 = "((((C) NOT) OR ((B) AND (C))) NOT) OR ((((B) OR (A)) NOT) OR (((C) NOT) NOT))";
+        std::string tree2 = "(A AND B) OR ((B) NOT)";
+        ExpressionTree expr{tree1, 4};
+        ExpressionTree expr2{tree2, 3};
+        expr2.printTruthTable();
+        expr.treeCrossover(expr2, 2);
     } else if (labSelector == "OptimalXor") {
         runExpressionTreeTests(true);
         // User input for binary expression to optimize
