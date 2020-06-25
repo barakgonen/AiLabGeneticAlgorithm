@@ -215,7 +215,8 @@ std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions() const {
     auto rightSide = getAllFunctions(right);
     for (const auto funC : leftSide)
         funcs.push_back(funC);
-    funcs.push_back(func);
+    if (func != UKNOWN)
+        funcs.push_back(func);
     for (const auto funC : rightSide)
         funcs.push_back(funC);
     return funcs;
@@ -438,9 +439,11 @@ std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions(ExpressionT
         const auto right = getAllFunctions(root->right);
         funcs.push_back(root->func);
         for (const auto o : lef)
-            funcs.push_back(o);
+            if (o != UKNOWN)
+                funcs.push_back(o);
         for (const auto o : right)
-            funcs.push_back(o);
+            if (o != UKNOWN)
+                funcs.push_back(o);
     }
     return funcs;
 }

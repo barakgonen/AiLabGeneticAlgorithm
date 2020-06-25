@@ -22,6 +22,8 @@
 
 #include <chrono>
 
+bool runOptimizationCase(std::pair<std::string, int> expressionToTest, int maxDepth);
+
 using namespace std;
 
 // .exe path always is the fist program argument
@@ -474,14 +476,33 @@ int main(int argc, char *argv[]) {
     } else if (labSelector == "OptimalXor") {
         runExpressionTreeTests(true);
         // User input for binary expression to optimize
-        std::string userInput = "a XOR b";
-        ExpressionTree exprTree{userInput, 0, 3};
+        int failures = 0;
+        std::map<std::string, int> expressionsToTest;
+        expressionsToTest.insert(std::make_pair("a", 0));
+        expressionsToTest.insert(std::make_pair("a && a", 0));
+        expressionsToTest.insert(std::make_pair("((B) NOT) NOT", 0));
 
-        // Initialization of GeneticXorOptimizer
-        GeneticXorOptimizer geneticXorOptimizer{exprTree};
-        geneticXorOptimizer.optimizeExpression();
+        expressionsToTest.insert(std::make_pair("A AND B", 1));
+        expressionsToTest.insert(std::make_pair("!a", 1));
+        expressionsToTest.insert(std::make_pair("a OR b", 1));
 
+        expressionsToTest.insert(std::make_pair("a XOR b", 4));
+        for (const auto expr : expressionsToTest)
+            if (!runOptimizationCase(expr, 3))
+                failures++;
+        std::cout << "Ran: " << expressionsToTest.size() << " tests. Summary: Passed: "
+                    << (expressionsToTest.size() - failures) << ", Failed: " << failures << std::endl;
     }
-
     return 0;
+}
+
+bool runOptimizationCase(std::pair<std::string, int> expressionToTest, int maxDepth) {
+    std::cout << "===============================" << std::endl;
+    ExpressionTree exprTree{expressionToTest.first, 0, maxDepth};
+
+    // Initialization of GeneticXorOptimizer
+    GeneticXorOptimizer geneticXorOptimizer{exprTree};
+    if (geneticXorOptimizer.optimizeExpression() != expressionToTest.second)
+        return false;
+    return true;
 }

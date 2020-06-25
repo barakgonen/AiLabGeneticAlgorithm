@@ -18,28 +18,23 @@ GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
 , numberOfTrues{std::count(target.begin(), target.end(), true)}
 , numberOfFalses{std::count(target.begin(), target.end(), false)}
 {
-    std::cout << "Original expression is: " << std::endl;
-    inputExpression.printTruthTable();
 }
 
-void GeneticXorOptimizer::optimizeExpression() {
+int GeneticXorOptimizer::optimizeExpression() {
     clock_t t, totalTicks = 0;
     srand(unsigned(time(NULL)));
     auto startTimeStamp = std::chrono::high_resolution_clock::now();
+
     init_population();
-    int indexInPopulateion;
     int minimalLogicalGates = INT_MAX;
     int numberOfChecks = 0;
     int bestCounter = 0;
+    bool hasFound = false;
 
-    t = clock();
-
-    for (indexInPopulateion = 0; indexInPopulateion < population.size(); indexInPopulateion++) {
-        calculate_fitness();
+    while (!hasFound){
+        calc_fitness();
         sort_population_by_fitnes();
-        print_best();                       // print the best one
-        double averageFitnessValue = get_average_fitness();
-        double standardDeviation = get_standard_deviation(averageFitnessValue);
+        print_best();
 
         if (population.front().getCalculatedResult() == target)
         {
@@ -55,14 +50,29 @@ void GeneticXorOptimizer::optimizeExpression() {
         } else{
             numberOfChecks++;
         }
-        if (population.front().fitnessVal == 0 || bestCounter == 5) {
-            break;
+        if (population.front().fitnessVal == 0 || bestCounter == 5)
+            hasFound = true;
+
+        // removing least promising citizens there is no chance to be good
+        std::remove_if(population.begin(), population.end(), [&](const CalculatedExpression& v){return v.fitnessVal > INT_MAX / 2;});
+        bool mutationOrCrossover = std::experimental::randint(0, 1);
+        if (mutationOrCrossover){
+            // mutation
+            mutate(population.at(std::experimental::randint(0, (int)(population.size() - 1))));
+        } else{
+            // crossover
+            int firstIndex = std::experimental::randint(0, (int)(population.size() - 1));
+            int secondIndex = std::experimental::randint(0, (int)(population.size() - 1));
+            non_uniform_crossover(firstIndex, secondIndex);
         }
 
-        specis = mate(); // mate the population together
-        swap();        // swap buffers
-        t = clock();
+
+        // clear the buffer, expect most N prommising
+        // generate next generation
+//        specis = mate(); // mate the population together
+//        swap();        // swap buffers
     }
+
     auto endTimeStamp = std::chrono::high_resolution_clock::now();
     auto numberOfMillis =  std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp).count();
     std::cout << "End of execution:" << std::endl;
@@ -72,6 +82,7 @@ void GeneticXorOptimizer::optimizeExpression() {
     representation.printTruthTable();
     std::cout << "Number of logical gates: " << representation.getNumberOfLogicalGates() << std::endl;
     std::cout << "Total time is: " << numberOfMillis << " millis" << std::endl;
+    return representation.getNumberOfLogicalGates();
 }
 
 void GeneticXorOptimizer::init_population() {
@@ -93,54 +104,14 @@ void GeneticXorOptimizer::init_population() {
 
 void GeneticXorOptimizer::growMethod() {
     ExpressionTree tree{operands, InitializationMethod::Grow, 0, maxDepth};
-//    population.push_back(std::make_unique<CalculatedExpression>(tree));
     population.push_back(tree);
-    buffer.push_back(tree);
+//    buffer.push_back(tree);
 }
 
 void GeneticXorOptimizer::fullMethod() {
     ExpressionTree tree{operands, InitializationMethod::Full, 0, maxDepth};
-//    population.push_back(std::make_unique<CalculatedExpression>(tree));
     population.push_back(tree);
-    buffer.push_back(tree);
-}
-
-void GeneticXorOptimizer::calculate_fitness() {
-    // our target is to be with value of 0!
-    // for each case we for in-matching we have fees!
-    // starting of very greedy look, number of variables, if it's not the same, moving on
-    for (auto& citizen : population) {
-//        citizen.printTruthTable();
-        double fitnessVal = 0;
-        // For bloating support, if number of operands is different, means it's larger -> bigger tree generated, or
-        // smaller, means truth table will never be equal --> tautology
-        if (citizen.getNumberOfOperands() != inputExpression.getNumberOfOperands())
-            fitnessVal = INT_MAX;
-        else {
-//            // for each mistake, reducing 5 points
-            const auto citizenCalculatedResult = citizen.getCalculatedResult();
-            for (int index = 0; index < citizenCalculatedResult.size(); index++){
-                if (citizenCalculatedResult.at(index) != target.at(index))
-                    fitnessVal += 5;
-            }
-//            // means all answers correct!
-            if (fitnessVal == 0){
-                // Trying - there are more correct than incorrect add another dimension - number of true & false
-                int currNumberOfTrue = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), true);
-                int currNumberOfFalse = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), false);
-                if (currNumberOfFalse == numberOfFalses && currNumberOfTrue == numberOfTrues){
-                    fitnessVal = 1;
-                    fitnessVal *= citizen.getNumberOfLogicalGates();
-                }
-                else{
-                    // penalty, if we missed it.. it should not get here
-                    fitnessVal += 10;
-                }
-            }
-        }
-
-        citizen.fitnessVal = fitnessVal;
-    }
+//    buffer.push_back(tree);
 }
 
 std::string GeneticXorOptimizer::getBestGene() const {
@@ -164,12 +135,43 @@ void GeneticXorOptimizer::print_results() {
 }
 
 void GeneticXorOptimizer::calc_fitness() {
+// our target is to be with value of 0!
+    // for each case we for in-matching we have fees!
+    // starting of very greedy look, number of variables, if it's not the same, moving on
+    for (auto& citizen : population) {
+        double fitnessVal = 0;
+        // For bloating support, if number of operands is different, means it's larger -> bigger tree generated, or
+        // smaller, means truth table will never be equal --> tautology
+        if (citizen.getNumberOfOperands() != inputExpression.getNumberOfOperands())
+            fitnessVal = INT_MAX;
+        else {
+            // for each mistake, reducing 5 points
+            const auto citizenCalculatedResult = citizen.getCalculatedResult();
+            for (int index = 0; index < citizenCalculatedResult.size(); index++){
+                if (citizenCalculatedResult.at(index) != target.at(index))
+                    fitnessVal += 5;
+            }
+            // means all answers correct!
+            if (fitnessVal == 0){
+                // Trying - there are more correct than incorrect add another dimension - number of true & false
+                int currNumberOfTrue = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), true);
+                int currNumberOfFalse = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), false);
+                if (currNumberOfFalse == numberOfFalses && currNumberOfTrue == numberOfTrues){
+                    fitnessVal = 1;
+                    fitnessVal *= citizen.getNumberOfLogicalGates();
+                }
+                else{
+                    // penalty, if we missed it.. it should not get here
+                    fitnessVal += 10;
+                }
+            }
+        }
 
+        citizen.fitnessVal = fitnessVal;
+    }
 }
 
-void GeneticXorOptimizer::mutate(CalculatedExpression &member) {
 
-}
 
 int GeneticXorOptimizer::calculateDistanceBetweenTwoCitizens(const CalculatedExpression &citizenOne,
                                                              const CalculatedExpression &citizenTwo) {
@@ -177,5 +179,30 @@ int GeneticXorOptimizer::calculateDistanceBetweenTwoCitizens(const CalculatedExp
 }
 
 void GeneticXorOptimizer::handle_specific_elitism(const int index) {
+
+}
+
+void GeneticXorOptimizer::mutate(CalculatedExpression &member) {
+    // Mutation is modifing existing tree, thus we will generate new randomly chosen subtree with same terminals
+    // and add it to the tree
+    auto& expr = member.getExpressionTree();
+    auto randomInitializationMethod = (InitializationMethod)std::experimental::randint(0, 1);
+    const auto maxDepth = std::experimental::randint(0, expr.getMaxDepth());
+    auto generatedNewSubtree = ExpressionTree(expr.getAllOperands(), randomInitializationMethod, 0, maxDepth);
+}
+
+void GeneticXorOptimizer::non_uniform_crossover(const int i1, const int i2) {
+    // Getting both randomly chosen trees from general population
+    auto& firstExpr = population.at(i1).getExpressionTree();
+    auto& secondExpr = population.at(i2).getExpressionTree();
+
+    // Finding the minimal height for not increasing tree size
+    int minHeight = std::min(firstExpr.getTreeHeight(), secondExpr.getTreeHeight());
+
+    // Calling for crossover in randomly chosen depth, the directions inside the tree also randomized
+    firstExpr.treeCrossover(secondExpr, std::experimental::randint(0, minHeight));
+}
+
+void GeneticXorOptimizer::generateNextGeneration() {
 
 }

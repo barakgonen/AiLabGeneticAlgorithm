@@ -10,31 +10,12 @@
 #include "CalculatedExpression.h"
 #include <AbstractGeneticSolver.h>
 
-using Expr = std::unique_ptr<CalculatedExpression>;
-
 class GeneticXorOptimizer : public AbstractGeneticSolver<CalculatedExpression>{
 public:
     GeneticXorOptimizer(ExpressionTree& inputExpression);
     virtual ~GeneticXorOptimizer() = default;
 
-    void optimizeExpression();
-
-    std::string getBestGene() const override;
-
-    void resetCitizenProps(CalculatedExpression &citizen) override;
-
-    void setCitizenProps(CalculatedExpression &citizen) override;
-
-    int start_solve() override;
-
-    void print_results() override;
-
-    void calc_fitness() override;
-
-    void mutate(CalculatedExpression &member) override;
-
-    int calculateDistanceBetweenTwoCitizens(const CalculatedExpression &citizenOne,
-                                            const CalculatedExpression &citizenTwo) override;
+    int optimizeExpression();
 
 protected:
     void handle_specific_elitism(const int index) override;
@@ -43,10 +24,19 @@ protected:
     void growMethod();
     void fullMethod();
     void init_population();
+    std::string getBestGene() const override;
 
-    // Those methods should override infra's
-    void calculate_fitness();
+    void resetCitizenProps(CalculatedExpression &citizen) override;
+    void setCitizenProps(CalculatedExpression &citizen) override;
+    int start_solve() override;
+    void print_results() override;
+    void calc_fitness() override;
+    void mutate(CalculatedExpression &member) override;
+    int calculateDistanceBetweenTwoCitizens(const CalculatedExpression &citizenOne,
+                                            const CalculatedExpression &citizenTwo) override;
+    virtual void non_uniform_crossover(const int i1, const int i2) override;
 
+    virtual void generateNextGeneration();
     const ExpressionTree& inputExpression;
     const int maxDepth;
     const int numberOfCitizensInPopulationGroup;

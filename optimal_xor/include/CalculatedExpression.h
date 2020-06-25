@@ -39,7 +39,7 @@ public:
         return expressionTree.getOriginalExpr();
     }
 
-    ExpressionTree getExpressionTree() const{
+    ExpressionTree& getExpressionTree() {
         return expressionTree;
     }
 
