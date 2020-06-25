@@ -87,14 +87,24 @@ ExpressionTree::ExpressionTree(char v, const int currentDepth, const int maxDept
     val = v;
 }
 
-ExpressionTree::ExpressionTree(const std::vector<char>& operands, const InitializationMethod initializationMethod, const int currentDepth, const int maxDepth)
+ExpressionTree::ExpressionTree(const std::vector<char>& operands,
+                               const InitializationMethod initializationMethod,
+                               const int currentDepth,
+                               const int maxDepth)
 : left{nullptr}
 , right{nullptr}
 , depth{currentDepth}
 , maxDepth{maxDepth}
-, operands{operands} {
-    if (initializationMethod == InitializationMethod::Grow) {
-        growInitMethod(operands, initializationMethod, maxDepth);
+, operands{operands}
+{
+    switch (initializationMethod) {
+        case Grow:
+            growInitMethod(operands, initializationMethod, maxDepth);
+            break;
+        case Full:
+            fullInitMethod(operands, initializationMethod, maxDepth, currentDepth);
+            break;
+
     }
     // Setting the height manually, because in cases such the root is a function, it's height is still 0
     if (left == nullptr && right == nullptr)
@@ -121,8 +131,6 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
             // this is function generation
             // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
             func = select_randomly(keyToExpressionFunc.begin(), keyToExpressionFunc.end())->second;
-            if (func == UKNOWN)
-                std::cout << "PROBLEM BRO" << std::endl;
 
             val = EMPTY_VALUE;
             left = new ExpressionTree(operands, initializationMethod, depth + 1, maxDepth);
@@ -142,15 +150,7 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
     }
 }
 
-// Ctor for full method
-ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxDepth, const int currentDepth)
-: left{nullptr}
-, right{nullptr}
-, height{0}
-, maxDepth{maxDepth}
-, operands{operands}
-, depth{currentDepth}
-{
+void ExpressionTree::fullInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod, const int maxDepth, const int currentDepth) {
     if (currentDepth == maxDepth){
         // Should set the kids values as leafs TERMINAL
         val = *(select_randomly(operands.begin(), operands.end()));
@@ -161,13 +161,10 @@ ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxD
         // this is function generation
         // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
         func = select_randomly(keyToExpressionFunc.begin(), keyToExpressionFunc.end())->second;
-        if (func == ExpressionTreeFunctions::UKNOWN)
-            std::cout << "PROBLEM BRO" << std::endl;
-
         val = EMPTY_VALUE;
-        left = new ExpressionTree(operands, maxDepth, currentDepth + 1);
+        left = new ExpressionTree(operands, initializationMethod, currentDepth  + 1, maxDepth);
         if (func != ExpressionTreeFunctions::NOT)
-            right = new ExpressionTree(operands, maxDepth, currentDepth  + 1);
+            right = new ExpressionTree(operands, initializationMethod, currentDepth  + 1, maxDepth);
         height = std::max(getHeight(left), getHeight(right)) + 1;
         originalExpression = treeToString(this);
         numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
@@ -176,9 +173,6 @@ ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxD
     }
 }
 
-ExpressionTreeFunctions ExpressionTree::getRandomFunc() const {
-    return ExpressionTreeFunctions::UKNOWN;
-}
 int ExpressionTree::getTreeHeight() const {
     return height;
 }

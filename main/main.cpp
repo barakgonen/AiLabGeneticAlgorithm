@@ -475,7 +475,7 @@ int main(int argc, char *argv[]) {
         runExpressionTreeTests(true);
         // User input for binary expression to optimize
         std::string userInput = "a XOR b";
-        ExpressionTree exprTree{userInput, 3};
+        ExpressionTree exprTree{userInput, 0, 3};
 
         // Initialization of GeneticXorOptimizer
         GeneticXorOptimizer geneticXorOptimizer{exprTree};

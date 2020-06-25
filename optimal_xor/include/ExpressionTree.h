@@ -81,7 +81,6 @@ protected:
     ExpressionTree(const std::vector<char>& operands, const int maxDepth, const int currentDepth);
 
     bool isSingleOperandExpression(const std::string& initializationExpression) const;
-    ExpressionTreeFunctions getRandomFunc() const;
 
     void printTableBorder() const;
     void printTruthTableHeaderLine() const;
@@ -133,6 +132,8 @@ protected:
 
     void growInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod,
                    const int maxDepth);
+    void fullInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod,
+                        const int maxDepth, const int currentDepth = 0);
 };
 
 #endif //AILABGENETICALGORITHM_EXPRESSIONTREE_H

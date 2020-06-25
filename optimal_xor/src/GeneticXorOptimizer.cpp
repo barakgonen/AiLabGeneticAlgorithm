@@ -99,7 +99,7 @@ void GeneticXorOptimizer::growMethod() {
 }
 
 void GeneticXorOptimizer::fullMethod() {
-    ExpressionTree tree{operands, InitializationMethod::Full, maxDepth};
+    ExpressionTree tree{operands, InitializationMethod::Full, 0, maxDepth};
 //    population.push_back(std::make_unique<CalculatedExpression>(tree));
     population.push_back(tree);
     buffer.push_back(tree);

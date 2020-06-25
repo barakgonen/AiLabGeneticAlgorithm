@@ -49,20 +49,9 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
 void testSwappingTrees(const std::string &treeOne, const int treeOneMaxDepth, std::vector<bool> treeOneExpectedResult,
                        const std::string &treeTwo, const int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedResult,
                        const int swapDepth) {
-
-    std::cout << "BEFORE: " << std::endl;
     ExpressionTree a{treeOne, 0, treeOneMaxDepth};
     ExpressionTree b{treeTwo, 0, treeTwoMaxDepth};
-    std::cout << "Tree A: " << std::endl;
-    a.printTruthTable();
-    std::cout << "Tree B: " << std::endl;
-    b.printTruthTable();
     a.treeCrossover(b, swapDepth);
-    std::cout << "AFTER: " << std::endl;
-    std::cout << "Tree A: " << std::endl;
-    a.printTruthTable();
-    std::cout << "Tree B: " << std::endl;
-    b.printTruthTable();
     const auto actualTreeAcalculatedResults = a.getEvaluatedResults();
     const auto actualTreeBcalculatedResults = b.getEvaluatedResults();
     bool isOK = true;
@@ -86,16 +75,7 @@ void testSwawppingRootFuncForTreeInDepthOne(std::string treeAsStringOne,
                                             std::vector<bool> expectedResultForTreeTwo) {
     ExpressionTree aT{treeAsStringOne, 0, 1};
     ExpressionTree bT{treeAsStringTwo, 0, 1};
-    std::cout << "First:" << std::endl;
-    aT.printTruthTable();
-    std::cout << "Second:" << std::endl;
-    bT.printTruthTable();
     aT.treeCrossover(bT, 0);
-    std::cout << "After conversion: " << std::endl;
-    std::cout << "First:" << std::endl;
-    aT.printTruthTable();
-    std::cout << "Second:" << std::endl;
-    bT.printTruthTable();
     bool isOK = true;
     if (expectedResultForTreeOne != aT.getEvaluatedResults()) {
         std::cout << "ERROR, tree 1 evaluated false" << std::endl;
@@ -116,10 +96,6 @@ void testSwappingTreesTerminals(std::string treeAsStringOne,
                                 std::vector<char> treeTwoTerminals) {
     ExpressionTree aT{treeAsStringOne, 0, 0};
     ExpressionTree bT{treeAsStringTwo, 0, 0};
-    std::cout << "First:" << std::endl;
-    aT.printTruthTable();
-    std::cout << "Second:" << std::endl;
-    bT.printTruthTable();
     bool isOK = true;
     if (treeOneTerminals != aT.getAllOperands()) {
         std::cout << "ERROR, tree 1 has different operands than expected" << std::endl;
@@ -131,11 +107,6 @@ void testSwappingTreesTerminals(std::string treeAsStringOne,
     }
     aT.treeCrossover(bT, 0);
 
-    std::cout << "After conversion: " << std::endl;
-    std::cout << "First:" << std::endl;
-    aT.printTruthTable();
-    std::cout << "Second:" << std::endl;
-    bT.printTruthTable();
     if (treeTwoTerminals != aT.getAllOperands()) {
         std::cout << "ERROR, tree 1 has different operands than expected" << std::endl;
         isOK = false;
@@ -155,14 +126,7 @@ testSwappingRightRightDepthN(std::string treeAsStringOne, int treeOneMaxDepth, s
 
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
-    expr.printTruthTable();
-    expr2.printTruthTable();
     expr.treeCrossover(expr2, subDepth, true, true, true);
-    std::cout << "TREE 1: " << std::endl;
-    expr.printTruthTable();
-    std::cout << "TREE 2: " << std::endl;
-    expr2.printTruthTable();
-    std::cout << "------------------" << std::endl;
 
     bool isOK = true;
     if (treeOneExpectedRes != expr.getEvaluatedResults()) {
@@ -207,14 +171,7 @@ void testSwappingRightLeftDepthN(std::string treeAsStringOne, int treeOneMaxDept
 
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
-    expr.printTruthTable();
-    expr2.printTruthTable();
     expr.treeCrossover(expr2, subDepth, true, true, false);
-    std::cout << "TREE 1: " << std::endl;
-    expr.printTruthTable();
-    std::cout << "TREE 2: " << std::endl;
-    expr2.printTruthTable();
-    std::cout << "------------------" << std::endl;
 
     bool isOK = true;
     if (treeOneExpectedRes != expr.getEvaluatedResults()) {
@@ -250,18 +207,7 @@ void testSwappingLeftLeftDepthN(std::string treeAsStringOne, int treeOneMaxDepth
 
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
-    std::cout << "BEFORE:" << std::endl;
-    std::cout << "------------------" << std::endl;
-    std::cout << "TREE 1: " << std::endl;
-    expr.printTruthTable();
-    std::cout << "TREE 2: " << std::endl;
-    expr2.printTruthTable();
     expr.treeCrossover(expr2, subDepth, true, false, false);
-    std::cout << "TREE 1: " << std::endl;
-    expr.printTruthTable();
-    std::cout << "TREE 2: " << std::endl;
-    expr2.printTruthTable();
-
 
     bool isOK = true;
     if (treeOneExpectedRes != expr.getEvaluatedResults()) {
@@ -296,14 +242,8 @@ void testSwappingLeftRightDepthN(std::string treeAsStringOne, int treeOneMaxDept
 
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
-    expr.printTruthTable();
-    expr2.printTruthTable();
+
     expr.treeCrossover(expr2, subDepth, true, false, true);
-    std::cout << "TREE 1: " << std::endl;
-    expr.printTruthTable();
-    std::cout << "TREE 2: " << std::endl;
-    expr2.printTruthTable();
-    std::cout << "------------------" << std::endl;
 
     bool isOK = true;
     if (treeOneExpectedRes != expr.getEvaluatedResults()) {
@@ -446,8 +386,8 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
              {1, 1, 1, 1, 1, 1, 1, 1});
 }
 
-void runAllTests() {
-    runExpressionTreeTests();
+void runAllTests(bool quietMode = false) {
+    runExpressionTreeTests(quietMode);
     testSwappingTrees("((A) && (!B)) OR ((!A) && B)", 3, {0, 0, 0, 0},
                       "((A) || (!B)) AND ((!A) && A)", 3, {1, 1, 0, 1},
                       0);
