@@ -38,7 +38,7 @@ public:
                        bool isTestingMode = false,
                        bool movementDirectionWithThisTree = false,
                        bool movementDirectionWithOtherTree = false) {
-        if (this->depth == crossoverDepth && other.depth == crossoverDepth) {
+        if (this->depth == crossoverDepth || other.depth == crossoverDepth) {
             // when crossover depth is 0, it means were preforming root substitution
             if (crossoverDepth == 0)
                 rootNodeSub(other);
@@ -54,15 +54,23 @@ public:
             if (movementDirectionWithThisTree && movementDirectionWithOtherTree){
                 if (right != nullptr && other.right != nullptr)
                     right->treeCrossover(*other.right, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
+                else if (right != nullptr && other.right == nullptr)
+                    right->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
             } else if (movementDirectionWithThisTree && !movementDirectionWithOtherTree){
                 if (right != nullptr && other.left != nullptr)
                     right->treeCrossover(*other.left, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
+                else if (right != nullptr && other.left == nullptr)
+                    right->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
             } else if (!movementDirectionWithThisTree && movementDirectionWithOtherTree){
                 if (left != nullptr && other.right != nullptr)
                     left->treeCrossover(*other.right, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
+                else if (left != nullptr && other.right == nullptr)
+                    left->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
             } else if (!movementDirectionWithThisTree && !movementDirectionWithOtherTree){
                 if (left != nullptr && other.left != nullptr)
                     left->treeCrossover(*other.left, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
+                else if (left != nullptr && other.left == nullptr)
+                    left->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
             }
         }
         postSubActions(other);

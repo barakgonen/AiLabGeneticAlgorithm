@@ -4,12 +4,13 @@
 
 #ifndef AILABGENETICALGORITHM_OPTIMALXORAUTOTESTS_H
 #define AILABGENETICALGORITHM_OPTIMALXORAUTOTESTS_H
+
 #include <iostream>
 #include <string>
 #include "ExpressionTree.h"
 
-void assertPropertyCalculatedCorrectly(const int expected, const int actual, bool& isFine) {
-    if (expected != actual){
+void assertPropertyCalculatedCorrectly(const int expected, const int actual, bool &isFine) {
+    if (expected != actual) {
         std::cout << "ERROR, expected: " << expected << ", actual:" << actual << std::endl;
         isFine = false;
     }
@@ -39,15 +40,15 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
         }
     }
 
-    if (!isFine){
+    if (!isFine) {
         std::cout << "failed parsing the following string tree: " << treeAsString << std::endl;
         exit(-1);
     }
 }
 
-void testSwappingTrees(const std::string& treeOne, const int treeOneMaxDepth, std::vector<bool> treeOneExpectedResult,
-                       const std::string& treeTwo, const int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedResult,
-                       const int swapDepth){
+void testSwappingTrees(const std::string &treeOne, const int treeOneMaxDepth, std::vector<bool> treeOneExpectedResult,
+                       const std::string &treeTwo, const int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedResult,
+                       const int swapDepth) {
 
     std::cout << "BEFORE: " << std::endl;
     ExpressionTree a{treeOne, 0, treeOneMaxDepth};
@@ -65,16 +66,15 @@ void testSwappingTrees(const std::string& treeOne, const int treeOneMaxDepth, st
     const auto actualTreeAcalculatedResults = a.getEvaluatedResults();
     const auto actualTreeBcalculatedResults = b.getEvaluatedResults();
     bool isOK = true;
-    if (actualTreeAcalculatedResults != treeOneExpectedResult){
+    if (actualTreeAcalculatedResults != treeOneExpectedResult) {
         std::cout << "results comparison for tree one has failed :(" << std::endl;
         isOK = false;
     }
-    if (actualTreeBcalculatedResults != treeTwoExpectedResult){
+    if (actualTreeBcalculatedResults != treeTwoExpectedResult) {
         std::cout << "results comparison for tree one has failed :(" << std::endl;
         isOK = false;
     }
-    if (!isOK)
-    {
+    if (!isOK) {
         std::cout << "Tree swap failed.. " << std::endl;
         exit(-1);
     }
@@ -97,11 +97,11 @@ void testSwawppingRootFuncForTreeInDepthOne(std::string treeAsStringOne,
     std::cout << "Second:" << std::endl;
     bT.printTruthTable();
     bool isOK = true;
-    if (expectedResultForTreeOne != aT.getEvaluatedResults()){
+    if (expectedResultForTreeOne != aT.getEvaluatedResults()) {
         std::cout << "ERROR, tree 1 evaluated false" << std::endl;
         isOK = false;
     }
-    if (expectedResultForTreeTwo != bT.getEvaluatedResults()){
+    if (expectedResultForTreeTwo != bT.getEvaluatedResults()) {
         std::cout << "ERROR, tree 2 evaluated false" << std::endl;
         isOK = false;
     }
@@ -111,9 +111,9 @@ void testSwawppingRootFuncForTreeInDepthOne(std::string treeAsStringOne,
 }
 
 void testSwappingTreesTerminals(std::string treeAsStringOne,
-                                            std::string treeAsStringTwo,
-                                            std::vector<char> treeOneTerminals,
-                                            std::vector<char> treeTwoTerminals) {
+                                std::string treeAsStringTwo,
+                                std::vector<char> treeOneTerminals,
+                                std::vector<char> treeTwoTerminals) {
     ExpressionTree aT{treeAsStringOne, 0, 0};
     ExpressionTree bT{treeAsStringTwo, 0, 0};
     std::cout << "First:" << std::endl;
@@ -121,11 +121,11 @@ void testSwappingTreesTerminals(std::string treeAsStringOne,
     std::cout << "Second:" << std::endl;
     bT.printTruthTable();
     bool isOK = true;
-    if (treeOneTerminals != aT.getAllOperands()){
+    if (treeOneTerminals != aT.getAllOperands()) {
         std::cout << "ERROR, tree 1 has different operands than expected" << std::endl;
         isOK = false;
     }
-    if (treeTwoTerminals != bT.getAllOperands()){
+    if (treeTwoTerminals != bT.getAllOperands()) {
         std::cout << "ERROR, tree 2 has different operands than expected" << std::endl;
         isOK = false;
     }
@@ -136,11 +136,11 @@ void testSwappingTreesTerminals(std::string treeAsStringOne,
     aT.printTruthTable();
     std::cout << "Second:" << std::endl;
     bT.printTruthTable();
-    if (treeTwoTerminals != aT.getAllOperands()){
+    if (treeTwoTerminals != aT.getAllOperands()) {
         std::cout << "ERROR, tree 1 has different operands than expected" << std::endl;
         isOK = false;
     }
-    if (treeOneTerminals != bT.getAllOperands()){
+    if (treeOneTerminals != bT.getAllOperands()) {
         std::cout << "ERROR, tree 2 has different operands than expected" << std::endl;
         isOK = false;
     }
@@ -148,8 +148,10 @@ void testSwappingTreesTerminals(std::string treeAsStringOne,
         exit(-1);
 }
 
-void testSwappingRightRightDepthN(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                    std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes, int subDepth) {
+void
+testSwappingRightRightDepthN(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                             std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes,
+                             int subDepth) {
 
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
@@ -163,11 +165,11 @@ void testSwappingRightRightDepthN(std::string treeAsStringOne, int treeOneMaxDep
     std::cout << "------------------" << std::endl;
 
     bool isOK = true;
-    if (treeOneExpectedRes != expr.getEvaluatedResults()){
+    if (treeOneExpectedRes != expr.getEvaluatedResults()) {
         std::cout << "ERROR, tree 1 failed with sub" << std::endl;
         isOK = false;
     }
-    if (treeTwoExpectedRes != expr2.getEvaluatedResults()){
+    if (treeTwoExpectedRes != expr2.getEvaluatedResults()) {
         std::cout << "ERROR, tree 2 failed with sub" << std::endl;
         isOK = false;
     }
@@ -175,28 +177,33 @@ void testSwappingRightRightDepthN(std::string treeAsStringOne, int treeOneMaxDep
         exit(-1);
 }
 
-void testSwappingRightRightDepthOne(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+void
+testSwappingRightRightDepthOne(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                               std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
     testSwappingRightRightDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
                                  treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 1);
 }
 
-void testSwappingRightRightDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                    std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+void
+testSwappingRightRightDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                               std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
 
     testSwappingRightRightDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
                                  treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 2);
 }
 
-void testSwappingRightRightDepthThree(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                    std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+void
+testSwappingRightRightDepthThree(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                                 std::string treeAsStringTwo, int treeTwoMaxDepth,
+                                 std::vector<bool> treeTwoExpectedRes) {
 
     testSwappingRightRightDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
                                  treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 3);
 }
 
 void testSwappingRightLeftDepthN(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                  std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes, int subDepth) {
+                                 std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes,
+                                 int subDepth) {
 
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
@@ -210,11 +217,11 @@ void testSwappingRightLeftDepthN(std::string treeAsStringOne, int treeOneMaxDept
     std::cout << "------------------" << std::endl;
 
     bool isOK = true;
-    if (treeOneExpectedRes != expr.getEvaluatedResults()){
+    if (treeOneExpectedRes != expr.getEvaluatedResults()) {
         std::cout << "ERROR, tree 1 failed with sub" << std::endl;
         isOK = false;
     }
-    if (treeTwoExpectedRes != expr2.getEvaluatedResults()){
+    if (treeTwoExpectedRes != expr2.getEvaluatedResults()) {
         std::cout << "ERROR, tree 2 failed with sub" << std::endl;
         isOK = false;
     }
@@ -222,21 +229,24 @@ void testSwappingRightLeftDepthN(std::string treeAsStringOne, int treeOneMaxDept
         exit(-1);
 }
 
-void testSwappingRightLeftDepthOne(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                    std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+void
+testSwappingRightLeftDepthOne(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                              std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
     testSwappingRightLeftDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
-                                 treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 1);
+                                treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 1);
 }
 
-void testSwappingRightLeftDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                    std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+void
+testSwappingRightLeftDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                              std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
 
     testSwappingRightLeftDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
-                                 treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 2);
+                                treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 2);
 }
 
 void testSwappingLeftLeftDepthN(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                 std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes, int subDepth) {
+                                std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes,
+                                int subDepth) {
 
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
@@ -254,11 +264,11 @@ void testSwappingLeftLeftDepthN(std::string treeAsStringOne, int treeOneMaxDepth
 
 
     bool isOK = true;
-    if (treeOneExpectedRes != expr.getEvaluatedResults()){
+    if (treeOneExpectedRes != expr.getEvaluatedResults()) {
         std::cout << "ERROR, tree 1 failed with sub" << std::endl;
         isOK = false;
     }
-    if (treeTwoExpectedRes != expr2.getEvaluatedResults()){
+    if (treeTwoExpectedRes != expr2.getEvaluatedResults()) {
         std::cout << "ERROR, tree 2 failed with sub" << std::endl;
         isOK = false;
     }
@@ -266,16 +276,60 @@ void testSwappingLeftLeftDepthN(std::string treeAsStringOne, int treeOneMaxDepth
         exit(-1);
 }
 
-void testSwappingLeftLeftDepthOne(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                   std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+void
+testSwappingLeftLeftDepthOne(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                             std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
     testSwappingLeftLeftDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
+                               treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 1);
+}
+
+void
+testSwappingLeftLeftDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                             std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+    testSwappingLeftLeftDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
+                               treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 2);
+}
+
+void testSwappingLeftRightDepthN(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                                 std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes,
+                                 int subDepth) {
+
+    ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
+    ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
+    expr.printTruthTable();
+    expr2.printTruthTable();
+    expr.treeCrossover(expr2, subDepth, true, false, true);
+    std::cout << "TREE 1: " << std::endl;
+    expr.printTruthTable();
+    std::cout << "TREE 2: " << std::endl;
+    expr2.printTruthTable();
+    std::cout << "------------------" << std::endl;
+
+    bool isOK = true;
+    if (treeOneExpectedRes != expr.getEvaluatedResults()) {
+        std::cout << "ERROR, tree 1 failed with sub" << std::endl;
+        isOK = false;
+    }
+    if (treeTwoExpectedRes != expr2.getEvaluatedResults()) {
+        std::cout << "ERROR, tree 2 failed with sub" << std::endl;
+        isOK = false;
+    }
+    if (!isOK)
+        exit(-1);
+}
+
+void
+testSwappingLeftRightDepthOne(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                              std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+    testSwappingLeftRightDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
                                 treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 1);
 }
 
-void testSwappingLeftLeftDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
-                                   std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
+void
+testSwappingLeftRightDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, std::vector<bool> treeOneExpectedRes,
+                              std::string treeAsStringTwo, int treeTwoMaxDepth, std::vector<bool> treeTwoExpectedRes) {
 
-    testSwappingLeftLeftDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
+    testSwappingLeftRightDepthN(treeAsStringOne, treeOneMaxDepth, treeOneExpectedRes,
                                 treeAsStringTwo, treeTwoMaxDepth, treeTwoExpectedRes, 2);
 }
 
@@ -309,14 +363,14 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("A XOR B", 1, isInQuietMode, {0, 1, 1, 0});
     testTree("(b) OR (b)", 1, isInQuietMode, {1, 0});
 
-    testTree("(A AND B) OR ((B) OR (A))", 2, isInQuietMode, {1,1,1,0});
+    testTree("(A AND B) OR ((B) OR (A))", 2, isInQuietMode, {1, 1, 1, 0});
     testTree("(C AND A) AND ((C) XOR (D))", 2, isInQuietMode, {0, 1, 0, 0, 0, 0, 0, 0});
-    testTree("(A AND B) OR (C XOR D)", 2, isInQuietMode, {1,1,1,1,0,1,1,0,0,1,1,0,0,1,1,0});
+    testTree("(A AND B) OR (C XOR D)", 2, isInQuietMode, {1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0});
     testTree("(C AND A) && (B || A)", 2, isInQuietMode, {1, 1, 0, 0, 0, 0, 0, 0});
     testTree("(A AND B) AND (A NOT)", 2, isInQuietMode, {0, 0, 0, 0});
     testTree("a && (b && c)", 2, isInQuietMode, {1, 0, 0, 0, 0, 0, 0, 0});
     testTree("a || (b || c)", 2, isInQuietMode, {1, 1, 1, 1, 1, 1, 1, 0});
-    testTree("((b) NOT) OR ((a) AND (b))", 2, isInQuietMode, {1,0,1,1});
+    testTree("((b) NOT) OR ((a) AND (b))", 2, isInQuietMode, {1, 0, 1, 1});
     testTree("((b) NOT) OR ((b) OR (b))", 2, isInQuietMode, {1, 1});
     testTree("((a) OR (b)) NOT", 2, isInQuietMode, {0, 0, 0, 1});
 
@@ -325,7 +379,9 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("(a) && ((b && c) || ((A || B) && (!C)))", 4, isInQuietMode,
              {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0,
               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-    testTree("(((((b) AND (b)) NOT) OR (((a) NOT) OR ((b) OR (a)))) NOT) OR (((((b) OR (b)) AND ((b) AND (b))) NOT) NOT)", 5, isInQuietMode, {1, 1, 0, 0});
+    testTree(
+            "(((((b) AND (b)) NOT) OR (((a) NOT) OR ((b) OR (a)))) NOT) OR (((((b) OR (b)) AND ((b) AND (b))) NOT) NOT)",
+            5, isInQuietMode, {1, 1, 0, 0});
     testTree("a && (b && (c && (d && (e && (!f)))))", 6, isInQuietMode,
              {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
@@ -368,51 +424,61 @@ void runExpressionTreeTests(bool isInQuietMode = false) {
     testTree("(((b) AND (b)) OR ((b) OR (a))) AND (((a) AND (b)) NOT)", 3, isInQuietMode, {0, 1, 1, 0});
     testTree("(((b) NOT) AND ((b) OR (a))) OR (((a) NOT) AND ((b) AND (b)))", 3, isInQuietMode, {0, 1, 1, 0});
 
-    testTree("(((((b) OR (a)) NOT) OR (((a) AND (a)) AND ((b) AND (b)))) OR ((((b) OR (a)) AND ((a) OR (b))) AND (((a) AND (b)) AND ((a) NOT)))) NOT", 5, isInQuietMode, {0, 1, 1, 0});
-    testTree("(((((b) NOT) AND ((b) OR (b))) OR (((a) OR (b)) NOT)) NOT) AND (((((b) AND (a)) NOT) AND (((b) OR (a)) OR ((b) NOT))) OR ((((a) OR (a)) NOT) AND (((b) NOT) OR ((a) AND (a)))))", 5, isInQuietMode, {0, 1, 1, 0});
+    testTree(
+            "(((((b) OR (a)) NOT) OR (((a) AND (a)) AND ((b) AND (b)))) OR ((((b) OR (a)) AND ((a) OR (b))) AND (((a) AND (b)) AND ((a) NOT)))) NOT",
+            5, isInQuietMode, {0, 1, 1, 0});
+    testTree(
+            "(((((b) NOT) AND ((b) OR (b))) OR (((a) OR (b)) NOT)) NOT) AND (((((b) AND (a)) NOT) AND (((b) OR (a)) OR ((b) NOT))) OR ((((a) OR (a)) NOT) AND (((b) NOT) OR ((a) AND (a)))))",
+            5, isInQuietMode, {0, 1, 1, 0});
 
-    testTree("((((C) NOT) OR ((B) AND (C))) NOT) OR ((((B) OR (A)) NOT) OR (((C) NOT) NOT))", 4, isInQuietMode, {1, 1, 1, 1, 0, 0, 0, 1});
-    testTree("((((B) OR (C)) AND ((B) NOT)) OR (((B) AND (A)) NOT)) AND ((((C) AND (A)) OR ((C) OR (B))) AND (((B) AND (A)) OR ((A) AND (C))))", 4, isInQuietMode, {0, 0, 0, 0, 1, 0, 0, 0});
+    testTree("((((C) NOT) OR ((B) AND (C))) NOT) OR ((((B) OR (A)) NOT) OR (((C) NOT) NOT))", 4, isInQuietMode,
+             {1, 1, 1, 1, 0, 0, 0, 1});
+    testTree(
+            "((((B) OR (C)) AND ((B) NOT)) OR (((B) AND (A)) NOT)) AND ((((C) AND (A)) OR ((C) OR (B))) AND (((B) AND (A)) OR ((A) AND (C))))",
+            4, isInQuietMode, {0, 0, 0, 0, 1, 0, 0, 0});
 
     testTree("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, isInQuietMode, {1, 1, 1, 1, 1, 0, 0, 0});
     testTree("((B) NOT) NOT", 2, isInQuietMode, {1, 0});
 
-    testTree("((((C) NOT) OR ((B) AND (C))) NOT) AND ((A) NOT)", 4, isInQuietMode, {0,0,0, 1, 0, 0,0,0});
+    testTree("((((C) NOT) OR ((B) AND (C))) NOT) AND ((A) NOT)", 4, isInQuietMode, {0, 0, 0, 1, 0, 0, 0, 0});
     testTree("(((C) NOT) OR ((B AND C) NOT)) AND ((A) NOT)", 4, isInQuietMode, {0, 0, 0, 1, 0, 1, 0, 1});
-    testTree("(((C) NOT) OR ((B AND C) NOT)) OR (((B OR A) NOT) OR (((C) NOT) NOT))", 4, isInQuietMode, {1,1,1,1,1,1,1,1});
+    testTree("(((C) NOT) OR ((B AND C) NOT)) OR (((B OR A) NOT) OR (((C) NOT) NOT))", 4, isInQuietMode,
+             {1, 1, 1, 1, 1, 1, 1, 1});
 }
 
-void runAllTests(){
+void runAllTests() {
     runExpressionTreeTests();
-    testSwappingTrees("((A) && (!B)) OR ((!A) && B)", 3, {0,0,0,0},
-                      "((A) || (!B)) AND ((!A) && A)", 3, {1,1,0,1},
+    testSwappingTrees("((A) && (!B)) OR ((!A) && B)", 3, {0, 0, 0, 0},
+                      "((A) || (!B)) AND ((!A) && A)", 3, {1, 1, 0, 1},
                       0);
     // Substitute just function of the root
     testSwawppingRootFuncForTreeInDepthOne("C AND A",
-                                            "C || A",
-                                            {1, 1, 1, 0},
-                                            {1, 0, 0, 0});
-
-
+                                           "C || A",
+                                           {1, 1, 1, 0},
+                                           {1, 0, 0, 0});
     testSwappingTreesTerminals("C", "B", {'C'}, {'B'});
     testSwappingRightRightDepthOne("(C AND A) && (B)", 2, {0, 1, 0, 0, 0, 0, 0, 0},
                                    "(A AND B) OR ((B) NOT)", 2, {1, 0, 1, 0});
-
-    testSwappingRightRightDepthTwo("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, {1, 1, 1, 1, 1, 0, 0, 0},
-                                   "((B) NOT) NOT", 2, {1, 0});
+    testSwappingRightRightDepthTwo("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, {1, 1, 1, 1, 0, 0, 1, 0},
+                                   "((B) NOT) NOT", 2, {0, 0});
     testSwappingRightRightDepthThree("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, {1, 1, 1, 1, 1, 0, 0, 0},
-                                   "(((B) NOT) NOT) AND ((A OR B) OR (B XOR C))", 3, {1, 1, 0, 0});
+                                     "(((B) NOT) NOT) AND ((A OR B) OR (B XOR C))", 3, {1, 1, 0, 0});
     testSwappingRightLeftDepthOne("(C AND A) && (B || A)", 4, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                   "(D AND B) OR (C XOR B)", 3, {1, 1, 1, 1, 1, 1, 1, 0});
     testSwappingRightLeftDepthTwo("(C AND A) && (B || A)", 4, {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                                   "(D AND B) OR (C XOR B)", 3, {1, 1, 1, 0, 0, 1, 1, 0});
-
-
-    std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-    testSwappingLeftLeftDepthOne("(((C) NOT) OR ((B AND C) NOT)) OR (((B OR A) NOT) OR (((C) NOT) NOT))", 4, {1, 1, 1, 1, 1, 0, 1, 1},
-                                  "(A) AND ((A) NOT)", 2, {0, 0, 0, 1, 0, 1, 0, 1});
-    std::cout << "++++++++++++++++++++++++++++++++++++++++" << std::endl;
-    // MUST MAKE THE FOLLOWING TESTABLE!!!!
-//        std::string tree1 = ;
+    testSwappingLeftLeftDepthOne("(((C) NOT) OR ((B AND C) NOT)) OR (((B OR A) NOT) OR (((C) NOT) NOT))", 4,
+                                 {1, 1, 1, 1, 1, 0, 1, 1},
+                                 "(A) AND ((A) NOT)", 2, {0, 0, 0, 1, 0, 1, 0, 1});
+    testSwappingLeftLeftDepthTwo("(((C) NOT) OR ((B AND C) NOT)) OR (((B OR A) NOT) OR (((C) NOT) NOT))", 4,
+                                 {1, 1, 1, 1, 1, 1, 1, 1},
+                                 "(A) AND ((A) NOT)", 2, {0, 0, 0, 1});
+    testSwappingRightRightDepthThree("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, {1, 1, 1, 1, 1, 0, 0, 0},
+                                     "(((B) NOT) NOT) AND ((A OR B) OR (B XOR C))", 3, {1, 1, 0, 0});
+    testSwappingLeftRightDepthOne("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, {1, 1, 0, 0},
+                                  "((B) NOT) NOT", 2, {1, 0});
+    testSwappingLeftRightDepthTwo("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, {1, 1, 1, 0, 0, 0, 0, 0},
+                                  "(D AND B) OR (C XOR B)", 2, {1, 1, 0, 0, 0, 0, 0, 0});
 }
+
 #endif //AILABGENETICALGORITHM_OPTIMALXORAUTOTESTS_H
