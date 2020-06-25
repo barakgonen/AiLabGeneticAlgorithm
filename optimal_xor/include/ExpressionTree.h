@@ -13,11 +13,10 @@
 
 class ExpressionTree{
 public:
-    ExpressionTree(std::string initializationExpression, const int maxDepth = MAX_PARSE_TREE_DEPTH);
-
     // Construction of fully generated tree, gets as parameter the depth to go down and flag indicates if node is function or terminal
+    ExpressionTree(std::string initializationExpression, const int currentDepth = 0, const int maxDepth = MAX_PARSE_TREE_DEPTH);
     ExpressionTree(const std::vector<char>& operands, const InitializationMethod initializationMethod, const int currentDepth = 0, const int maxDepth = MAX_PARSE_TREE_DEPTH);
-    ExpressionTree(const std::vector<char>& operands, const int maxDepth);
+
     virtual ~ExpressionTree() = default;
 
     int getMaxDepth() const;
@@ -31,33 +30,50 @@ public:
     void print() const;
     void printTruthTable() const;
 
-    void treeCrossover(ExpressionTree& other, int depth){
-        if (currentDepth == depth && other.currentDepth == depth){
-            // Were in the correct depth
-            if (currentDepth == 0 && other.currentDepth == 0){
-                // need to preform root change
-                if (func != ExpressionTreeFunctions::UKNOWN && other.func != ExpressionTreeFunctions::UKNOWN){
-                    // swappings terminals
-                    std::swap(this->func, other.func);
-                }
-                else if (this->val== EMPTY_VALUE && other.val == EMPTY_VALUE) {
-                    std::swap(this->val, other.val);
-                }
+    std::string treeToString(ExpressionTree* root) const;
+
+    // In cases whether substitution is not available, expect to do NOTHING
+    void treeCrossover(ExpressionTree& other,
+                       int crossoverDepth,
+                       bool isTestingMode = false,
+                       bool movementDirectionWithThisTree = false,
+                       bool movementDirectionWithOtherTree = false) {
+        if (this->depth == crossoverDepth && other.depth == crossoverDepth) {
+            // when crossover depth is 0, it means were preforming root substitution
+            if (crossoverDepth == 0)
+                rootNodeSub(other);
+            else
+                std::swap(*this, other);
+        }else {
+
+            if (!isTestingMode){
+                movementDirectionWithThisTree = std::experimental::randint(0, 1);
+                movementDirectionWithOtherTree = std::experimental::randint(0, 1);
+            }
+
+            if (movementDirectionWithThisTree && movementDirectionWithOtherTree){
+                if (right != nullptr && other.right != nullptr)
+                    right->treeCrossover(*other.right, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
+            } else if (movementDirectionWithThisTree && !movementDirectionWithOtherTree){
+                if (right != nullptr && other.left != nullptr)
+                    right->treeCrossover(*other.left, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
+            } else if (!movementDirectionWithThisTree && movementDirectionWithOtherTree){
+                if (left != nullptr && other.right != nullptr)
+                    left->treeCrossover(*other.right, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
+            } else if (!movementDirectionWithThisTree && !movementDirectionWithOtherTree){
+                if (left != nullptr && other.left != nullptr)
+                    left->treeCrossover(*other.left, crossoverDepth, isTestingMode, movementDirectionWithThisTree, movementDirectionWithOtherTree);
             }
         }
-        else{
-            std::cout << "TO BE CONTINUED" << std::endl;
-
-        }
-
-        operands = getAllOperands();
+        postSubActions(other);
     }
 
 protected:
-    bool isSingleOperandExpression(const std::string& initializationExpression) const;
-    ExpressionTree(char v, const int maxDepth);
-    ExpressionTreeFunctions getRandomFunc() const;
+    ExpressionTree(char v, const int currentDepth, const int maxDepth);
     ExpressionTree(const std::vector<char>& operands, const int maxDepth, const int currentDepth);
+
+    bool isSingleOperandExpression(const std::string& initializationExpression) const;
+    ExpressionTreeFunctions getRandomFunc() const;
 
     void printTableBorder() const;
     void printTruthTableHeaderLine() const;
@@ -79,11 +95,28 @@ protected:
 
     ExpressionTreeFunctions parseExpressionTreeFunc(const std::string& rawSubTree, const int rootStartIndex);
 
+    void rootNodeSub(ExpressionTree &other) {// need to preform root change
+        if (func != UKNOWN && other.func != UKNOWN){
+            // swapping terminals
+            std::swap(this->func, other.func);
+        }
+        else if (val != EMPTY_VALUE && other.val != EMPTY_VALUE) {
+            std::swap(val, other.val);
+        }
+    };
+
+    void postSubActions(ExpressionTree &other) {
+        originalExpression = treeToString(this);
+        other.originalExpression = treeToString(&other);
+        operands = getAllOperands(this);
+        other.operands = getAllOperands(&other);
+    };
+
     int numberOfSpaces;
     ExpressionTree* left;
     ExpressionTree* right;
-    int currentHeight;
-    int currentDepth;
+    int height;
+    int depth;
     ExpressionTreeFunctions func;
     char val;
     std::string originalExpression;

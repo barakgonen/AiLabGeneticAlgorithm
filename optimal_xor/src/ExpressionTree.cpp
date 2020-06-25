@@ -10,14 +10,15 @@
 #include <experimental/random>
 
 
-ExpressionTree::ExpressionTree(std::string initializationExpression, const int maxDepth)
+ExpressionTree::ExpressionTree(std::string initializationExpression, const int treeDepth, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * initializationExpression.size())}
 , left{nullptr}
 , right{nullptr}
-, currentHeight{0}
+, height{0}
 , func{ExpressionTreeFunctions::UKNOWN}
 , originalExpression{initializationExpression}
 , maxDepth{maxDepth}
+, depth{treeDepth}
 {
     auto rootIndexes = getRootIndexes(originalExpression);
     if (rootIndexes.first == -1 && rootIndexes.second == -1) {
@@ -25,10 +26,10 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
         if (notPos != std::string::npos && originalExpression.size() > 1) {
             // Found NOT
             func = stringToExpressionTreeFunc.at(std::string{originalExpression[notPos]});
-            left = new ExpressionTree{originalExpression.at(1), maxDepth};
-            currentHeight = 1;
+            left = new ExpressionTree{originalExpression.at(1), depth + 1, maxDepth};
+            height = 1;
         } else if (initializationExpression.size() == 1 && initializationExpression != "!") {
-            currentHeight = 1;
+            height = 1;
             val = initializationExpression.at(0);
         } else {
             try {
@@ -39,7 +40,6 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
 
             }
         }
-        currentDepth = getDepth(this);
     }
     else if (isSingleOperandExpression(originalExpression)) {
         int spaceIndex = originalExpression.find(' ');
@@ -47,44 +47,42 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int m
         // if operator is between () need to simplify it
         if (originalExpression.at(0) == '(' && originalExpression.at(2) == ')' && 3 == spaceIndex)
             // almost sure index 1 is the variable
-            left = new ExpressionTree{originalExpression.at(1), maxDepth};
+            left = new ExpressionTree{originalExpression.at(1), depth + 1, maxDepth};
         else
-            left = new ExpressionTree{originalExpression.at(0), maxDepth};
-        currentDepth = 1;
-        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
+            left = new ExpressionTree{originalExpression.at(0), depth + 1, maxDepth};
     } else {
         // Extracting sub trees - left and right
         std::string leftSide = extractSubTree(originalExpression.substr(0, rootIndexes.first));
         if (leftSide.size() > 1)
-            left = new ExpressionTree{leftSide, maxDepth};
+            left = new ExpressionTree{leftSide, depth + 1, maxDepth};
         else
-            left = new ExpressionTree{leftSide.at(0), maxDepth};
+            left = new ExpressionTree{leftSide.at(0), depth + 1, maxDepth};
         std::string rightSide = extractSubTree(originalExpression.substr(rootIndexes.second));
         if (rightSide.size() > 1)
-            right = new ExpressionTree{rightSide, maxDepth};
+            right = new ExpressionTree{rightSide, depth + 1, maxDepth};
         else if (0 < rightSide.size())
-            right = new ExpressionTree{rightSide.at(0), maxDepth};
+            right = new ExpressionTree{rightSide.at(0), depth + 1, maxDepth};
         func = parseExpressionTreeFunc(originalExpression, rootIndexes.first + 1);
     }
     // Setting the height manually, because in cases such the root is a function, it's height is still 0
     if (left == nullptr && right == nullptr)
-        currentHeight = 0;
+        height = 0;
     else
-        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
-    if (currentHeight > maxDepth)
-        throw TooLargeExpressionTreeException{currentHeight, maxDepth};
-    operands = getAllOperands();
-    currentDepth = currentHeight - maxDepth;
+        height = std::max(getHeight(left), getHeight(right)) + 1;
+    if (height > maxDepth)
+        throw TooLargeExpressionTreeException{height, maxDepth};
+    operands = getAllOperands(this);
 }
 
-ExpressionTree::ExpressionTree(char v, const int maxDepth)
+ExpressionTree::ExpressionTree(char v, const int currentDepth, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * 1)}
 , left{nullptr}
 , right{nullptr}
-, currentHeight{0}
+, height{0}
 , func{ExpressionTreeFunctions::UKNOWN}
 , originalExpression{v}
 , maxDepth{maxDepth}
+, depth{currentDepth}
 {
     val = v;
 }
@@ -92,7 +90,7 @@ ExpressionTree::ExpressionTree(char v, const int maxDepth)
 ExpressionTree::ExpressionTree(const std::vector<char>& operands, const InitializationMethod initializationMethod, const int currentDepth, const int maxDepth)
 : left{nullptr}
 , right{nullptr}
-, currentDepth{currentDepth}
+, depth{currentDepth}
 , maxDepth{maxDepth}
 , operands{operands} {
     if (initializationMethod == InitializationMethod::Grow) {
@@ -100,21 +98,21 @@ ExpressionTree::ExpressionTree(const std::vector<char>& operands, const Initiali
     }
     // Setting the height manually, because in cases such the root is a function, it's height is still 0
     if (left == nullptr && right == nullptr)
-        currentHeight = 0;
+        height = 0;
     else
-        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
+        height = std::max(getHeight(left), getHeight(right)) + 1;
 }
 
 void ExpressionTree::growInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod, const int maxDepth) {
     // According to lesson - each branch might have different depth, while it's less that maxDepth
-    if (currentDepth < maxDepth){
+    if (depth < maxDepth){
         int branchDepth = std::experimental::randint(0, maxDepth);
         bool terminalOrFunction = std::experimental::randint(0, 1);
         if (terminalOrFunction) {
             // terminal
             val = *(select_randomly(operands.begin(), operands.end()));
             func = UKNOWN;
-            originalExpression = std::string{val};
+            originalExpression = treeToString(this);
             ExpressionTree::operands.clear();
             ExpressionTree::operands.push_back(val);
             numberOfSpaces = 4 * 2 + 1;
@@ -127,16 +125,14 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
                 std::cout << "PROBLEM BRO" << std::endl;
 
             val = EMPTY_VALUE;
-            left = new ExpressionTree(operands, initializationMethod, currentDepth + 1, maxDepth);
+            left = new ExpressionTree(operands, initializationMethod, depth + 1, maxDepth);
             if (func != NOT)
-                right = new ExpressionTree(operands, initializationMethod, currentDepth + 1, maxDepth);
-            currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
-            originalExpression = std::string{
-                    "(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func)
-                    + ((right != nullptr ? " (" + right->originalExpression + ")" : ""))};
+                right = new ExpressionTree(operands, initializationMethod, depth + 1, maxDepth);
+            height = std::max(getHeight(left), getHeight(right)) + 1;
+            originalExpression = treeToString(this);
             numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
         }
-    } else if (currentDepth == maxDepth){ // need to set terminals}
+    } else if (depth == maxDepth){ // need to set terminals}
         val = *(select_randomly(operands.begin(), operands.end()));
         func = UKNOWN;
         originalExpression = std::string{val};
@@ -146,19 +142,14 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
     }
 }
 
-ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxDepth)
-: ExpressionTree{operands, maxDepth, 0}
-{
-}
-
 // Ctor for full method
 ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxDepth, const int currentDepth)
 : left{nullptr}
 , right{nullptr}
-, currentHeight{0}
+, height{0}
 , maxDepth{maxDepth}
 , operands{operands}
-, currentDepth{currentDepth}
+, depth{currentDepth}
 {
     if (currentDepth == maxDepth){
         // Should set the kids values as leafs TERMINAL
@@ -177,12 +168,11 @@ ExpressionTree::ExpressionTree(const std::vector<char>& operands, const int maxD
         left = new ExpressionTree(operands, maxDepth, currentDepth + 1);
         if (func != ExpressionTreeFunctions::NOT)
             right = new ExpressionTree(operands, maxDepth, currentDepth  + 1);
-        currentHeight = std::max(getHeight(left), getHeight(right)) + 1;
-        originalExpression = std::string{"(" + left->originalExpression + ") " + expressionTreeFuncToString.at(func)
-                                         + ((right != nullptr ? " (" + right->originalExpression + ")" : ""))};
+        height = std::max(getHeight(left), getHeight(right)) + 1;
+        originalExpression = treeToString(this);
         numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
-        if (currentHeight > maxDepth)
-            throw TooLargeExpressionTreeException{currentHeight, maxDepth};
+        if (height > maxDepth)
+            throw TooLargeExpressionTreeException{height, maxDepth};
     }
 }
 
@@ -190,7 +180,7 @@ ExpressionTreeFunctions ExpressionTree::getRandomFunc() const {
     return ExpressionTreeFunctions::UKNOWN;
 }
 int ExpressionTree::getTreeHeight() const {
-    return currentHeight;
+    return height;
 }
 
 int ExpressionTree::getMaxDepth() const{
@@ -202,7 +192,7 @@ int ExpressionTree::getNumberOfOperands() const{
 }
 
 std::vector<char> ExpressionTree::getAllOperands() const {
-    return getAllOperands(this);
+    return operands;
 }
 
 std::vector<char> ExpressionTree::getAllOperands(const ExpressionTree *root) const {
@@ -239,7 +229,7 @@ std::vector<ExpressionTreeFunctions> ExpressionTree::getAllFunctions() const {
 
 void ExpressionTree::print() const {
     std::cout << "Used Operands are:" << std::endl;
-    for (const auto& v : getAllOperands())
+    for (const auto& v : operands)
         std::cout << v << ", ";
     std::cout << std::endl;
     std::cout << "Used funcs are:" << std::endl;
@@ -247,8 +237,8 @@ void ExpressionTree::print() const {
         if (v != ExpressionTreeFunctions::UKNOWN)
             std::cout << expressionTreeFuncToString.at(v) << ", ";
     std::cout << std::endl;
-    std::cout << "Height is: " << currentHeight << std::endl;
-    std::cout << "Tree depth is: " << currentDepth << std::endl;
+    std::cout << "Height is: " << height << std::endl;
+    std::cout << "Tree depth is: " << depth << std::endl;
 }
 
 void ExpressionTree::printTruthTable() const {
@@ -388,6 +378,8 @@ void ExpressionTree::printExpression(const char expr) const {
 
 std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(const std::vector<char>& operators) const {
     std::vector<std::vector<std::pair<char, bool>>> allOperandsPemutate;
+    if (operators.empty())
+        return allOperandsPemutate;
     if (operators.size() == 1){
         const char x = operators.begin().operator*();
         // in case we have 1 operands, we have 2 lines
@@ -545,7 +537,7 @@ std::vector<bool> ExpressionTree::getEvaluatedResults() const {
 }
 
 int ExpressionTree::getCurrentDepth() const {
-    return currentDepth;
+    return depth;
 }
 
 int ExpressionTree::getDepth(ExpressionTree* root) const
@@ -564,4 +556,17 @@ bool ExpressionTree::isSingleOperandExpression(const std::string &initialization
     if (function == "NOT")
         return spacesValidation;
     return false;
+}
+
+std::string ExpressionTree::treeToString(ExpressionTree *root) const {
+    std::string expr;
+    if (root == nullptr)
+        expr = "";
+    else if (root->func != ExpressionTreeFunctions::UKNOWN)
+        expr = ((root->left != nullptr ? "(" + root->left->originalExpression + ") " : ""))
+                    + expressionTreeFuncToString.at(root->func) +
+                ((root->right != nullptr ? " (" + root->right->originalExpression + ")" : ""));
+    else if (root->val != EMPTY_VALUE)
+        expr = root->val;
+    return expr;
 }

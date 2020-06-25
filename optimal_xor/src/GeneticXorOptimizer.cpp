@@ -99,7 +99,7 @@ void GeneticXorOptimizer::growMethod() {
 }
 
 void GeneticXorOptimizer::fullMethod() {
-    ExpressionTree tree{operands, maxDepth};
+    ExpressionTree tree{operands, InitializationMethod::Full, maxDepth};
 //    population.push_back(std::make_unique<CalculatedExpression>(tree));
     population.push_back(tree);
     buffer.push_back(tree);
@@ -112,6 +112,8 @@ void GeneticXorOptimizer::calculate_fitness() {
     for (auto& citizen : population) {
 //        citizen.printTruthTable();
         double fitnessVal = 0;
+        // For bloating support, if number of operands is different, means it's larger -> bigger tree generated, or
+        // smaller, means truth table will never be equal --> tautology
         if (citizen.getNumberOfOperands() != inputExpression.getNumberOfOperands())
             fitnessVal = INT_MAX;
         else {
