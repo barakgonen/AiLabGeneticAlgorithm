@@ -43,6 +43,13 @@ public:
         return expressionTree;
     }
 
+    virtual inline bool operator==(const CalculatedExpression& lhs) {
+        return  items == lhs.items &&
+                fitnessVal == lhs.fitnessVal &&
+                ageVal == lhs.ageVal &&
+                expressionTree == lhs.expressionTree;
+    }
+
 
     std::vector<int> items;
 protected:

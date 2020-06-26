@@ -31,7 +31,6 @@ public:
     void printTruthTable() const;
 
     std::string treeToString(ExpressionTree* root) const;
-
     // In cases whether substitution is not available, expect to do NOTHING
     void treeCrossover(ExpressionTree& other,
                        int crossoverDepth,
@@ -76,7 +75,52 @@ public:
         postSubActions(other);
     }
 
+    bool isOK() {
+        if (func != UKNOWN){
+            if (func != NOT)
+                return ((left != nullptr && right != nullptr)) ? (isStructureOK(left) && isStructureOK(right)) : false;
+            else
+                return isStructureOK(left) && right == nullptr;
+        } else{
+            // means funct is UKNOWN, need to make sure there is terminal
+            return val != EMPTY_VALUE;
+        }
+    }
+
+    virtual inline bool operator==(const ExpressionTree& lhs) {
+        return
+            this->numberOfSpaces == lhs.numberOfSpaces         &&
+            this->left == lhs.left                             &&
+            this->right == lhs.right                           &&
+            this->height == lhs.height                         &&
+            this->depth == lhs.depth                           &&
+            this->func == lhs.func                             &&
+            this->val == lhs.val                               &&
+            this->originalExpression == lhs.originalExpression &&
+            this->maxDepth == lhs.maxDepth                     &&
+            this->operands == lhs.operands;
+    }
+
 protected:
+    bool isStructureOK(ExpressionTree* root){
+        if (root == nullptr)
+            return true;
+        // if leaf
+        if (root->right == nullptr && root->left == nullptr) {
+            // if im bad leaf -> leaf without terminal data or with func
+            if (root->val == EMPTY_VALUE || root->func != UKNOWN)
+                return false;
+            return true;
+        }
+
+        if (root->func != UKNOWN)
+            if (root->func != NOT)
+                return isStructureOK(root->left) && isStructureOK(root->right);
+            else
+                return isStructureOK(root->left) && root->right == nullptr;
+        // because it means im not a leaf and im a terminal, which is wrong
+        return false;
+    }
     ExpressionTree(char v, const int currentDepth, const int maxDepth);
     ExpressionTree(const std::vector<char>& operands, const int maxDepth, const int currentDepth);
 
@@ -104,12 +148,62 @@ protected:
 
     void rootNodeSub(ExpressionTree &other) {// need to preform root change
         if (func != UKNOWN && other.func != UKNOWN){
-            // swapping terminals
-            std::swap(this->func, other.func);
+            if (func == NOT || other.func == NOT){
+                // I'm not and the other is not
+                if (func == NOT && other.func != NOT){
+                    // in case like i'm NOT and the other isn't, like the following:
+                    //    this                other
+                    //     NOT                 OR
+                    //    /                   /  \
+                    //   a                   NOT  a
+                    //                      /
+                    //                     b
+                    //
+                    // Expected result should be the following:
+                    //    this                other
+                    //     NOT                  OR
+                    //    /                    /  \
+                    //   b                    a   NOT
+                    //                            /
+                    //                           a
+                    std::swap(*this, other);
+                }
+                // other is NOT
+                if (func != NOT && other.func == NOT){
+                    // in case like i'm not NOT and the other is yes, like the following:
+                    //    this                other
+                    //     OR                   NOT
+                    //    /  \                  /
+                    //   a   NOT               b
+                    //       /
+                    //      a
+                    // Expected result should be the following:
+                    //    this                other
+                    //     NOT                  OR
+                    //    /                    /  \
+                    //   b                    a   NOT
+                    //                            /
+                    //                           a
+
+                    std::swap(*this, other);
+                }
+                else {
+                    // both are NOT
+                    std::swap(this->left, other.left);
+                }
+
+            }
+            else{
+                std::swap(this->func, other.func);
+            }
         }
         else if (val != EMPTY_VALUE && other.val != EMPTY_VALUE) {
             std::swap(val, other.val);
         }
+
+//        else{
+//            std::swap(*this, other);
+//        }
     };
 
     void postSubActions(ExpressionTree &other) {

@@ -120,7 +120,7 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
         bool terminalOrFunction = std::experimental::randint(0, 1);
         if (terminalOrFunction) {
             // terminal
-            val = *(select_randomly(operands.begin(), operands.end()));
+            val = operands.at(std::experimental::randint(0, (int)operands.size() - 1));
             func = UKNOWN;
             originalExpression = treeToString(this);
             ExpressionTree::operands.clear();
@@ -130,7 +130,7 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
             //function
             // this is function generation
             // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
-            func = select_randomly(keyToExpressionFunc.begin(), keyToExpressionFunc.end())->second;
+            func = keyToExpressionFunc.at(std::experimental::randint(0, (int)keyToExpressionFunc.size()-1));
 
             val = EMPTY_VALUE;
             left = new ExpressionTree(operands, initializationMethod, depth + 1, maxDepth);
@@ -141,7 +141,7 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
             numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
         }
     } else if (depth == maxDepth){ // need to set terminals}
-        val = *(select_randomly(operands.begin(), operands.end()));
+        val = operands.at(std::experimental::randint(0, (int)operands.size() - 1));
         func = UKNOWN;
         originalExpression = std::string{val};
         ExpressionTree::operands.clear();
@@ -153,14 +153,14 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
 void ExpressionTree::fullInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod, const int maxDepth, const int currentDepth) {
     if (currentDepth == maxDepth){
         // Should set the kids values as leafs TERMINAL
-        val = *(select_randomly(operands.begin(), operands.end()));
+        val = operands.at(std::experimental::randint(0, (int)operands.size() - 1));
         func = ExpressionTreeFunctions::UKNOWN;
         originalExpression = std::string{val};
     } else{
         // Should set as function
         // this is function generation
         // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
-        func = select_randomly(keyToExpressionFunc.begin(), keyToExpressionFunc.end())->second;
+        func = keyToExpressionFunc.at(std::experimental::randint(0, (int)keyToExpressionFunc.size()-1));
         val = EMPTY_VALUE;
         left = new ExpressionTree(operands, initializationMethod, currentDepth  + 1, maxDepth);
         if (func != ExpressionTreeFunctions::NOT)
@@ -387,10 +387,8 @@ std::vector<std::vector<std::pair<char, bool>>> ExpressionTree::getPermutation(c
         lineTwo.push_back(std::make_pair(x, false));
         allOperandsPemutate.push_back(lineTwo);
     } else if (operators.size() == 2) {
-        auto oper = operators.begin();
-        const char x = *oper;
-        oper++;
-        const char y = *oper;
+        const char x = operators.at(0);
+        const char y = operators.at(1);
         // in case we have 2 operands, we have 4 lines
         std::vector<std::pair<char, bool>> lineOne;
         lineOne.push_back(std::make_pair(x, true));

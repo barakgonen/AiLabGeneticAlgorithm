@@ -37,6 +37,7 @@ protected:
     virtual void non_uniform_crossover(const int i1, const int i2) override;
 
     virtual void generateNextGeneration();
+    virtual double getValueToPrint(const CalculatedExpression& citizen) override;
     const ExpressionTree& inputExpression;
     const int maxDepth;
     const int numberOfCitizensInPopulationGroup;

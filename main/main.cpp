@@ -474,24 +474,60 @@ int main(int argc, char *argv[]) {
     } else if (labSelector == "TestExpressionTree") {
         runAllTests();
     } else if (labSelector == "OptimalXor") {
-        runExpressionTreeTests(true);
+        runAllTests(true);
         // User input for binary expression to optimize
+
+        // Immediate values which should appear with population initialization
+        std::vector<std::pair<std::string, int>> immediateExpressionsToTest;
+        immediateExpressionsToTest.push_back(std::make_pair("a", 0));
+        immediateExpressionsToTest.push_back(std::make_pair("b", 0));
+        immediateExpressionsToTest.push_back(std::make_pair("A && A", 0));
+        immediateExpressionsToTest.push_back(std::make_pair("A AND B", 1));
+        immediateExpressionsToTest.push_back(std::make_pair("B AND A", 1));
+        immediateExpressionsToTest.push_back(std::make_pair("B AND B", 0));
+        immediateExpressionsToTest.push_back(std::make_pair("A OR A", 0));
+        immediateExpressionsToTest.push_back(std::make_pair("A || B", 1));
+        immediateExpressionsToTest.push_back(std::make_pair("B OR A", 1));
+        immediateExpressionsToTest.push_back(std::make_pair("B OR B", 0));
+        immediateExpressionsToTest.push_back(std::make_pair("!a", 1));
+        immediateExpressionsToTest.push_back(std::make_pair("((B) NOT) NOT", 0));
+        int passed = 0;
         int failures = 0;
-        std::map<std::string, int> expressionsToTest;
-        expressionsToTest.insert(std::make_pair("a", 0));
-        expressionsToTest.insert(std::make_pair("a && a", 0));
-        expressionsToTest.insert(std::make_pair("((B) NOT) NOT", 0));
+//        for (int c = 0; c < 500; c++){
+//            for (const auto expr : immediateExpressionsToTest) {
+//                if (!runOptimizationCase(expr, 2)){
+//                    std::cout << "FAI:ED FOR: " << expr.first << std::endl;
+//                    failures++;
+//                }
+//                else{
+//                    passed++;
+//                }
+//            }
+//        }
 
-        expressionsToTest.insert(std::make_pair("A AND B", 1));
-        expressionsToTest.insert(std::make_pair("!a", 1));
-        expressionsToTest.insert(std::make_pair("a OR b", 1));
+        std::cout << "Ran: " << (passed + failures) << " tests. Summary: Passed: " << passed << ", Failed: " << failures << std::endl;
 
-        expressionsToTest.insert(std::make_pair("a XOR b", 4));
-        for (const auto expr : expressionsToTest)
-            if (!runOptimizationCase(expr, 3))
-                failures++;
-        std::cout << "Ran: " << expressionsToTest.size() << " tests. Summary: Passed: "
-                    << (expressionsToTest.size() - failures) << ", Failed: " << failures << std::endl;
+        // Those examples forces algorithm to generate deeper trees, for example if input height is 2, result is at least 3 to MAX_PARSE_TREE_DEPTH
+        std::map<std::string, int> levelOneExamples;
+
+        levelOneExamples.insert(std::make_pair("a XOR b", 4));
+        failures = 0;
+        passed = 0;
+        for (int c = 0; c < 1; c++){
+            for (const auto expr : levelOneExamples) {
+                if (!runOptimizationCase(expr, 3)){
+                    std::cout << "FAI:ED FOR: " << expr.first << std::endl;
+                    failures++;
+                }
+                else{
+                    passed++;
+                }
+            }
+        }
+//        immediateExpressionsToTest.insert(std::make_pair("b XOR a", 4));
+//        immediateExpressionsToTest.insert(std::make_pair("b XOR b", 4));
+//        immediateExpressionsToTest.insert(std::make_pair("a XOR a", 4));
+
     }
     return 0;
 }
@@ -502,7 +538,8 @@ bool runOptimizationCase(std::pair<std::string, int> expressionToTest, int maxDe
 
     // Initialization of GeneticXorOptimizer
     GeneticXorOptimizer geneticXorOptimizer{exprTree};
-    if (geneticXorOptimizer.optimizeExpression() != expressionToTest.second)
+    int n = geneticXorOptimizer.optimizeExpression();
+    if (n != expressionToTest.second)
         return false;
     return true;
 }

@@ -5,6 +5,8 @@
 #ifndef AILABGENETICALGORITHM_OPTIMALXORAUTOTESTS_H
 #define AILABGENETICALGORITHM_OPTIMALXORAUTOTESTS_H
 
+void testRightRightDepth1();
+
 #include <iostream>
 #include <string>
 #include "ExpressionTree.h"
@@ -40,6 +42,7 @@ void testTree(const std::string treeAsString, const int expectedHeight, bool qui
         }
     }
 
+    isFine = isFine && exprTree.isOK();
     if (!isFine) {
         std::cout << "failed parsing the following string tree: " << treeAsString << std::endl;
         exit(-1);
@@ -63,6 +66,7 @@ void testSwappingTrees(const std::string &treeOne, const int treeOneMaxDepth, st
         std::cout << "results comparison for tree one has failed :(" << std::endl;
         isOK = false;
     }
+    isOK = isOK && a.isOK() && b.isOK();
     if (!isOK) {
         std::cout << "Tree swap failed.. " << std::endl;
         exit(-1);
@@ -85,6 +89,8 @@ void testSwawppingRootFuncForTreeInDepthOne(std::string treeAsStringOne,
         std::cout << "ERROR, tree 2 evaluated false" << std::endl;
         isOK = false;
     }
+    isOK = isOK && aT.isOK() && bT.isOK();
+
 
     if (!isOK)
         exit(-1);
@@ -115,6 +121,8 @@ void testSwappingTreesTerminals(std::string treeAsStringOne,
         std::cout << "ERROR, tree 2 has different operands than expected" << std::endl;
         isOK = false;
     }
+    isOK = isOK && aT.isOK() && bT.isOK();
+
     if (!isOK)
         exit(-1);
 }
@@ -127,7 +135,6 @@ testSwappingRightRightDepthN(std::string treeAsStringOne, int treeOneMaxDepth, s
     ExpressionTree expr{treeAsStringOne, 0, treeOneMaxDepth};
     ExpressionTree expr2{treeAsStringTwo, 0, treeTwoMaxDepth};
     expr.treeCrossover(expr2, subDepth, true, true, true);
-
     bool isOK = true;
     if (treeOneExpectedRes != expr.getEvaluatedResults()) {
         std::cout << "ERROR, tree 1 failed with sub" << std::endl;
@@ -137,6 +144,8 @@ testSwappingRightRightDepthN(std::string treeAsStringOne, int treeOneMaxDepth, s
         std::cout << "ERROR, tree 2 failed with sub" << std::endl;
         isOK = false;
     }
+    isOK = isOK && expr.isOK() && expr2.isOK();
+
     if (!isOK)
         exit(-1);
 }
@@ -174,6 +183,7 @@ void testSwappingRightLeftDepthN(std::string treeAsStringOne, int treeOneMaxDept
     expr.treeCrossover(expr2, subDepth, true, true, false);
 
     bool isOK = true;
+
     if (treeOneExpectedRes != expr.getEvaluatedResults()) {
         std::cout << "ERROR, tree 1 failed with sub" << std::endl;
         isOK = false;
@@ -182,6 +192,8 @@ void testSwappingRightLeftDepthN(std::string treeAsStringOne, int treeOneMaxDept
         std::cout << "ERROR, tree 2 failed with sub" << std::endl;
         isOK = false;
     }
+    isOK = isOK && expr.isOK() && expr2.isOK();
+
     if (!isOK)
         exit(-1);
 }
@@ -218,6 +230,8 @@ void testSwappingLeftLeftDepthN(std::string treeAsStringOne, int treeOneMaxDepth
         std::cout << "ERROR, tree 2 failed with sub" << std::endl;
         isOK = false;
     }
+    isOK = isOK && expr.isOK() && expr2.isOK();
+
     if (!isOK)
         exit(-1);
 }
@@ -254,6 +268,9 @@ void testSwappingLeftRightDepthN(std::string treeAsStringOne, int treeOneMaxDept
         std::cout << "ERROR, tree 2 failed with sub" << std::endl;
         isOK = false;
     }
+
+    isOK = isOK && expr.isOK() && expr2.isOK();
+
     if (!isOK)
         exit(-1);
 }
@@ -274,12 +291,12 @@ testSwappingLeftRightDepthTwo(std::string treeAsStringOne, int treeOneMaxDepth, 
 }
 
 void runExpressionTreeTests(bool isInQuietMode = false) {
-    testTree("NOT", 0, isInQuietMode);
-    testTree("!", 0, isInQuietMode);
-    testTree("OR", 0, isInQuietMode);
-    testTree("||", 0, isInQuietMode);
-    testTree("AND", 0, isInQuietMode);
-    testTree("&&", 0, isInQuietMode);
+//    testTree("NOT", 0, isInQuietMode);
+//    testTree("!", 0, isInQuietMode);
+//    testTree("OR", 0, isInQuietMode);
+//    testTree("||", 0, isInQuietMode);
+//    testTree("AND", 0, isInQuietMode);
+//    testTree("&&", 0, isInQuietMode);
 
     testTree("A", 0, isInQuietMode, {1, 0});
 
@@ -419,6 +436,85 @@ void runAllTests(bool quietMode = false) {
                                   "((B) NOT) NOT", 2, {1, 0});
     testSwappingLeftRightDepthTwo("(C AND C) OR ((A AND B) XOR (A AND ((A) NOT)))", 4, {1, 1, 1, 0, 0, 0, 0, 0},
                                   "(D AND B) OR (C XOR B)", 2, {1, 1, 0, 0, 0, 0, 0, 0});
+    testRightRightDepth1();
+//    std::string one = "((b) NOT) AND (b)";
+//    std::string two = "((b) NOT) AND (b)";
+//    ExpressionTree exprOne{one, 0, 2};
+//    ExpressionTree exprTwo{two, 0, 2};
+//    std::vector<bool> oneExpectedRes = {1, 0};
+//    std::vector<bool> twoExpectedRes = {1, 0};
+//    std::vector<char> oneExpectedOperandsTerminals = {'b'};
+//    std::vector<char> twoExpectedOperandsTerminals = {'b'};
+//    std::vector<ExpressionTreeFunctions> oneFuncs = {};
+//    std::vector<ExpressionTreeFunctions> twoFuncs = {};
+//    exprOne.treeCrossover(exprTwo, 1);
+//
+//    std::vector<bool> oneActualRes = exprOne.getEvaluatedResults();
+//    std::vector<bool> twoActualRes = exprTwo.getEvaluatedResults();
+//    std::vector<char> oneActualTerminals = exprOne.getAllOperands();
+//    std::vector<char> twoActualTerminals = exprTwo.getAllOperands();
+//    std::vector<ExpressionTreeFunctions> oneActualFuncs = exprOne.getAllFunctions();
+//    std::vector<ExpressionTreeFunctions> twoActualFuncs = exprTwo.getAllFunctions();
+//    if (oneExpectedRes != oneActualRes)
+//        std::cout << "One: results different" << std::endl;
+//    if (twoExpectedRes != twoActualRes)
+//        std::cout << "Two: results different" << std::endl;
+//    if (oneExpectedOperandsTerminals != oneActualTerminals)
+//        std::cout << "One: operands different" << std::endl;
+//    if (twoExpectedOperandsTerminals != twoActualTerminals)
+//        std::cout << "Two: operands different" << std::endl;
+//    if (oneFuncs != oneActualFuncs)
+//        std::cout << "One: funcs different" << std::endl;
+//    if (twoFuncs != twoActualFuncs)
+//        std::cout << "Two: funcs different" << std::endl;
+
+    std::string e = "(b) OR";
+    ExpressionTree ee{e, 0,1};
+    if (ee.isOK()){
+        std::cout << "Expression is wrong" << std::endl;
+        exit(-1);
+    }
+//    "(a) OR ((a) NOT)"
+//    "(b) NOT"
+//    firstExpr.treeCrossover(secondExpr, 0));
+}
+
+void testRightRightDepth1() {
+    std::string one = "C AND A";
+    std::string two = "(B) NOT";
+    ExpressionTree exprOne{one, 0, 1};
+    ExpressionTree exprTwo{two, 0, 1};
+    std::vector<bool> oneExpectedRes = {0, 1, 0, 0};
+    std::vector<bool> twoExpectedRes = {1, 0};
+    std::vector<char> oneExpectedOperandsTerminals = {'C', 'B'};
+    std::vector<char> twoExpectedOperandsTerminals = {'A'};
+    std::vector<ExpressionTreeFunctions> oneFuncs = {AND, NOT};
+    std::vector<ExpressionTreeFunctions> twoFuncs = {};
+    exprOne.treeCrossover(exprTwo, 1, true, true, true);
+
+    std::vector<bool> oneActualRes = exprOne.getEvaluatedResults();
+    std::vector<bool> twoActualRes = exprTwo.getEvaluatedResults();
+    std::vector<char> oneActualTerminals = exprOne.getAllOperands();
+    std::vector<char> twoActualTerminals = exprTwo.getAllOperands();
+    std::vector<ExpressionTreeFunctions> oneActualFuncs = exprOne.getAllFunctions();
+    std::vector<ExpressionTreeFunctions> twoActualFuncs = exprTwo.getAllFunctions();
+    if (oneExpectedRes != oneActualRes)
+        std::cout << "One: results different" << std::endl;
+    if (twoExpectedRes != twoActualRes)
+        std::cout << "Two: results different" << std::endl;
+    if (oneExpectedOperandsTerminals != oneActualTerminals)
+        std::cout << "One: operands different" << std::endl;
+    if (twoExpectedOperandsTerminals != twoActualTerminals)
+        std::cout << "Two: operands different" << std::endl;
+    if (oneFuncs != oneActualFuncs)
+        std::cout << "One: funcs different" << std::endl;
+    if (twoFuncs != twoActualFuncs)
+        std::cout << "Two: funcs different" << std::endl;
+    if (!exprOne.isOK())
+        std::cout << "One: tree is not OK" << std::endl;
+    if (!exprTwo.isOK())
+        std::cout << "Two: tree is not OK" << std::endl;
+
 }
 
 #endif //AILABGENETICALGORITHM_OPTIMALXORAUTOTESTS_H
