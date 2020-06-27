@@ -22,7 +22,7 @@ GeneticXorOptimizer::GeneticXorOptimizer(ExpressionTree &inputExpression)
 {
 }
 
-int GeneticXorOptimizer::optimizeExpression() {
+CalculatedExpression GeneticXorOptimizer::optimizeExpression() {
     std::cout << "Starting to optimize the following expression: " << inputExpression.getOriginalExpr() << std::endl;
     clock_t t, totalTicks = 0;
     init_population();
@@ -33,56 +33,43 @@ int GeneticXorOptimizer::optimizeExpression() {
     int c = 0;
     bool hasFound = false;
 
-    while (!hasFound){
+    while (!hasFound) {
         calc_fitness();
         sort_population_by_fitnes();
         print_best();
 
-        const auto& best = population.front();
+        const auto &best = population.front();
         if (best.getCalculatedResult() == target) {
             if (best.fitnessVal < minimalLogicalGates) {
                 minimalLogicalGates = best.fitnessVal;
                 c = 0;
-            } else{
-                if(best.fitnessVal == minimalLogicalGates){
-                    if (c == 100){
+            } else {
+                if (best.fitnessVal == minimalLogicalGates) {
+                    if (c == 10) {
                         hasFound = true;
                         break;
                     } else
                         c++;
                 }
             }
-        }
-//        else{
+        } else {
             int index = 0;
-            for (auto& citizen : population){
+            for (auto &citizen : population) {
                 bool mutationOrCrossover = std::experimental::randint(0, 1);
-                if (mutationOrCrossover){
+                if (mutationOrCrossover) {
                     // mutation
                     mutate(citizen);
-                } else{
+                } else {
                     // crossover
-                    int firstIndex = index;/*std::experimental::randint(0, (int)(population.size() - 1));*/
-                    int secondIndex = std::experimental::randint(0, (int)(population.size() - 1));
+                    int firstIndex = index;
+                    int secondIndex = std::experimental::randint(0, (int) (population.size() - 1));
                     while (secondIndex == firstIndex)
-                        secondIndex = std::experimental::randint(0, (int)(population.size() - 1));
+                        secondIndex = std::experimental::randint(0, (int) (population.size() - 1));
                     non_uniform_crossover(firstIndex, secondIndex);
                 }
                 index++;
             }
-//        }
-//        bool mutationOrCrossover = std::experimental::randint(0, 1);
-//        if (mutationOrCrossover){
-//            // mutation
-//            mutate(population.at(std::experimental::randint(0, (int)(population.size() - 1))));
-//        } else{
-//            // crossover
-//            int firstIndex = std::experimental::randint(0, (int)(population.size() - 1));
-//            int secondIndex = std::experimental::randint(0, (int)(population.size() - 1));
-//            while (secondIndex == firstIndex)
-//                secondIndex = std::experimental::randint(0, (int)(population.size() - 1));
-//            non_uniform_crossover(firstIndex, secondIndex);
-//        }
+        }
     }
 
     auto endTimeStamp = std::chrono::high_resolution_clock::now();
@@ -94,7 +81,7 @@ int GeneticXorOptimizer::optimizeExpression() {
     representation.printTruthTable();
 //    std::cout << "Number of logical gates: " << representation.getNumberOfLogicalGates() << std::endl;
     std::cout << "Total time is: " << numberOfMillis << " millis" << std::endl;
-    return representation.getNumberOfLogicalGates();
+    return representation;
 }
 
 void GeneticXorOptimizer::init_population() {
@@ -144,13 +131,14 @@ void GeneticXorOptimizer::calc_fitness() {
     // for each case we for in-matching we have fees!
     // starting of very greedy look, number of variables, if it's not the same, moving on
     for (auto& citizen : population) {
+        citizen.setNotTargetGene();
         double fitnessVal = 0;
         // For bloating support, if number of operands is different, means it's larger -> bigger tree generated, or
         // smaller, means truth table will never be equal --> tautology
         if (citizen.getNumberOfOperands() != inputExpression.getNumberOfOperands())
             fitnessVal = INT_MAX;
         else {
-            // for each mistake, reducing 5 points
+            // for each mistake, increasing by 50 points
             const auto citizenCalculatedResult = citizen.getCalculatedResult();
             for (int index = 0; index < citizenCalculatedResult.size(); index++){
                 if (citizenCalculatedResult.at(index) != target.at(index))
@@ -159,20 +147,14 @@ void GeneticXorOptimizer::calc_fitness() {
             // means all answers correct!
             if (fitnessVal == 0){
                 // Trying - there are more correct than incorrect add another dimension - number of true & false
-                int currNumberOfTrue = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), true);
-                int currNumberOfFalse = std::count(citizenCalculatedResult.begin(), citizenCalculatedResult.end(), false);
-                if (currNumberOfFalse == numberOfFalses && currNumberOfTrue == numberOfTrues){
                     fitnessVal = 1;
                     fitnessVal *= citizen.getNumberOfLogicalGates();
+                    citizen.setItsTargetGene();
                 }
                 else{
                     // penalty, if we missed it.. it should not get here
                     fitnessVal += 10;
                 }
-//                // Another check is height check
-//                if (citizen.getExpressionTree().getTreeHeight() > inputExpression.getTreeHeight())
-//                    fitnessVal *= 2;
-            }
         }
 
         citizen.fitnessVal = fitnessVal;
@@ -191,27 +173,18 @@ void GeneticXorOptimizer::handle_specific_elitism(const int index) {
 }
 
 void GeneticXorOptimizer::mutate(CalculatedExpression &member) {
-    // Mutation is modifing existing tree, thus we will generate new randomly chosen subtree with same terminals
+    // Mutation is modifying existing tree, thus we will generate new randomly chosen subtree with same terminals
     // and add it to the tree
-    counter++;
-    std::cout << "COUNTER = " << counter << std::endl;
     auto expr = member.getExpressionTree();
     auto randomInitializationMethod = (InitializationMethod)std::experimental::randint(0, 1);
     const auto maxDepth = std::experimental::randint(0, expr.getMaxDepth());
     auto generatedNewSubtree = ExpressionTree(expr.getAllOperands(), randomInitializationMethod, 0, maxDepth);
-    if (!expr.isOK()) {
-        std::cout << "BLA" << std::endl;
-    }
+
     expr.treeCrossover(generatedNewSubtree, maxDepth);
-    if (!expr.isOK()) {
-        std::cout << "BLA" << std::endl;
-    }
-    population.push_back(expr);
+    assert(expr.isTreeBuiltSuccessfully() && "expr is not OK!");
 }
 
 void GeneticXorOptimizer::non_uniform_crossover(const int i1, const int i2) {
-    counter++;
-    std::cout << "COUNTER = " << counter << std::endl;
     // Getting both randomly chosen trees from general population
     auto& firstExpr = population.at(i1).getExpressionTree();
     auto& secondExpr = population.at(i2).getExpressionTree();
@@ -219,14 +192,11 @@ void GeneticXorOptimizer::non_uniform_crossover(const int i1, const int i2) {
     // Finding the minimal height for not increasing tree size
     int minHeight = std::min(firstExpr.getTreeHeight(), secondExpr.getTreeHeight());
 
-    if (!firstExpr.isOK() || !secondExpr.isOK())
-        std::cout << "BLA" << std::endl;
     // Calling for crossover in randomly chosen depth, the directions inside the tree also randomized
     firstExpr.treeCrossover(secondExpr, std::experimental::randint(0, minHeight));
-    if (!firstExpr.isOK() || !secondExpr.isOK())
-        std::cout << "BLA" << std::endl;
-    assert(firstExpr.isOK() && "firstExpr is not OK!");
-    assert(secondExpr.isOK() && "secondExpr is not OK!");
+
+    assert(firstExpr.isTreeBuiltSuccessfully() && "firstExpr is not OK!");
+    assert(secondExpr.isTreeBuiltSuccessfully() && "secondExpr is not OK!");
 }
 
 void GeneticXorOptimizer::generateNextGeneration() {

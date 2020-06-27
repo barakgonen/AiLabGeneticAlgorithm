@@ -478,55 +478,39 @@ int main(int argc, char *argv[]) {
         // User input for binary expression to optimize
 
         // Immediate values which should appear with population initialization
-        std::vector<std::pair<std::string, int>> immediateExpressionsToTest;
-        immediateExpressionsToTest.push_back(std::make_pair("a", 0));
-        immediateExpressionsToTest.push_back(std::make_pair("b", 0));
-        immediateExpressionsToTest.push_back(std::make_pair("A && A", 0));
-        immediateExpressionsToTest.push_back(std::make_pair("A AND B", 1));
-        immediateExpressionsToTest.push_back(std::make_pair("B AND A", 1));
-        immediateExpressionsToTest.push_back(std::make_pair("B AND B", 0));
-        immediateExpressionsToTest.push_back(std::make_pair("A OR A", 0));
-        immediateExpressionsToTest.push_back(std::make_pair("A || B", 1));
-        immediateExpressionsToTest.push_back(std::make_pair("B OR A", 1));
-        immediateExpressionsToTest.push_back(std::make_pair("B OR B", 0));
-        immediateExpressionsToTest.push_back(std::make_pair("!a", 1));
-        immediateExpressionsToTest.push_back(std::make_pair("((B) NOT) NOT", 0));
+        std::vector<std::pair<std::string, int>> inputExamples;
+        inputExamples.push_back(std::make_pair("a", 0));
+        inputExamples.push_back(std::make_pair("b", 0));
+        inputExamples.push_back(std::make_pair("A && A", 0));
+        inputExamples.push_back(std::make_pair("A AND B", 1));
+        inputExamples.push_back(std::make_pair("B AND A", 1));
+        inputExamples.push_back(std::make_pair("B AND B", 0));
+        inputExamples.push_back(std::make_pair("A OR A", 0));
+        inputExamples.push_back(std::make_pair("A || B", 1));
+        inputExamples.push_back(std::make_pair("B OR A", 1));
+        inputExamples.push_back(std::make_pair("B OR B", 0));
+        inputExamples.push_back(std::make_pair("!a", 1));
+        inputExamples.push_back(std::make_pair("((B) NOT) NOT", 0));
+        inputExamples.push_back(std::make_pair("((a) NOT) XOR (a AND b)", 2));
+        inputExamples.push_back(std::make_pair("(a XOR b) XOR (a XOR b)", 2));
+        inputExamples.push_back(std::make_pair("(a || b) XOR (a AND b)", 7));
+        inputExamples.push_back(std::make_pair("a XOR b", 4));
+        inputExamples.push_back(std::make_pair("b XOR b", 2));
+        inputExamples.push_back(std::make_pair("a XOR a", 2));
+        inputExamples.push_back(std::make_pair("(((b) AND (a)) NOT) AND (((a) OR (b)) OR ((a) AND (b)))", 6));
+        inputExamples.push_back(std::make_pair("(a XOR b) AND (a XOR b)", 4));
         int passed = 0;
         int failures = 0;
-//        for (int c = 0; c < 500; c++){
-//            for (const auto expr : immediateExpressionsToTest) {
-//                if (!runOptimizationCase(expr, 2)){
-//                    std::cout << "FAI:ED FOR: " << expr.first << std::endl;
-//                    failures++;
-//                }
-//                else{
-//                    passed++;
-//                }
-//            }
-//        }
-
-        std::cout << "Ran: " << (passed + failures) << " tests. Summary: Passed: " << passed << ", Failed: " << failures << std::endl;
-
-        // Those examples forces algorithm to generate deeper trees, for example if input height is 2, result is at least 3 to MAX_PARSE_TREE_DEPTH
-        std::map<std::string, int> levelOneExamples;
-
-        levelOneExamples.insert(std::make_pair("a XOR b", 4));
-        failures = 0;
-        passed = 0;
-        for (int c = 0; c < 1; c++){
-            for (const auto expr : levelOneExamples) {
-                if (!runOptimizationCase(expr, 3)){
-                    std::cout << "FAI:ED FOR: " << expr.first << std::endl;
-                    failures++;
-                }
-                else{
-                    passed++;
-                }
+        for (const auto expr : inputExamples) {
+            if (!runOptimizationCase(expr, 2)){
+                failures++;
+                std::cout << "FAILED: " << expr.first << std::endl;
+            }
+            else{
+                passed++;
             }
         }
-//        immediateExpressionsToTest.insert(std::make_pair("b XOR a", 4));
-//        immediateExpressionsToTest.insert(std::make_pair("b XOR b", 4));
-//        immediateExpressionsToTest.insert(std::make_pair("a XOR a", 4));
+        std::cout << "Ran: " << (passed + failures) << " tests. Summary: Passed: " << passed << ", Failed: " << failures << std::endl;
 
     }
     return 0;
@@ -535,11 +519,14 @@ int main(int argc, char *argv[]) {
 bool runOptimizationCase(std::pair<std::string, int> expressionToTest, int maxDepth) {
     std::cout << "===============================" << std::endl;
     ExpressionTree exprTree{expressionToTest.first, 0, maxDepth};
+    auto expectedResult = exprTree.getEvaluatedResults();
 
     // Initialization of GeneticXorOptimizer
     GeneticXorOptimizer geneticXorOptimizer{exprTree};
-    int n = geneticXorOptimizer.optimizeExpression();
-    if (n != expressionToTest.second)
+    auto calculatedExpr = geneticXorOptimizer.optimizeExpression();
+    int numberOfLogicalGates = calculatedExpr.getNumberOfLogicalGates();
+    auto calculatedResult = calculatedExpr.getCalculatedResult();
+    if (numberOfLogicalGates != expressionToTest.second || calculatedResult != expectedResult)
         return false;
     return true;
 }

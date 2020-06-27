@@ -69,8 +69,8 @@ ExpressionTree::ExpressionTree(std::string initializationExpression, const int t
         height = 0;
     else
         height = std::max(getHeight(left), getHeight(right)) + 1;
-    if (height > maxDepth)
-        throw TooLargeExpressionTreeException{height, maxDepth};
+//    if (height > maxDepth)
+//        throw TooLargeExpressionTreeException{height, maxDepth};
     operands = getAllOperands(this);
 }
 
@@ -168,8 +168,8 @@ void ExpressionTree::fullInitMethod(const std::vector<char> &operands, const Ini
         height = std::max(getHeight(left), getHeight(right)) + 1;
         originalExpression = treeToString(this);
         numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
-        if (height > maxDepth)
-            throw TooLargeExpressionTreeException{height, maxDepth};
+//        if (height > maxDepth)
+//            throw TooLargeExpressionTreeException{height, maxDepth};
     }
 }
 
@@ -531,10 +531,6 @@ std::vector<bool> ExpressionTree::getEvaluatedResults() const {
     return evaluatedResults;
 }
 
-int ExpressionTree::getCurrentDepth() const {
-    return depth;
-}
-
 int ExpressionTree::getDepth(ExpressionTree* root) const
 {
     if (root == nullptr || root->left == nullptr && root->right == nullptr)
@@ -564,4 +560,161 @@ std::string ExpressionTree::treeToString(ExpressionTree *root) const {
     else if (root->val != EMPTY_VALUE)
         expr = root->val;
     return expr;
+}
+
+void ExpressionTree::treeCrossover(ExpressionTree &other, int crossoverDepth, bool isTestingMode,
+                                   bool movementDirectionWithThisTree, bool movementDirectionWithOtherTree) {
+    if (this->depth == crossoverDepth || other.depth == crossoverDepth) {
+        // when crossover depth is 0, it means were preforming root substitution
+        if (crossoverDepth == 0)
+            rootNodeSub(other);
+        else
+            std::swap(*this, other);
+    } else {
+
+        if (!isTestingMode) {
+            movementDirectionWithThisTree = std::experimental::randint(0, 1);
+            movementDirectionWithOtherTree = std::experimental::randint(0, 1);
+        }
+
+        if (movementDirectionWithThisTree && movementDirectionWithOtherTree) {
+            if (right != nullptr && other.right != nullptr)
+                right->treeCrossover(*other.right, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                     movementDirectionWithOtherTree);
+            else if (right != nullptr && other.right == nullptr)
+                right->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                     movementDirectionWithOtherTree);
+        } else if (movementDirectionWithThisTree && !movementDirectionWithOtherTree) {
+            if (right != nullptr && other.left != nullptr)
+                right->treeCrossover(*other.left, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                     movementDirectionWithOtherTree);
+            else if (right != nullptr && other.left == nullptr)
+                right->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                     movementDirectionWithOtherTree);
+        } else if (!movementDirectionWithThisTree && movementDirectionWithOtherTree) {
+            if (left != nullptr && other.right != nullptr)
+                left->treeCrossover(*other.right, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                    movementDirectionWithOtherTree);
+            else if (left != nullptr && other.right == nullptr)
+                left->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                    movementDirectionWithOtherTree);
+        } else if (!movementDirectionWithThisTree && !movementDirectionWithOtherTree) {
+            if (left != nullptr && other.left != nullptr)
+                left->treeCrossover(*other.left, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                    movementDirectionWithOtherTree);
+            else if (left != nullptr && other.left == nullptr)
+                left->treeCrossover(other, crossoverDepth, isTestingMode, movementDirectionWithThisTree,
+                                    movementDirectionWithOtherTree);
+        }
+    }
+    postSubActions(other);
+}
+
+bool ExpressionTree::isTreeBuiltSuccessfully() {
+    if (func != UKNOWN){
+        if (func != NOT)
+            return ((left != nullptr && right != nullptr)) ? (isStructureOK(left) && isStructureOK(right)) : false;
+        else
+            return isStructureOK(left) && right == nullptr;
+    } else{
+        // means funct is UKNOWN, need to make sure there is terminal
+        return val != EMPTY_VALUE;
+    }
+}
+
+bool ExpressionTree::operator==(const ExpressionTree &lhs) {
+    return
+            this->numberOfSpaces == lhs.numberOfSpaces         &&
+            this->left == lhs.left                             &&
+            this->right == lhs.right                           &&
+            this->height == lhs.height                         &&
+            this->depth == lhs.depth                           &&
+            this->func == lhs.func                             &&
+            this->val == lhs.val                               &&
+            this->originalExpression == lhs.originalExpression &&
+            this->maxDepth == lhs.maxDepth                     &&
+            this->operands == lhs.operands;
+}
+
+void ExpressionTree::postSubActions(ExpressionTree &other) {
+    originalExpression = treeToString(this);
+    other.originalExpression = treeToString(&other);
+    operands = getAllOperands(this);
+    other.operands = getAllOperands(&other);
+}
+
+void ExpressionTree::rootNodeSub(ExpressionTree &other) {
+    if (func != UKNOWN && other.func != UKNOWN){
+        if (func == NOT || other.func == NOT){
+            // I'm not and the other is not
+            if (func == NOT && other.func != NOT){
+                // in case like i'm NOT and the other isn't, like the following:
+                //    this                other
+                //     NOT                 OR
+                //    /                   /  \
+                    //   a                   NOT  a
+                //                      /
+                //                     b
+                //
+                // Expected result should be the following:
+                //    this                other
+                //     NOT                  OR
+                //    /                    /  \
+                    //   b                    a   NOT
+                //                            /
+                //                           a
+                std::swap(*this, other);
+            }
+            // other is NOT
+            if (func != NOT && other.func == NOT){
+                // in case like i'm not NOT and the other is yes, like the following:
+                //    this                other
+                //     OR                   NOT
+                //    /  \                  /
+                //   a   NOT               b
+                //       /
+                //      a
+                // Expected result should be the following:
+                //    this                other
+                //     NOT                  OR
+                //    /                    /  \
+                    //   b                    a   NOT
+                //                            /
+                //                           a
+
+                std::swap(*this, other);
+            }
+            else {
+                // both are NOT
+                std::swap(this->left, other.left);
+            }
+
+        }
+        else{
+            std::swap(this->func, other.func);
+        }
+    }
+    else if (val != EMPTY_VALUE && other.val != EMPTY_VALUE) {
+        std::swap(val, other.val);
+    }
+}
+
+bool ExpressionTree::isStructureOK(ExpressionTree *root) {
+    if (root == nullptr)
+        return true;
+    // if leaf
+    if (root->right == nullptr && root->left == nullptr) {
+        // if im bad leaf -> leaf without terminal data or with func
+        if (root->val == EMPTY_VALUE || root->func != UKNOWN)
+            return false;
+        return true;
+    }
+
+    if (root->func != UKNOWN)
+        if (root->func != NOT)
+            return isStructureOK(root->left) && isStructureOK(root->right);
+        else
+            return isStructureOK(root->left) && root->right == nullptr;
+    // because it means im not a leaf and im a terminal, which is wrong
+    return false;
 }

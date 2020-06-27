@@ -15,6 +15,7 @@ public:
     CalculatedExpression(const ExpressionTree& calculatedTree)
     : GeneticAlgorithmBaseStruct{}
     , expressionTree{calculatedTree}
+    , equalsToTargetGene{false}
     {}
 
     std::vector<bool> getCalculatedResult() const {
@@ -47,12 +48,24 @@ public:
         return  items == lhs.items &&
                 fitnessVal == lhs.fitnessVal &&
                 ageVal == lhs.ageVal &&
-                expressionTree == lhs.expressionTree;
+                expressionTree == lhs.expressionTree &&
+                equalsToTargetGene == lhs.equalsToTargetGene;
+    }
+
+    void setItsTargetGene(){
+        equalsToTargetGene = true;
+    }
+    void setNotTargetGene(){
+        equalsToTargetGene = false;
+    }
+    bool isEqualsToTargetGene() const{
+        return equalsToTargetGene;
     }
 
 
     std::vector<int> items;
 protected:
     ExpressionTree expressionTree;
+    bool equalsToTargetGene;
 };
 #endif //AILABGENETICALGORITHM_CALCULATEDEXPRESSION_H

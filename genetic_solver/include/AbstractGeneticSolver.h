@@ -30,7 +30,7 @@ class AbstractGeneticSolver : public IGeneticAlgorithmApi<PopulationStruct> {
 public:
     AbstractGeneticSolver(const SelectionMethod selectionMethod,
                           const CrossoverMethod crossoverMethod,
-                          const int numberOfItems,  // problem size - string length, number of items, number of bins, items, etc..
+                          const int numberOfItems,  // problem maxDepth - string length, number of items, number of bins, items, etc..
                           int minimumIterationsForLocalMinima,
                           double minimalStandardDeviationForLocalMinima,
                           const int maxAge = 5,
@@ -235,8 +235,12 @@ public:
         return best;
     }
 
+    virtual double getValueToPrint(const PopulationStruct& citizen) {
+        return citizen.fitnessVal;
+    }
+
     void print_best() override {
-        std::cout << "Best: " << getBestGene() << " (" << population.at(getBestGeneIndex()).fitnessVal << ")" << std::endl;
+        std::cout << "Best: " << getBestGene() << " (" << getValueToPrint(population.at(getBestGeneIndex())) << ")" << std::endl;
     }
 
     virtual std::string getBestGene() const = 0;

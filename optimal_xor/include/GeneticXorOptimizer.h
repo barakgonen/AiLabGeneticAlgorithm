@@ -15,7 +15,7 @@ public:
     GeneticXorOptimizer(ExpressionTree& inputExpression);
     virtual ~GeneticXorOptimizer() = default;
 
-    int optimizeExpression();
+    CalculatedExpression optimizeExpression();
 
 protected:
     void handle_specific_elitism(const int index) override;
