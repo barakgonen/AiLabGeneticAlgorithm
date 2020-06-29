@@ -9,16 +9,20 @@
 StringMatchingGeneticSolver::StringMatchingGeneticSolver(const std::string &inputString,
                                                          const HeuristicsEnum heuristicType,
                                                          const SelectionMethod selectionMethod,
-                                                         const CrossoverMethod crossoverMethod)
+                                                         const CrossoverMethod crossoverMethod,
+                                                         const int numberOfProccessors)
 : AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod, static_cast<int>(inputString.size()), 5, 0.1, 10}
 , heuristicMethod{heuristicType}
 , inputString{inputString}
+, numberOfProccessors{numberOfProccessors}
 {
     // Initializing each cell
     for (auto &res : rawOutputArr)
         res.id = -1;
     std::cout << "Heuristic: " << heuristicMethod << std::endl;
     std::cout << "input string is: " << inputString << std::endl;
+    for (int i = 0; i < numberOfProccessors; i++)
+        populationPartsIndexes.insert(std::make_pair((i * populationSize) / numberOfProccessors, ((i+1) * populationSize) / numberOfProccessors));
 }
 
 void StringMatchingGeneticSolver::init_population() {
@@ -81,13 +85,11 @@ int StringMatchingGeneticSolver::start_solve() {
     return std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp).count();
 }
 
-void StringMatchingGeneticSolver::calc_fitness() {
-    unsigned int fitness;
-
+void StringMatchingGeneticSolver::setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) {
     switch (heuristicMethod) {
         case DefaultHeuristic:
-            for (int i = 0; i < populationSize; i++) {
-                fitness = 0;
+            for (int i = startIndex; i < endIndex; i++) {
+                double fitness = 0;
                 for (int j = 0; j < numberOfItems; j++) {
                     fitness += abs(int(population[i].items[j] - inputString.at(j)));
                 }
@@ -95,8 +97,8 @@ void StringMatchingGeneticSolver::calc_fitness() {
             }
             break;
         case BullsAndCows:
-            for (int i = 0; i < populationSize; i++) {
-                fitness = numberOfItems * 50;
+            for (int i = startIndex; i < endIndex; i++) {
+                double fitness = numberOfItems * 50;
                 for (int j = 0; j < numberOfItems; j++) {
                     // if the letter on the right place we give 50 points
                     if (population[i].items[j] == inputString[j])
@@ -115,6 +117,16 @@ void StringMatchingGeneticSolver::calc_fitness() {
             }
             break;
     }
+}
+
+void StringMatchingGeneticSolver::calc_fitness() {
+    std::vector<std::thread> threadMap;
+    for (auto& callable : populationPartsIndexes){
+        std::thread t(&StringMatchingGeneticSolver::setFitnessInRange, this, callable.first, callable.second);
+        threadMap.push_back(std::move(t));
+    }
+    for (auto& activeThread : threadMap)
+        activeThread.join();
 }
 
 void StringMatchingGeneticSolver::mutate(GeneticStringMatchingAlgStruct &member) {

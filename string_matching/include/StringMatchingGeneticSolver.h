@@ -14,13 +14,15 @@
 #include "../../genetic_solver/include/AbstractGeneticSolver.h"
 #include "../../genetic_solver/include/IterationRawOutput.h"
 #include "consts.h"
+#include <map>
 
 class StringMatchingGeneticSolver : public AbstractGeneticSolver<GeneticStringMatchingAlgStruct> {
 public:
     StringMatchingGeneticSolver(const std::string &inputString,
                                 const HeuristicsEnum heuristicType,
                                 const SelectionMethod selectionMethod,
-                                const CrossoverMethod crossoverMethod);
+                                const CrossoverMethod crossoverMethod,
+                                const int numberOfProccessors = 1);
 
     virtual ~StringMatchingGeneticSolver() = default;
 
@@ -60,6 +62,9 @@ private:
     const std::string inputString;
     HeuristicsEnum heuristicMethod;
     IterationRawOutput rawOutputArr[GA_MAXITER];
+    const int numberOfProccessors;
+    std::map<const int, const int> populationPartsIndexes;
+    void setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex);
 };
 
 #endif //AILABGENETICALGORITHM_STRINGMATCHINGGENETICSOLVER_H

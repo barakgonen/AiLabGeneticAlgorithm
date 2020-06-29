@@ -622,7 +622,7 @@ bool ExpressionTree::isTreeBuiltSuccessfully() {
     }
 }
 
-bool ExpressionTree::operator==(const ExpressionTree &lhs) {
+inline bool ExpressionTree::operator==(const ExpressionTree &lhs) {
     return
             this->numberOfSpaces == lhs.numberOfSpaces         &&
             this->left == lhs.left                             &&

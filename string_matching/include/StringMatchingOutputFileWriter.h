@@ -18,7 +18,7 @@ class StringMatchingOutputFileWriter : public OutputFileWriter {
 public:
     StringMatchingOutputFileWriter(const std::string &testedString, const HeuristicsEnum heuristicType,
                                    const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod,
-                                   const std::string &outputPath);
+                                   const std::string &outputPath, const bool isParallelized = false);
 
 protected:
     const HeuristicsEnum heuristicType;

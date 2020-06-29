@@ -8,8 +8,8 @@
 
 StringMatchingOutputFileWriter::StringMatchingOutputFileWriter(const std::string &testedString, const HeuristicsEnum heuristicType,
                                                                const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod,
-                                                               const std::string &outputPath)
-: OutputFileWriter{outputPath, testedString, selectionMethod, crossoverMethod}
+                                                               const std::string &outputPath, const bool isParallelized)
+: OutputFileWriter{outputPath, testedString, selectionMethod, crossoverMethod, isParallelized}
 , heuristicType{heuristicType}
 {
     create_output_directories();
@@ -24,6 +24,8 @@ std::string StringMatchingOutputFileWriter::getOutputFileName(const std::string&
     outputFileName += getSelectionMethodStr() + "_";
     // crossover
     outputFileName += getCrossoverMethodStr() + "_";
+    if (isParallelized)
+        outputFileName += "PARALLELIZED";
     outputFileName += ".csv";
     return outputFileName;
 }
