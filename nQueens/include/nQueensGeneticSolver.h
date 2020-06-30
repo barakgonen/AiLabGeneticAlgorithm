@@ -17,6 +17,7 @@ public:
                          const SelectionMethod selectionMethod,
                          const CrossoverMethod crossoverMethod,
                          const MutationOperator mutationOperator,
+                         const int numberOfProccessors = 1,
                          bool quietMode = false);
 
     std::string getBestGene() const override;
@@ -24,7 +25,6 @@ public:
     int start_solve() override;
     void print_results() override;
     void init_population() override;
-    void calc_fitness() override;
     void fillAditionalSolutionData(nQueensSolutionData&) override;
 
     int calculateDistanceBetweenTwoCitizens(const nQueensGeneticStruct &citizenOne,
@@ -43,6 +43,11 @@ protected:
     void scale_results();
     int runSolver() override;
     void mutate(nQueensGeneticStruct& member) override ;
+
+    void runGeneticAlgo() override;
+
+    void setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) override;
+
     MutationOperator mutataionOperator;
     bool quietMode;
 };

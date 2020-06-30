@@ -11,6 +11,7 @@ BinPackingGeneticSolver::BinPackingGeneticSolver(const int numberOfItems,
                                                  const CrossoverMethod crossoverMethod,
                                                  const int maxAge,
                                                  const int expectedResult,
+                                                 const int numberOfProccessors,
                                                  const int maxSpecis,
                                                  const int specis)
 : AbstractGeneticSolver<BinPackingGeneticStruct>(selectionMethod,
@@ -18,6 +19,7 @@ BinPackingGeneticSolver::BinPackingGeneticSolver(const int numberOfItems,
                                                  numberOfItems,
                                                  5,
                                                  0.1,
+                                                 numberOfProccessors,
                                                  5,
                                                  maxSpecis,
                                                  specis,
@@ -34,48 +36,29 @@ std::string BinPackingGeneticSolver::getBestGene() const {
 
 int BinPackingGeneticSolver::start_solve() {
     init_population();
-    clock_t t;
-    int count = 0;
-    double avg, standart_deviation;
-    bool hasFound = false;
+    // run scenerio on initialized population
+    auto singleThreadedTotalRuntime = runScenerio();
 
-    // We assume best solution would be the number of available bins, of course it's in worse case
-    int best = numberOfItems;
-    t = clock();
-    for (int i = 0; i < GA_MAXITER && !hasFound; i++) {
-        count++;
-        calc_fitness();		          // calculate fitness
-        sort_population_by_fitnes(); // sort them
+    // printing results for users
+    print_results();
+    // if user wants multi-threaded run also
+    if (numberOfProccessors != 1) {
+        prepareMultiThreadedEnv();
+        auto muliThreadedTotalRuntime = runScenerio();
 
-        if (population.front().fitnessVal < best) {
-            best = population.front().fitnessVal;
-            print_best();
-            std::cout << "clock time: " << clock() - t << std::endl;
-            std::cout << "elapsed time " << ((float) (clock() - t)) / CLOCKS_PER_SEC << " seconds" << std::endl;
-            std::cout << "total iterations: " << count << std::endl;
-            std::cout << std::endl;
-            if (population.front().fitnessVal == expectedResult)
-                hasFound = true;
-        }
-        avg = get_average_fitness();
-        standart_deviation = get_standard_deviation(avg);
+        // printing results for users
+        print_results();
 
-        if (count > 1 && isAtLocalOptima(standart_deviation, count)) {
-            isInLocalOptima = true;
-            threshold = pow(numberOfItems, 2);
-        }
+        std::string winner = "";
+        if (muliThreadedTotalRuntime < singleThreadedTotalRuntime)
+            winner = "parallel";
         else
-            isInLocalOptima = false;
-
-        specis = mate();
-        if (specis > maxSpecis - 2)
-            threshold += 1;
-        else if (specis < maxSpecis + 2)
-            threshold -= 1;
-        swap();		// swap buffers
+            winner = "single";
+        std::cout << "The winner is: " << ((muliThreadedTotalRuntime < singleThreadedTotalRuntime) ? "Parralel" : "Single")
+                  << " Parralel: " << muliThreadedTotalRuntime << ", single: " << singleThreadedTotalRuntime << std::endl;
     }
 
-    return best;
+    return population.front().fitnessVal;
 }
 
 int BinPackingGeneticSolver::calculateDistanceBetweenTwoCitizens(const BinPackingGeneticStruct& citizenOne,
@@ -126,9 +109,11 @@ void BinPackingGeneticSolver::init_population() {
         resetCitizenProps(bufferedItem);
 
         buffer.push_back(bufferedItem);
+        tmpBuffer.push_back(bufferedItem);
 
         setCitizenProps(item);
         population.push_back(item);
+        tmpPopulation.push_back(item);
     }
 }
 
@@ -336,4 +321,51 @@ int BinPackingGeneticSolver::kendallTau(const std::vector<int> &a, const std::ve
     delete[] ary;
 
     return count;
+}
+
+void BinPackingGeneticSolver::runGeneticAlgo() {
+    clock_t t;
+    int count = 0;
+    double avg, standart_deviation;
+    bool hasFound = false;
+
+    // We assume best solution would be the number of available bins, of course it's in worse case
+    int best = numberOfItems;
+    t = clock();
+    for (int i = 0; i < GA_MAXITER && !hasFound; i++) {
+        count++;
+        calc_fitness();		          // calculate fitness
+        sort_population_by_fitnes(); // sort them
+
+        if (population.front().fitnessVal < best) {
+            best = population.front().fitnessVal;
+            print_best();
+            std::cout << "clock time: " << clock() - t << std::endl;
+            std::cout << "elapsed time " << ((float) (clock() - t)) / CLOCKS_PER_SEC << " seconds" << std::endl;
+            std::cout << "total iterations: " << count << std::endl;
+            std::cout << std::endl;
+            if (population.front().fitnessVal == expectedResult)
+                hasFound = true;
+        }
+        avg = get_average_fitness();
+        standart_deviation = get_standard_deviation(avg);
+
+        if (count > 1 && isAtLocalOptima(standart_deviation, count)) {
+            isInLocalOptima = true;
+            threshold = pow(numberOfItems, 2);
+        }
+        else
+            isInLocalOptima = false;
+
+        specis = mate();
+        if (specis > maxSpecis - 2)
+            threshold += 1;
+        else if (specis < maxSpecis + 2)
+            threshold -= 1;
+        swap();		// swap buffers
+    }
+}
+
+void BinPackingGeneticSolver::setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) {
+
 }

@@ -6,8 +6,9 @@
 
 NsgaSolver::NsgaSolver(const SelectionMethod selectionMethod,
                        const CrossoverMethod crossoverMethod,
-                       const int numberOfCouples)
-: AbstractGeneticSolver<Nsga2Struct>(selectionMethod, crossoverMethod, 1000, 5, 0.5, 5, 30, 0,
+                       const int numberOfCouples,
+                       const int numberOfProccessors)
+: AbstractGeneticSolver<Nsga2Struct>(selectionMethod, crossoverMethod, 1000, 5, 0.5, numberOfProccessors, 5, 30, 0,
                                              2000)
 , mutateKind{true}
 {
@@ -35,42 +36,42 @@ void NsgaSolver::init_population() {
         setCitizenProps(citizen);
 
         population.push_back(citizen);
+        tmpPopulation.push_back(citizen);
     }
     buffer.resize(GA_POPSIZE);
+    tmpBuffer.resize(GA_POPSIZE);
 }
 
 int NsgaSolver::start_solve() {
     init_population();
-    for (int i = 0; i < 2000; i++){
-        calc_fitness();
-        sort_population_by_fitnes();
-        print_best();
-        if(population.front().fitnessVal == 0){
-            break;
-        }
-        mate();
-        swap();
+
+    // run scenerio on initialized population
+    auto singleThreadedTotalRuntime = runScenerio();
+
+    // printing results for users
+    print_results();
+    // if user wants multi-threaded run also
+    if (numberOfProccessors != 1) {
+        prepareMultiThreadedEnv();
+        auto muliThreadedTotalRuntime = runScenerio();
+
+        // printing results for users
+        print_results();
+
+        std::string winner = "";
+        if (muliThreadedTotalRuntime < singleThreadedTotalRuntime)
+            winner = "parallel";
+        else
+            winner = "single";
+        std::cout << "The winner is: " << ((muliThreadedTotalRuntime < singleThreadedTotalRuntime) ? "Parralel" : "Single")
+                  << " Multi: " << muliThreadedTotalRuntime << ", single: " << singleThreadedTotalRuntime << std::endl;
     }
-    print_best();
-    return 0;
+
+    return singleThreadedTotalRuntime;
 }
 
 void NsgaSolver::print_results() {
 
-}
-
-
-void NsgaSolver::calc_fitness() {
-    double x;
-    double fitness;
-    for (int i = 0; i < populationSize; i++) {
-        fitness = 0;
-        for (int j = 0; j < numberOfItems; j++) {
-            x = population[i].items[j];
-            fitness = fitness + 0.2 * (-x * x) + 0.8 * (-(x - 2) * (x - 2));
-        }
-        population[i].fitnessVal = fitness / numberOfItems;
-    }
 }
 
 void NsgaSolver::mutate(Nsga2Struct &member) {
@@ -238,7 +239,7 @@ void NsgaSolver::print_best() {
     std::cout << "the Fitness of these values:  (" << population[0].fitnessVal << ")" << std::endl;
 }
 
-int NsgaSolver::tournament() {
+int NsgaSolver::tournament(int startIndex, int endIndex) {
     int bestGene, random;
     bestGene = rand() % (populationSize);
     for (int i = 0; i < K; i++)
@@ -248,4 +249,31 @@ int NsgaSolver::tournament() {
             bestGene = random;
     }
     return bestGene;
+}
+
+void NsgaSolver::runGeneticAlgo() {
+    for (int i = 0; i < 2000; i++){
+        calc_fitness();
+        sort_population_by_fitnes();
+        print_best();
+        if(population.front().fitnessVal == 0){
+            break;
+        }
+        mate();
+        swap();
+    }
+    print_best();
+}
+
+void NsgaSolver::setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) {
+    double x;
+    double fitness;
+    for (int i = startIndex; i < endIndex; i++) {
+        fitness = 0;
+        for (int j = 0; j < numberOfItems; j++) {
+            x = population[i].items[j];
+            fitness = fitness + 0.2 * (-x * x) + 0.8 * (-(x - 2) * (x - 2));
+        }
+        population[i].fitnessVal = fitness / numberOfItems;
+    }
 }

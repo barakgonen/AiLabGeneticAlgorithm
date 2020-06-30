@@ -5,8 +5,6 @@
 #ifndef AILABGENETICALGORITHM_ABSTRACTGENETICSOLVER_H
 #define AILABGENETICALGORITHM_ABSTRACTGENETICSOLVER_H
 
-static const int GENES_TO_LEAVE = 10;
-
 #include <algorithm>
 #include <iostream>
 #include <limits.h>
@@ -20,6 +18,7 @@ static const int GENES_TO_LEAVE = 10;
 #include <random>
 #include <functional>
 #include <set>
+#include <map>
 
 // This abstract class defines generic behavior of any genetic solver, each specific
 // solver (for specific problem such as string matching / nQueens) should inherit this function
@@ -33,6 +32,7 @@ public:
                           const int numberOfItems,  // problem maxDepth - string length, number of items, number of bins, items, etc..
                           int minimumIterationsForLocalMinima,
                           double minimalStandardDeviationForLocalMinima,
+                          int numberOfProccessors = 1,
                           const int maxAge = 5,
                           const int maxSpecis = 30,
                           const int specis = 0,
@@ -43,17 +43,17 @@ public:
     , buffer{std::vector<PopulationStruct>()}
     , numberOfItems{numberOfItems}
     , threshold{static_cast<int>(pow(numberOfItems, 2))}
-//    , threshold{numberOfItems}
+    , numberOfProccessors{numberOfProccessors}
     , maxAge{maxAge}
     , maxSpecis{maxSpecis}
     , specis{specis}
     , isInLocalOptima{false}
     , minimumIterationsForLocalMinima{minimumIterationsForLocalMinima}
     , minimalStandardDeviationForLocalMinima{minimalStandardDeviationForLocalMinima}
-    , populationSize{populationSize}{
-//        std::cout << "Starting GeneticSolver with the following parameters:" << std::endl;
-//        std::cout << "selection: " << selectionMethod << std::endl;
-//        std::cout << "crossover: " << crossoverMethod << std::endl;
+    , populationSize{populationSize} {
+        // Assuming for first run, number of proccessors is 1 to be able to tests algorithms 1 after 1
+        for (int i = 0; i < 1; i++)
+            populationPartsIndexes.insert(std::make_pair((i * populationSize) / 1, ((i+1) * populationSize) / 1));
     }
 
     virtual ~AbstractGeneticSolver() = default;
@@ -212,7 +212,7 @@ public:
         return specis;
     }
 
-    int tournament() override {
+    int tournament(int beginIndex = 0, int endIndex = 0) override {
         // choose k genes
         int best = INT_MAX, secondBest = INT_MAX, i1 = 0, i2 = 0;
         for (int i = 0; i < K; i++) {
@@ -384,6 +384,48 @@ protected:
     virtual void set_data_in_buffer_vec_for_single_point_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int tsize) {};
     virtual void set_data_in_buffer_vec_for_two_points_selection(const int indexInBuffer, const int startIndex, const int endIndex, int spos, int spos2, int tsize) {};
 
+    void prepareMultiThreadedEnv()
+    {
+        // prepare environment for multi-threaded run
+        populationPartsIndexes.clear();
+        for (int i = 0; i < numberOfProccessors; i++)
+            populationPartsIndexes.insert(
+                    std::make_pair((i * populationSize) / numberOfProccessors,
+                                   ((i + 1) * populationSize) / numberOfProccessors));
+
+        // Swapping between tmpPopulation & buffer to the "real ones" in order to start the experiment from the same point
+        std::swap(tmpPopulation, population);
+        std::swap(tmpBuffer, buffer);
+    }
+
+    // Running loop which each specific solver must implement
+    virtual void runGeneticAlgo() = 0;
+    virtual void setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) = 0;
+
+    void calc_fitness() {
+        std::vector<std::thread> threadMap;
+        for (auto& callable : populationPartsIndexes){
+            std::thread t(&AbstractGeneticSolver<PopulationStruct>::setFitnessInRange, this, callable.first, callable.second);
+            threadMap.push_back(std::move(t));
+        }
+        for (auto& activeThread : threadMap)
+            activeThread.join();
+    }
+
+    long runScenerio(){
+        // Mesuring start time
+        auto startTimeStamp = std::chrono::high_resolution_clock::now();
+
+        // running genetic algorithm
+        runGeneticAlgo();
+
+        // measuring end time
+        auto endTimeStamp = std::chrono::high_resolution_clock::now();
+
+        return std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp).count();
+    }
+
+
     SelectionMethod selectionMethod;
     CrossoverMethod crossoverMethod;
     std::vector<PopulationStruct> population;
@@ -397,6 +439,14 @@ protected:
     int minimumIterationsForLocalMinima;
     double minimalStandardDeviationForLocalMinima;
     const int populationSize;
+
+    // For multi threaded cases
+    std::vector<PopulationStruct> tmpPopulation;
+    std::vector<PopulationStruct> tmpBuffer;
+    int numberOfProccessors;
+    std::map<const int, const int> populationPartsIndexes;
+
+
 };
 
 

@@ -11,18 +11,15 @@ StringMatchingGeneticSolver::StringMatchingGeneticSolver(const std::string &inpu
                                                          const SelectionMethod selectionMethod,
                                                          const CrossoverMethod crossoverMethod,
                                                          const int numberOfProccessors)
-: AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod, static_cast<int>(inputString.size()), 5, 0.1, 10}
+: AbstractGeneticSolver<GeneticStringMatchingAlgStruct>{selectionMethod, crossoverMethod, static_cast<int>(inputString.size()), 5, 0.1, numberOfProccessors}
 , heuristicMethod{heuristicType}
 , inputString{inputString}
-, numberOfProccessors{numberOfProccessors}
 {
     // Initializing each cell
     for (auto &res : rawOutputArr)
         res.id = -1;
     std::cout << "Heuristic: " << heuristicMethod << std::endl;
     std::cout << "input string is: " << inputString << std::endl;
-    for (int i = 0; i < numberOfProccessors; i++)
-        populationPartsIndexes.insert(std::make_pair((i * populationSize) / numberOfProccessors, ((i+1) * populationSize) / numberOfProccessors));
 }
 
 void StringMatchingGeneticSolver::init_population() {
@@ -32,17 +29,45 @@ void StringMatchingGeneticSolver::init_population() {
         setCitizenProps(citizen);
 
         population.push_back(citizen);
+        tmpPopulation.push_back(citizen);
         GeneticStringMatchingAlgStruct citizenn;
         resetCitizenProps(citizenn);
         buffer.push_back(citizenn);
+        tmpBuffer.push_back(citizen);
     }
 }
 
 int StringMatchingGeneticSolver::start_solve() {
-    clock_t t, totalTicks = 0;
     srand(unsigned(time(NULL)));
-    auto startTimeStamp = std::chrono::high_resolution_clock::now();
     init_population();
+
+    // run scenerio on initialized population
+    auto singleThreadedTotalRuntime = runScenerio();
+
+    // printing results for users
+    print_results();
+    // if user wants multi-threaded run also
+    if (numberOfProccessors != 1) {
+        prepareMultiThreadedEnv();
+        auto muliThreadedTotalRuntime = runScenerio();
+
+        // printing results for users
+        print_results();
+
+        std::string winner = "";
+        if (muliThreadedTotalRuntime < singleThreadedTotalRuntime)
+            winner = "parallel";
+        else
+            winner = "single";
+        std::cout << "The winner is: " << ((muliThreadedTotalRuntime < singleThreadedTotalRuntime) ? "Parralel" : "Single")
+                  << " Multi: " << muliThreadedTotalRuntime << ", single: " << singleThreadedTotalRuntime << std::endl;
+    }
+
+    return singleThreadedTotalRuntime;
+}
+
+void StringMatchingGeneticSolver::runGeneticAlgo() {
+    clock_t t, totalTicks = 0;
     t = clock();
     for (int i = 0; i < GA_MAXITER; i++) {
         calc_fitness();                     // calculate fitnessVal
@@ -79,10 +104,6 @@ int StringMatchingGeneticSolver::start_solve() {
 
         t = clock();
     }
-
-    auto endTimeStamp = std::chrono::high_resolution_clock::now();
-    print_results();
-    return std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp).count();
 }
 
 void StringMatchingGeneticSolver::setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) {
@@ -117,16 +138,6 @@ void StringMatchingGeneticSolver::setFitnessInRange(const unsigned int startInde
             }
             break;
     }
-}
-
-void StringMatchingGeneticSolver::calc_fitness() {
-    std::vector<std::thread> threadMap;
-    for (auto& callable : populationPartsIndexes){
-        std::thread t(&StringMatchingGeneticSolver::setFitnessInRange, this, callable.first, callable.second);
-        threadMap.push_back(std::move(t));
-    }
-    for (auto& activeThread : threadMap)
-        activeThread.join();
 }
 
 void StringMatchingGeneticSolver::mutate(GeneticStringMatchingAlgStruct &member) {

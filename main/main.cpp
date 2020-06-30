@@ -19,10 +19,9 @@
 #include "../optimal_xor/include/ExpressionTree.h"
 #include "../optimal_xor/include/GeneticXorOptimizer.h"
 #include "../optimal_xor/include/OptimalXorAutoTests.h"
+#include "../string_matching/include/ParallelizedStringMatching.h"
 
 #include <chrono>
-
-bool runOptimizationCase(std::pair<std::string, int> expressionToTest, int maxDepth);
 
 using namespace std;
 
@@ -308,7 +307,30 @@ void testBinPackingFitness(const string &basePath, int numOfIterations) {
     }
 }
 
+void printValues(const std::vector<int>& vec)
+{
+    for (const auto val : vec)
+        std::cout << val << ", ";
+    std::cout << std::endl;
+}
+
+bool runOptimizationCase(std::pair<std::string, int> expressionToTest, int maxDepth, int numberOfProccessors = std::thread::hardware_concurrency()) {
+    std::cout << "===============================" << std::endl;
+    ExpressionTree exprTree{expressionToTest.first, 0, maxDepth};
+    auto expectedResult = exprTree.getEvaluatedResults();
+
+    // Initialization of GeneticXorOptimizer
+    GeneticXorOptimizer geneticXorOptimizer{exprTree, numberOfProccessors};
+    auto calculatedExpr = geneticXorOptimizer.optimizeExpression();
+    int numberOfLogicalGates = calculatedExpr.getNumberOfLogicalGates();
+    auto calculatedResult = calculatedExpr.getCalculatedResult();
+    if (numberOfLogicalGates != expressionToTest.second || calculatedResult != expectedResult)
+        return false;
+    return true;
+}
+
 int main(int argc, char *argv[]) {
+    int numberOfProccessors = std::thread::hardware_concurrency();
     string labSelector = getMethodToRun(argc, argv);
 
     if (labSelector == "string_matching") {
@@ -319,15 +341,13 @@ int main(int argc, char *argv[]) {
         std::string outputPath = getOutputPath(argc, argv);
         StringMatchingOutputFileWriter outputWriter{workOnString, heuristicMethod, selectionMethod, crossoverMethod,
                                                     outputPath};
-        StringMatchingGeneticSolver matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod};
-        // Initializing each cell
-        int totalRuntime = matcher.start_solve();
-        std::cout << "Total runtime is: " << totalRuntime << " miliseconds" << std::endl;
+        int numberOFTries = 1;
 
-        outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
-
-        int a = 4;
-
+        for (int i = 0; i < numberOFTries; i++){
+            StringMatchingGeneticSolver matcher{workOnString, heuristicMethod, selectionMethod, crossoverMethod, 4};
+            int totalRuntime = matcher.start_solve();
+            outputWriter.writeToFile(totalRuntime, matcher.getRawOutput());
+        }
     } else if (labSelector == "nQueens") {
         std::cout << "you would like to run nqueens" << std::endl;
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
@@ -348,7 +368,7 @@ int main(int argc, char *argv[]) {
                 for (const int boardSize : staticBoardSizes) {
                     NqBoard board{boardSize};
                     nQueensGeneticSolver oxInversionSolver{board, SelectionMethod::None, CrossoverMethod::Ox,
-                                                           MutationOperator::Inversion, true};
+                                                           MutationOperator::Inversion, numberOfProccessors, true};
                     oxInversionresults.push_back(oxInversionSolver.solvePuzzle());
                     nQueensGeneticSolver oxExchangeSolver{board, SelectionMethod::Rws, CrossoverMethod::Ox,
                                                           MutationOperator::Exchange, true};
@@ -382,7 +402,7 @@ int main(int argc, char *argv[]) {
             minimalConflictsWriter.writeToFile(minimalConflictsResults);
         } else {
             NqBoard board{getBoardSizeAndNumberOfQueens(argc, argv)};
-            nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator, false};
+            nQueensGeneticSolver geneticSolver{board, selectionMethod, crossoverMethod, mutationOperator, numberOfProccessors, false};
             geneticSolver.solvePuzzle();
             nQueensMinimalConflictsSolver minimalConflictsSolver{board};
             minimalConflictsSolver.solvePuzzle();
@@ -401,10 +421,10 @@ int main(int argc, char *argv[]) {
 
         for (i = 0; i < c; i++) {
             for (const auto key : initializer.getPuzzlesIDs()) {
-                KnapSackGeneticSolver solver{key, initializer, selectionMethod, crossoverMethod};
+                KnapSackGeneticSolver solver{c, initializer, selectionMethod, crossoverMethod, numberOfProccessors};
                 const auto result = solver.solve();
-                if (initializer.isOptimalSelectionReached(key, result)) {
-                    std::cout << "Puzzle " << key << " solved in optiomal solution!" << std::endl;
+                if (initializer.isOptimalSelectionReached(c, result)) {
+                    std::cout << "Puzzle " << 1 << " solved in optiomal solution!" << std::endl;
                     passedCounter++;
                 } else {
                     failures++;
@@ -436,7 +456,8 @@ int main(int argc, char *argv[]) {
                                                             selectionMethod,
                                                             crossoverMethod,
                                                             maxAge,
-                                                            expectedKeyVal.second};
+                                                            expectedKeyVal.second,
+                                                            numberOfProccessors};
             int optimalNumberOfBins = binPackingGeneticSolver.start_solve();
             if (optimalNumberOfBins != expectedKeyVal.second)
                 std::cout << "ERROR, on example number: " << expectedKeyVal.first << std::endl;
@@ -469,7 +490,7 @@ int main(int argc, char *argv[]) {
         SelectionMethod selectionMethod = getSelectionMethod(argc, argv);
         CrossoverMethod crossoverMethod = getCrossoverMethod(argc, argv);
         const int numberOfCuples = 5;
-        NsgaSolver solver{selectionMethod, crossoverMethod, numberOfCuples};
+        NsgaSolver solver{selectionMethod, crossoverMethod, numberOfCuples, numberOfProccessors};
         solver.start_solve();
     } else if (labSelector == "TestExpressionTree") {
         runAllTests();
@@ -514,19 +535,4 @@ int main(int argc, char *argv[]) {
 
     }
     return 0;
-}
-
-bool runOptimizationCase(std::pair<std::string, int> expressionToTest, int maxDepth) {
-    std::cout << "===============================" << std::endl;
-    ExpressionTree exprTree{expressionToTest.first, 0, maxDepth};
-    auto expectedResult = exprTree.getEvaluatedResults();
-
-    // Initialization of GeneticXorOptimizer
-    GeneticXorOptimizer geneticXorOptimizer{exprTree};
-    auto calculatedExpr = geneticXorOptimizer.optimizeExpression();
-    int numberOfLogicalGates = calculatedExpr.getNumberOfLogicalGates();
-    auto calculatedResult = calculatedExpr.getCalculatedResult();
-    if (numberOfLogicalGates != expressionToTest.second || calculatedResult != expectedResult)
-        return false;
-    return true;
 }

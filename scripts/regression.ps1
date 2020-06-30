@@ -568,7 +568,18 @@ Write-Host "CrossoverMethod:" $crossoverMethod
 Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 &$exe $commandToExecute $selectionMethod $crossoverMethod
 Write-Host "=================================================================================="
-
+Write-Host "=================================================================================="
+Write-Host "Nsga"
+Write-Host "=================================================================================="
+$commandToExecute = "Nsga"
+$selectionMethod = "Aging"
+$crossoverMethod = "SinglePoint"
+Write-Host "Parameters are:"
+Write-Host "Command to execute:" $commandToExecute
+Write-Host "SelectionMethod:" $selectionMethod
+Write-Host "CrossoverMethod:" $crossoverMethod
+Write-Host "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+&$exe $commandToExecute $selectionMethod $crossoverMethod
 Write-Host "=================================================================================="
 Write-Host "OptimalXOR"
 Write-Host "=================================================================================="

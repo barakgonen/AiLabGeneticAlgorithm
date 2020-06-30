@@ -7,9 +7,11 @@
 #include "../include/consts.h"
 #include <algorithm>
 #include "../include/TooLargeExpressionTreeException.h"
-#include <experimental/random>
-
-
+#include "../../../../../../../../mingw64/lib/gcc/x86_64-w64-mingw32/4.8.1/include/c++/memory"
+template<typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args&&... args) {
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 ExpressionTree::ExpressionTree(std::string initializationExpression, const int treeDepth, const int maxDepth)
 : numberOfSpaces{static_cast<int>(1 + 2 * initializationExpression.size())}
 , left{nullptr}
@@ -116,11 +118,14 @@ ExpressionTree::ExpressionTree(const std::vector<char>& operands,
 void ExpressionTree::growInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod, const int maxDepth) {
     // According to lesson - each branch might have different depth, while it's less that maxDepth
     if (depth < maxDepth){
-        int branchDepth = std::experimental::randint(0, maxDepth);
-        bool terminalOrFunction = std::experimental::randint(0, 1);
+        int branchDepth = rand() % maxDepth;
+        bool terminalOrFunction = rand() % 1;
         if (terminalOrFunction) {
             // terminal
-            val = operands.at(std::experimental::randint(0, (int)operands.size() - 1));
+            if (operands.size() == 1)
+                val = operands.at(0);
+            else
+                val = operands.at((rand() % (int)operands.size()) - 1);
             func = UKNOWN;
             originalExpression = treeToString(this);
             ExpressionTree::operands.clear();
@@ -130,7 +135,7 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
             //function
             // this is function generation
             // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
-            func = keyToExpressionFunc.at(std::experimental::randint(0, (int)keyToExpressionFunc.size()-1));
+            func = keyToExpressionFunc.at((rand() % (int)keyToExpressionFunc.size()));
 
             val = EMPTY_VALUE;
             left = new ExpressionTree(operands, initializationMethod, depth + 1, maxDepth);
@@ -141,7 +146,10 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
             numberOfSpaces = static_cast<int>(1 + 2 * originalExpression.size());
         }
     } else if (depth == maxDepth){ // need to set terminals}
-        val = operands.at(std::experimental::randint(0, (int)operands.size() - 1));
+        if (operands.size() == 1)
+            val = operands.at(0);
+        else
+            val = operands.at(rand() % (int)operands.size());
         func = UKNOWN;
         originalExpression = std::string{val};
         ExpressionTree::operands.clear();
@@ -153,14 +161,17 @@ void ExpressionTree::growInitMethod(const std::vector<char> &operands, const Ini
 void ExpressionTree::fullInitMethod(const std::vector<char> &operands, const InitializationMethod &initializationMethod, const int maxDepth, const int currentDepth) {
     if (currentDepth == maxDepth){
         // Should set the kids values as leafs TERMINAL
-        val = operands.at(std::experimental::randint(0, (int)operands.size() - 1));
+        if (operands.size() == 1)
+            val = operands.at(0);
+        else
+            val = operands.at(rand() % (int)operands.size());
         func = ExpressionTreeFunctions::UKNOWN;
         originalExpression = std::string{val};
     } else{
         // Should set as function
         // this is function generation
         // pick random function of known funcs, and call for ctor for both right and left childs. decreasde max depth by 1 for each recursive call!
-        func = keyToExpressionFunc.at(std::experimental::randint(0, (int)keyToExpressionFunc.size()-1));
+        func = keyToExpressionFunc.at((rand() % (int)keyToExpressionFunc.size()));
         val = EMPTY_VALUE;
         left = new ExpressionTree(operands, initializationMethod, currentDepth  + 1, maxDepth);
         if (func != ExpressionTreeFunctions::NOT)
@@ -294,11 +305,11 @@ ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &ope
         if (startIndex == 0) {
             for (const auto& operand : operands)
                 if (operand.first == root->val)
-                    return std::make_unique<bool>(operand.second);
+                    return make_unique<bool>(operand.second);
         } else{
             for (int index = operands.size() - 1; index >= 0; index--){
                 if (operands.at(index).first == root->val)
-                    return std::make_unique<bool>(operands.at(index).second);
+                    return make_unique<bool>(operands.at(index).second);
             }
         }
     }
@@ -306,18 +317,18 @@ ExpressionTree::evaluateExpression(const std::vector<std::pair<char, bool>> &ope
     const auto rightSubtree = evaluateExpression(operands, root->right, startIndex);
     switch (root->func) {
         case (AND):
-            return std::make_unique<bool>(*leftSubtree && *rightSubtree);
+            return make_unique<bool>(*leftSubtree && *rightSubtree);
         case (OR):
-            return std::make_unique<bool>(*leftSubtree || *rightSubtree);
+            return make_unique<bool>(*leftSubtree || *rightSubtree);
             break;
         case (NOT):
             if (root->left == nullptr && root->right != nullptr)
-                return std::make_unique<bool>(!*rightSubtree);
+                return make_unique<bool>(!*rightSubtree);
             else if (root->left != nullptr && root->right == nullptr)
-                return std::make_unique<bool>(!*leftSubtree);
+                return make_unique<bool>(!*leftSubtree);
             break;
         case (XOR):
-            return std::make_unique<bool>(*leftSubtree ^ *rightSubtree);
+            return make_unique<bool>(*leftSubtree ^ *rightSubtree);
             break;
     }
     return {};
@@ -573,8 +584,8 @@ void ExpressionTree::treeCrossover(ExpressionTree &other, int crossoverDepth, bo
     } else {
 
         if (!isTestingMode) {
-            movementDirectionWithThisTree = std::experimental::randint(0, 1);
-            movementDirectionWithOtherTree = std::experimental::randint(0, 1);
+            movementDirectionWithThisTree = rand() % 1;
+            movementDirectionWithOtherTree = rand() % 1;
         }
 
         if (movementDirectionWithThisTree && movementDirectionWithOtherTree) {

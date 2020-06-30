@@ -28,8 +28,6 @@ public:
 
     void init_population() override ;
 
-    void calc_fitness() override ;
-
     void mutate(GeneticStringMatchingAlgStruct &member);
     int start_solve() override;
     void print_results() override;
@@ -62,9 +60,10 @@ private:
     const std::string inputString;
     HeuristicsEnum heuristicMethod;
     IterationRawOutput rawOutputArr[GA_MAXITER];
-    const int numberOfProccessors;
-    std::map<const int, const int> populationPartsIndexes;
-    void setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex);
+
+    void setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) override ;
+
+    void runGeneticAlgo() override ;
 };
 
 #endif //AILABGENETICALGORITHM_STRINGMATCHINGGENETICSOLVER_H

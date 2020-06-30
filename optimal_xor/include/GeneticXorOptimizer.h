@@ -12,7 +12,7 @@
 
 class GeneticXorOptimizer : public AbstractGeneticSolver<CalculatedExpression>{
 public:
-    GeneticXorOptimizer(ExpressionTree& inputExpression);
+    GeneticXorOptimizer(ExpressionTree& inputExpression, const int numberOfProccessors = 1);
     virtual ~GeneticXorOptimizer() = default;
 
     CalculatedExpression optimizeExpression();
@@ -30,14 +30,17 @@ protected:
     void setCitizenProps(CalculatedExpression &citizen) override;
     int start_solve() override;
     void print_results() override;
-    void calc_fitness() override;
     void mutate(CalculatedExpression &member) override;
     int calculateDistanceBetweenTwoCitizens(const CalculatedExpression &citizenOne,
                                             const CalculatedExpression &citizenTwo) override;
     virtual void non_uniform_crossover(const int i1, const int i2) override;
 
-    virtual void generateNextGeneration();
     virtual double getValueToPrint(const CalculatedExpression& citizen) override;
+
+    void runGeneticAlgo() override;
+
+    void setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) override;
+
     const ExpressionTree& inputExpression;
     const int maxDepth;
     const int numberOfCitizensInPopulationGroup;

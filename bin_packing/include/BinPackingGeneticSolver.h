@@ -17,6 +17,7 @@ public:
                             const CrossoverMethod crossoverMethod,
                             const int maxAge,
                             const int expectedResult,
+                            const int numberOfProccessors = 1,
                             const int maxSpecis = 30,
                             const int specis = 0);
     virtual ~BinPackingGeneticSolver() = default;
@@ -41,6 +42,10 @@ protected:
                                                     const BinPackingGeneticStruct& citizenTwo) override;
     void handle_specific_elitism(const int index) override;
     int runFirstFitAlgorithm(const std::vector<int>& items);
+
+    void runGeneticAlgo() override;
+
+    void setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) override;
 
     const int binsCapacity;
     std::vector<int> weights;

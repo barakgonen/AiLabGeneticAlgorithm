@@ -15,7 +15,7 @@
 class OutputFileWriter {
 public:
     OutputFileWriter(const std::string& outputPath, const std::string testedObject,
-                     const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod);
+                     const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod, const bool isParralellized = false);
     virtual ~OutputFileWriter() = default;
 
     void writeToFile(int totalDurationInMs, const std::vector<IterationRawOutput>& values);
@@ -32,6 +32,7 @@ protected:
     const std::string testedObject;
     const SelectionMethod selectionMethod;
     const CrossoverMethod crossoverMethod;
+    const bool isParallelized;
 };
 
 

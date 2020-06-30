@@ -6,6 +6,7 @@
 #define AILABGENETICALGORITHM_IGENETICALGORITHMAPI_H
 
 #include "vector"
+static const int GENES_TO_LEAVE = 10;
 
 template <typename ObjectName>
 class IGeneticAlgorithmApi
@@ -22,7 +23,7 @@ public:
     virtual void random_selection(int& i1, int& i2) = 0;
     virtual int rws(const std::vector<double>& weights) = 0;
     virtual int mate() = 0;
-    virtual int tournament() = 0;
+    virtual int tournament(int beginIndex = 0, int endIndex = 0) = 0;
     virtual void print_best() = 0;
     virtual void swap() = 0;
     virtual void mutate(ObjectName& member) = 0;

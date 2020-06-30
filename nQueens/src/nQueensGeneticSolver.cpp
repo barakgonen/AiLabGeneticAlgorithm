@@ -13,9 +13,9 @@ nQueensGeneticSolver::nQueensGeneticSolver(const NqBoard &board,
                                            const SelectionMethod selectionMethod,
                                            const CrossoverMethod crossoverMethod,
                                            const MutationOperator mutationOperator,
-                                           bool quietMode)
+                                           const int numberOfProccessors, bool quietMode)
 : nQueensGenericSolver{board, "GENETIC"}
-, AbstractGeneticSolver<nQueensGeneticStruct>{selectionMethod, crossoverMethod, board.getBoardSize(), 20, 1, 5, 3}
+, AbstractGeneticSolver<nQueensGeneticStruct>{selectionMethod, crossoverMethod, board.getBoardSize(), 20, 1, 5, 3, numberOfProccessors}
 , mutataionOperator{mutationOperator}
 , quietMode{quietMode}
 {}
@@ -28,86 +28,46 @@ void nQueensGeneticSolver::init_population() {
         resetCitizenProps(citizen);
         resetCitizenProps(s); // does it matters that i push to s -1?? if something breaks know it's because of it;
         buffer.push_back(s);
+        tmpBuffer.push_back(s);
         setCitizenProps(citizen);
         population.push_back(citizen);
+        tmpPopulation.push_back(citizen);
     }
 }
 
 int nQueensGeneticSolver::runSolver() {
-    init_population();
-    int numberOfMoves = 0;
-    clock_t t;
-    t = clock();
     srand(unsigned(time(NULL)));
+    init_population();
 
-    for (int i = 0; i < GA_MAXITER; i++) {
-        numberOfMoves++;
-        calc_fitness();        // calculate fitnessVal
-        sort_population_by_fitnes();    // sort them
-        scale_results();
-        if (!quietMode)
-            print_best();
-        if (population.front().fitnessVal == 0 || i > GA_MAXITER / 10) {
-            std::cout << "clock time: " << clock() - t << std::endl;
-            std::cout << "elapsed time " << ((float) (clock() - t)) / CLOCKS_PER_SEC << " seconds" << std::endl;
-            std::cout << "total iterations: " << numberOfMoves << std::endl;
-            board.setVec(std::move(population.front().items));
-            break;
-        }
+    // run scenerio on initialized population
+    auto singleThreadedTotalRuntime = runScenerio();
 
-        double avg = get_average_fitness();
-        double standart_deviation = get_standard_deviation(avg);
-        if (!quietMode)
-            std::cout << "Avg: " << avg << " standard Deviation: " << standart_deviation << std::endl;
-        if (numberOfMoves > 1 && isAtLocalOptima(standart_deviation, numberOfMoves)) {
-            isInLocalOptima = true;
-            threshold = pow(board.getBoardSize(), 2);
-        }
+    // printing results for users
+    print_results();
+    // if user wants multi-threaded run also
+    if (numberOfProccessors != 1) {
+        prepareMultiThreadedEnv();
+        auto muliThreadedTotalRuntime = runScenerio();
+
+        // printing results for users
+        print_results();
+
+        std::string winner = "";
+        if (muliThreadedTotalRuntime < singleThreadedTotalRuntime)
+            winner = "parallel";
         else
-            isInLocalOptima = false;
-        specis = mate(); // mate the population together
-        if (specis > maxSpecis - 2)
-            threshold += 1;
-        else if (specis < maxSpecis + 2)
-            threshold -= 1;
-        swap();        // swap buffers
+            winner = "single";
+        std::cout << "The winner is: " << ((muliThreadedTotalRuntime < singleThreadedTotalRuntime) ? "Parralel" : "Single")
+                  << " parallel: " << muliThreadedTotalRuntime << ", single: " << singleThreadedTotalRuntime << std::endl;
     }
 
-    return numberOfMoves;
+    return singleThreadedTotalRuntime;
 }
 
 void nQueensGeneticSolver::scale_results() {
     for (auto& citizen : population){
         if (citizen.fitnessVal != 0)
             citizen.fitnessVal = sqrt(citizen.fitnessVal);
-    }
-}
-
-void nQueensGeneticSolver::calc_fitness() {
-    // array for all the diagonals in board NXN
-    std::vector<int> a((4 * numberOfItems) - 2);
-    std::fill(a.begin(), a.end(), 0);
-
-    for (int i = 0; i < populationSize; i++) {
-        unsigned int fitness = 0;
-        for (int j = 0; j < numberOfItems; j++) {
-            // diagnol 1
-            a[j + population[i].items[j]]++;
-            int p = abs(j - population[i].items[j]);
-            // increase diagnol 2
-            if (j > population[i].items[j])
-                a[p + (2 * numberOfItems) - 1]++;
-            else
-                a[(4 * numberOfItems) - 2 - p - 1]++;
-        }
-        for (int l = 0; l < a.size(); l++) {
-            // we calculate duplicated collisions as well
-            a[l] = a[l] * (a[l] - 1);
-            fitness += (a[l]);
-            // initilazie array for next gene
-            a[l] = 0;
-        }
-        population[i].fitnessVal = fitness;
     }
 }
 
@@ -255,4 +215,72 @@ void nQueensGeneticSolver::set_data_in_buffer_vec_for_single_point_selection(con
 
 bool nQueensGeneticSolver::isStandardDeviationIndicatesLocalOptima(const double standardDeviation){
     return standardDeviation > minimalStandardDeviationForLocalMinima;
+}
+
+void nQueensGeneticSolver::runGeneticAlgo() {
+    int numberOfMoves = 0;
+    clock_t t;
+    t = clock();
+    srand(unsigned(time(NULL)));
+
+    for (int i = 0; i < GA_MAXITER; i++) {
+        numberOfMoves++;
+        calc_fitness();        // calculate fitnessVal
+        sort_population_by_fitnes();    // sort them
+        scale_results();
+        if (!quietMode)
+            print_best();
+        if (population.front().fitnessVal == 0 || i > GA_MAXITER / 10) {
+            std::cout << "clock time: " << clock() - t << std::endl;
+            std::cout << "elapsed time " << ((float) (clock() - t)) / CLOCKS_PER_SEC << " seconds" << std::endl;
+            std::cout << "total iterations: " << numberOfMoves << std::endl;
+            board.setVec(std::move(population.front().items));
+            break;
+        }
+
+        double avg = get_average_fitness();
+        double standart_deviation = get_standard_deviation(avg);
+        if (!quietMode)
+            std::cout << "Avg: " << avg << " standard Deviation: " << standart_deviation << std::endl;
+        if (numberOfMoves > 1 && isAtLocalOptima(standart_deviation, numberOfMoves)) {
+            isInLocalOptima = true;
+            threshold = pow(board.getBoardSize(), 2);
+        }
+        else
+            isInLocalOptima = false;
+        specis = mate(); // mate the population together
+        if (specis > maxSpecis - 2)
+            threshold += 1;
+        else if (specis < maxSpecis + 2)
+            threshold -= 1;
+        swap();        // swap buffers
+    }
+}
+
+void nQueensGeneticSolver::setFitnessInRange(const unsigned int startIndex, const unsigned int endIndex) {
+// array for all the diagonals in board NXN
+    std::vector<int> a((4 * (endIndex - startIndex)) - 2);
+    std::fill(a.begin(), a.end(), 0);
+
+    for (int i = startIndex; i < endIndex; i++) {
+        unsigned int fitness = 0;
+        for (int j = 0; j < numberOfItems; j++) {
+            // diagnol 1
+            a[j + population[i].items[j]]++;
+            int p = abs(j - population[i].items[j]);
+            // increase diagnol 2
+            if (j > population[i].items[j])
+                a[p + (2 * numberOfItems) - 1]++;
+            else
+                a[(4 * numberOfItems) - 2 - p - 1]++;
+        }
+        for (int l = 0; l < a.size(); l++) {
+            // we calculate duplicated collisions as well
+            a[l] = a[l] * (a[l] - 1);
+            fitness += (a[l]);
+            // initilazie array for next gene
+            a[l] = 0;
+        }
+        population[i].fitnessVal = fitness;
+    }
 }

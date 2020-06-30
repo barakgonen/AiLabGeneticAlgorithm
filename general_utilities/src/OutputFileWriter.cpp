@@ -8,11 +8,13 @@
 #include "../../string_matching/include/consts.h"
 
 OutputFileWriter::OutputFileWriter(const std::string& outputPath, const std::string testedObject,
-                                   const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod)
+                                   const SelectionMethod selectionMethod, const CrossoverMethod crossoverMethod,
+                                   const bool isParralelized)
 : outputPath{outputPath}
 , testedObject{testedObject}
 , selectionMethod{selectionMethod}
 , crossoverMethod{crossoverMethod}
+, isParallelized{isParralelized}
 {
     create_output_directories();
 }
